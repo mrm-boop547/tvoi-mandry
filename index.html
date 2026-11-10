@@ -15,6 +15,14 @@ html,body{background:var(--outer)}
 #app{max-width:430px;margin:0 auto;background:var(--site);min-height:100dvh;position:relative;overflow-x:clip}
 @media (min-width:600px){#app{box-shadow:0 0 0 1px rgba(0,0,0,.06),0 20px 60px rgba(0,0,0,.12)}}
 html{scroll-behavior:smooth}
+#totop{position:fixed;z-index:60;right:max(16px,calc((100vw - 430px)/2 + 16px));bottom:calc(20px + env(safe-area-inset-bottom,0px));
+  width:44px;height:44px;border-radius:22px;border:none;background:rgba(255,255,255,.92);color:#111;
+  box-shadow:0 6px 20px rgba(17,17,17,.18),0 1px 3px rgba(17,17,17,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:0;transform:translateY(12px) scale(.9);pointer-events:none;
+  transition:opacity .35s ease,transform .45s cubic-bezier(.16,1,.3,1),bottom .35s cubic-bezier(.16,1,.3,1)}
+#totop.show{opacity:1;transform:none;pointer-events:auto}
+#totop.above-bar{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+#totop:focus-visible{outline:2px solid #F2491D;outline-offset:2px}
 /* ---- motion: спокійні, «епплівські» анімації ---- */
 @media (prefers-reduced-motion: no-preference){
   .scr-in{animation:scrIn .5s ease both}
@@ -48,6 +56,7 @@ a{color:#111111}a:hover{color:#555555}
 <body>
 
 <div id="app"></div>
+<button id="totop" type="button" aria-label="Нагору сторінки"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></button>
 <template id="tpl-MainV3"><div style="width: 100%; min-height: 100dvh; box-sizing: border-box; background: #FFFFFF; font-family: 'Inter Tight', system-ui, sans-serif; color: #111111; display: flex; flex-direction: column; overflow: hidden">
 
 <section style="position: relative; height: 460px; overflow: hidden; background: #1E2830; border-radius: 0 0 30px 30px">
@@ -1249,7 +1258,15 @@ window.addEventListener('hashchange', function(){
   if (r.anchor){ var t = document.getElementById(r.anchor); if (t){ t.scrollIntoView({ block: 'start', behavior: 'instant' }); return; } }
   window.scrollTo({ top: 0, behavior: 'instant' });
 });
-route();
+var totop = document.getElementById('totop');
+function syncTop(){
+  totop.classList.toggle('show', window.scrollY > window.innerHeight * 0.9);
+  totop.classList.toggle('above-bar', !!app.querySelector('[style*="position: fixed"][style*="z-index: 50"]'));
+}
+window.addEventListener('scroll', syncTop, { passive: true });
+window.addEventListener('hashchange', function(){ setTimeout(syncTop, 50); });
+totop.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' }); });
+route(); syncTop();
 })();
 </script>
 
