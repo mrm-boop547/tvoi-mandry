@@ -95,7 +95,7 @@ input::placeholder{color:#A3A3A3}
 </header>
 
 <section style="position: relative; margin: 0 12px; height: 540px; overflow: hidden; border-radius: 32px; background: #1E2830">
-<img alt="Група мандрівників йде хребтом у Карпатах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 38.5509% 98.0068%; " src="img/crop_b2a8cf9b_85918.jpg">
+<img alt="Група мандрівників йде хребтом у Карпатах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 38.5509% 98.0068%; " src="img/crop_b2a8cf9b_74599.jpg">
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 300px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.5) 45%, rgba(10,14,18,0.82) 100%)"></div>
 <div style="position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; flex-direction: column; gap: 18px">
 <h1 style="margin: 0 4px; font-weight: 500; font-size: 36px; line-height: 1.04; letter-spacing: -1.5px; color: #FFFFFF"></h1><h1 style="margin: 0px; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px; color: #ffffff">Мандрівки, після яких залишаються друзі та спогади на все життя<br></h1>
@@ -229,7 +229,7 @@ input::placeholder{color:#A3A3A3}
 <template id="tpl-TourV4"><div class="page" style="width: 100%; min-height: 100dvh; padding-bottom: 104px; box-sizing: border-box; background: #FFFFFF; font-family: 'Inter Tight', system-ui, sans-serif; color: #111111; display: flex; flex-direction: column; position: relative; overflow: hidden">
 
 <section style="position: relative; height: 560px; overflow: hidden; background: #26313B; border-radius: 0 0 32px 32px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px">
-<sc-if value="{{isDra}}" hint-placeholder-val="{{true}}"><img alt="Стежка на Драгобраті" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 55.4699% 100%; " src="img/crop_04284121_99927.jpg"></sc-if><sc-if value="{{notDra}}" hint-placeholder-val="{{false}}"><img alt="{{name}}" src="{{heroImg}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover"></sc-if>
+<sc-if value="{{isDra}}" hint-placeholder-val="{{true}}"><img alt="Стежка на Драгобраті" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 55.4699% 100%; " src="img/crop_04284121_78825.jpg"></sc-if><sc-if value="{{notDra}}" hint-placeholder-val="{{false}}"><img alt="{{name}}" src="{{heroImg}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover"></sc-if>
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 130px; background: linear-gradient(180deg, rgba(10,14,18,0.4) 0%, rgba(10,14,18,0) 100%)"></div>
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 240px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.5) 50%, rgba(10,14,18,0.78) 100%)"></div>
 <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 16px">
@@ -266,17 +266,15 @@ input::placeholder{color:#A3A3A3}
 </section>
 
 <section id="when" style="margin: 36px 0 0; padding: 18px 16px 16px; min-height: 560px; box-sizing: border-box; border-radius: 0; display: flex; flex-direction: column; gap: 16px; position: relative; z-index: {{whenZ}}; color: #FFFFFF; height: 560px">
-<div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 0; overflow: hidden; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; background: #FFFFFF">
-<img src="img/50660d63b464b30e0adad8ed87ba1242.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover">
-<img src="img/0567fee2bd71b742446b0b6a95b4a33b.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover">
-<img src="img/f833908b1249bfdfd3c5f5afdff404e4.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover">
+<div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 0; overflow: hidden; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; background: #FFFFFF; grid-template-columns: {{seasonCols}}">
+<sc-for list="{{seasons}}" as="se" hint-placeholder-count="3"><img src="{{se.img}}" alt="{{se.name}}" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top"></sc-for>
 <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,14,18,0.35) 0%, rgba(10,14,18,0.2) 35%, rgba(10,14,18,0.8) 100%)"></div>
 </div>
-<div style="position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); text-align: center; font-size: 14px; font-weight: 600; letter-spacing: 0.2px; color: #FFFFFF"><span>Весна</span><span>Літо</span><span>Осінь</span></div>
+<div style="position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); text-align: center; font-size: 14px; font-weight: 600; letter-spacing: 0.2px; color: #FFFFFF; grid-template-columns: {{seasonCols}}"><sc-for list="{{seasons}}" as="se" hint-placeholder-count="3"><span>{{se.name}}</span></sc-for></div>
 <div style="flex: 1"></div>
 <div style="position: relative; display: flex; flex-direction: column; gap: 8px; padding: 0 6px">
 <h2 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px; color: #FFFFFF">Коли їдемо <span style="color: rgba(255,255,255,0.7)">{{whereTo}}?</span></h2>
-<p style="margin: 0; font-size: 16px; line-height: 1.45; color: rgba(255,255,255,0.85)">Весна, літо чи осінь: обери свій сезон і дату.</p>
+<p style="margin: 0; font-size: 16px; line-height: 1.45; color: rgba(255,255,255,0.85)">{{seasonTxt}}</p>
 </div>
 <button onClick="{{openSheet}}" style="position: relative; min-height: 76px; border: none; border-radius: 22px; padding: 12px 12px 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; font-family: 'Inter Tight', sans-serif; color: #111111; cursor: pointer; background-color: #FFFFFF">
 <span style="display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 600; font-size: 20px; letter-spacing: -0.4px">{{selLabel}}</span><span style="font-size: 14px; color: #6B6B6B">{{selSeats}}</span></span>
@@ -321,6 +319,15 @@ input::placeholder{color:#A3A3A3}
 <div style="padding: 2px 8px 12px; display: flex; flex-direction: column; gap: 10px">
 <span style="font-size: 15px; color: #6B6B6B">{{d.meta}}</span>
 <sc-for list="{{d.text}}" as="p" hint-placeholder-count="2"><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #333333">{{p.t}}</p></sc-for>
+<span style="margin-top: 6px; font-size: 13px; font-weight: 600; color: #6B6B6B">Локації дня</span>
+<div class="mrow" style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -8px; padding: 0 8px 2px">
+<sc-for list="{{d.spots}}" as="l" hint-placeholder-count="3">
+<div style="flex-shrink: 0; width: 124px; display: flex; flex-direction: column; gap: 6px">
+<div style="height: 124px; border-radius: 16px; overflow: hidden; background: #E9E9E9"><img src="{{l.src}}" alt="{{l.t}}" data-zoom="1" data-cap="{{l.t}}" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></div>
+<span style="font-size: 14px; font-weight: 500; letter-spacing: -0.2px">{{l.t}}</span>
+</div>
+</sc-for>
+</div>
 </div>
 </sc-if>
 </div>
@@ -798,9 +805,9 @@ SCREENS["TourV4"] = { props: {"accent": "#F2491D", "heroX": 50, "heroY": 60}, Cl
 /*TM-DATA*/ // єдине джерело турів і дат (потім підтягуватиметься з таблиці-адмінки)
 var TM = {
   tours: {
-    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6950, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true },
-    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false },
-    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false }
+    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6950, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true, seasons: [['Літо', 'img/eec1ae232dee3513b4739ee943be7efb.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg'], ['Зима', 'img/2b9561ffbe87cb6a2c790e94b280b697.jpg']] },
+    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false, seasons: [['Літо', 'img/bb85142f4c469e600cd4a53a37804f07.jpg']] },
+    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/efb98218d63a5047618b5502e6704c31.jpg'], ['Осінь', 'img/f833908b1249bfdfd3c5f5afdff404e4.jpg']] }
   },
   // [тур, місяць, дати, статус ok/few/sold, вільних місць]
   dates: [
@@ -822,7 +829,7 @@ class Component extends DCLogic {
     super(props);
     var id = props && props.tour && TM.tours[props.tour] ? props.tour : 'dra', list = TM.forTour(id), d = props && props.d != null ? +props.d : -1;
     if (!(d >= 0 && d < list.length) || list[d][3] === 'sold') { d = list.findIndex(function (r) { return r[3] !== 'sold'; }); if (d < 0) d = 0; }
-    this.state = { date: d, open: -1, day: -1, waited: {}, tab: 0 };
+    this.state = { date: d, open: -1, day: 0, waited: {}, tab: 0 };
   }
   renderVals() {
     var self = this;
@@ -889,6 +896,13 @@ class Component extends DCLogic {
         notLast: i < dayDefs.length - 1
       });
     });
+    // локації дня: назва + фото (у таблиці-адмінці це буде колонка «Локації дня»)
+    var SPOTS = [
+      [['Озеро Івор', IMG.dra], ['Жандарм', IMG.pip], ['Захід сонця', 'img/f833908b1249bfdfd3c5f5afdff404e4.jpg']],
+      [['Озеро Ворожеска', IMG.grp], ['Озеро Герешаска', IMG.bak], ['Близниця', IMG.pip]],
+      [['Світанок над туманом', IMG.pip], ['Оглядовий майданчик', IMG.dra]]
+    ];
+    days.forEach(function (x, i) { x.spots = (SPOTS[i] || []).map(function (p) { return { t: p[0], src: p[1] }; }); });
     var incl = t((isDra ? ['3 дні / 2 ночі в котеджі'] : []).concat([
       'Сніданки й вечері, перекус у горах',
       'Усі переїзди на місці',
@@ -905,6 +919,9 @@ class Component extends DCLogic {
     });
     return {
       acc: acc, accInk: accInk, dates: dates, days: days, incl: incl, excl: excl, faq: faq,
+      seasons: (TOUR.seasons || []).map(function (x) { return { name: x[0], img: x[1] }; }),
+      seasonCols: 'repeat(' + Math.max(1, (TOUR.seasons || []).length) + ', minmax(0, 1fr))',
+      seasonTxt: (TOUR.seasons || []).length > 1 ? TOUR.seasons.map(function (x) { return x[0].toLowerCase(); }).join(', ').replace(/^./, function (c) { return c.toUpperCase(); }).replace(/, ([^,]*)$/, ' чи $1') + ': обери свій сезон і дату.' : 'Обери дату, яка тобі підходить.',
       whereTo: { dra: 'на Драгобрат', bak: 'на Бакоту', pip: 'на Піп Іван' }[TID] || TOUR.name,
       sheet: !!this.state.sheet, whenZ: this.state.sheet ? '61' : 'auto', selSeats: raw[this.state.date][1],
       openSheet: function () { self.setState({ sheet: true }); }, closeSheet: function () { self.setState({ sheet: false }); },
