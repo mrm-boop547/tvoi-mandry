@@ -22,6 +22,9 @@ html{scroll-behavior:smooth}
   transition:opacity .35s ease,transform .45s cubic-bezier(.16,1,.3,1),bottom .35s cubic-bezier(.16,1,.3,1)}
 #totop.show{opacity:1;transform:none;pointer-events:auto}
 #totop.above-bar{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+
+.sbar.off{transform:translate(-50%,140%)!important;opacity:0;pointer-events:none}
+.sfade.off{opacity:0}
 #totop:focus-visible{outline:2px solid #F2491D;outline-offset:2px}
 /* ---- motion: спокійні, «епплівські» анімації ---- */
 @media (prefers-reduced-motion: no-preference){
@@ -37,9 +40,7 @@ html{scroll-behavior:smooth}
   .rv.in{opacity:1;transform:none}
   .swap{animation:swap .7s cubic-bezier(.16,1,.3,1) both}
   @keyframes swap{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
-  .bar-in{animation:barIn .8s .9s cubic-bezier(.16,1,.3,1) both}
-  @keyframes barIn{from{opacity:0;transform:translate(-50%,130%)}to{opacity:1;transform:translate(-50%,0)}}
-  .fade-in{animation:scrIn .8s .9s ease both}
+  .sbar,.sfade{transition:transform .6s cubic-bezier(.16,1,.3,1),opacity .4s ease}
   a,button{transition:transform .2s cubic-bezier(.16,1,.3,1)}
   a:active,button:active{transform:scale(.97)}
   @media (hover:hover){a img{transition:transform 1.2s cubic-bezier(.16,1,.3,1)} a:hover img{transform:scale(1.035)}}
@@ -1157,7 +1158,19 @@ function countUp(el){
     el.textContent = Math.round(to * e) + tail; if (p < 1) requestAnimationFrame(step); }
   el.textContent = '0' + tail; requestAnimationFrame(step);
 }
+function syncBar(){
+  var bar = app.querySelector('[style*="position: fixed"][style*="z-index: 50"]');
+  var fade = app.querySelector('[style*="position: fixed"][style*="z-index: 49"]');
+  if (!bar) return false;
+  bar.classList.add('sbar'); if (fade) fade.classList.add('sfade');
+  // плашка з'являється, коли людина прогорнула блок з датами
+  var when = document.getElementById('when');
+  var show = !when || when.getBoundingClientRect().bottom < window.innerHeight * 0.85;
+  bar.classList.toggle('off', !show); if (fade) fade.classList.toggle('off', !show);
+  return show;
+}
 function motion(first, before){
+  syncTop();
   if (RM) return;
   var root = app.firstElementChild; if (!root) return;
   if (!first){
@@ -1181,10 +1194,6 @@ function motion(first, before){
     var txt = h1 && h1.parentElement;
     if (txt && txt !== hero) Array.prototype.forEach.call(txt.children, function(el, i){ el.classList.add('up'); el.style.animationDelay = (0.35 + i * 0.14) + 's'; });
   } else hero = null;
-  // sticky booking bar
-  Array.prototype.forEach.call(root.querySelectorAll('[style*="position: fixed"]'), function(el){
-    el.classList.add(/z-index: 50/.test(el.getAttribute('style')) ? 'bar-in' : 'fade-in');
-  });
   // scroll reveal
   var targets = [];
   Array.prototype.forEach.call(root.children, function(sec){
@@ -1260,8 +1269,9 @@ window.addEventListener('hashchange', function(){
 });
 var totop = document.getElementById('totop');
 function syncTop(){
+  var barShown = syncBar();
   totop.classList.toggle('show', window.scrollY > window.innerHeight * 0.9);
-  totop.classList.toggle('above-bar', !!app.querySelector('[style*="position: fixed"][style*="z-index: 50"]'));
+  totop.classList.toggle('above-bar', !!barShown);
 }
 window.addEventListener('scroll', syncTop, { passive: true });
 window.addEventListener('hashchange', function(){ setTimeout(syncTop, 50); });
