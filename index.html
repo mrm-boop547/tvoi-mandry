@@ -54,6 +54,12 @@ html{scroll-behavior:smooth}
   .rv.in{opacity:1;transform:none}
   .swap{animation:swap .7s cubic-bezier(.16,1,.3,1) both}
   @keyframes swap{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+  .tl-dot{transform:scale(.3);opacity:0;transition:transform .8s .25s cubic-bezier(.34,1.56,.64,1),opacity .4s .25s ease}
+  .in .tl-dot{transform:none;opacity:1}
+  .tl-line{transform:scaleY(0);transform-origin:top;transition:transform 1.4s .55s cubic-bezier(.16,1,.3,1)}
+  .in .tl-line{transform:none}
+  .tl-card{opacity:0;transform:translateX(18px);transition:opacity .9s .15s cubic-bezier(.16,1,.3,1),transform 1.1s .15s cubic-bezier(.16,1,.3,1)}
+  .in .tl-card{opacity:1;transform:none}
   .sbar{transition:transform 1s cubic-bezier(.22,1,.36,1),opacity .8s cubic-bezier(.22,1,.36,1);will-change:transform,opacity}
   .sbar.off{transition:transform .6s cubic-bezier(.4,0,.2,1),opacity .45s ease}
   .sfade{transition:opacity .9s ease}
@@ -1238,6 +1244,20 @@ function motion(first, before){
   var targets = [];
   Array.prototype.forEach.call(root.children, function(sec){
     if (sec === hero || sec === topHd || /position: (fixed|absolute)/.test(sec.getAttribute('style') || '')) return;
+    // програма: кожен день окремо, кружок «вистрибує», пунктир домальовується вниз, картка заїжджає збоку
+    if (sec.id === 'program'){
+      var list = sec.lastElementChild;
+      Array.prototype.forEach.call(sec.children, function(k, i){ if (k === list) return; k.classList.add('rv'); k.style.transitionDelay = (i * 80) + 'ms'; targets.push(k); });
+      Array.prototype.forEach.call(list.children, function(row){
+        var rail = row.firstElementChild, card = row.children[1];
+        if (!rail || !card) return;
+        if (rail.children[0]) rail.children[0].classList.add('tl-dot');
+        if (rail.children[1]) rail.children[1].classList.add('tl-line');
+        card.classList.add('tl-card');
+        row.dataset.card = '1'; targets.push(row);
+      });
+      return;
+    }
     var kids = sec.children.length > 1 ? Array.prototype.slice.call(sec.children) : [sec];
     kids.forEach(function(k, i){
       if (/position: (fixed|absolute)/.test(k.getAttribute('style') || '')) return;
@@ -1264,6 +1284,33 @@ function motion(first, before){
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
   targets.forEach(function(t){ io.observe(t); });
 }
+
+// ---- розгортання дня програми: плавно відкривається і так само плавно закривається ----
+var EASE = 'cubic-bezier(.16,1,.3,1)';
+function dayBtns(){ return Array.prototype.slice.call(app.querySelectorAll('#program button[aria-expanded]')); }
+function dayState(){ return dayBtns().map(function(b){ return b.getAttribute('aria-expanded') === 'true'; }); }
+function dayOpenAnim(was){
+  if (RM || !Element.prototype.animate) return;
+  dayBtns().forEach(function(b, i){
+    if (b.getAttribute('aria-expanded') !== 'true' || was[i]) return;
+    var body = b.nextElementSibling; if (!body) return;
+    var h = body.offsetHeight; body.style.overflow = 'hidden';
+    body.animate([{ height: '0px', opacity: 0 }, { height: h + 'px', opacity: 1 }], { duration: 650, easing: EASE })
+      .onfinish = function(){ body.style.overflow = ''; };
+    Array.prototype.forEach.call(body.children, function(c, j){
+      c.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 700, delay: 120 + j * 70, easing: EASE, fill: 'backwards' });
+    });
+  });
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest && e.target.closest('#program button[aria-expanded="true"]');
+  if (!b || RM || b._closing || !Element.prototype.animate) return;
+  var body = b.nextElementSibling; if (!body) return;
+  e.preventDefault(); e.stopPropagation(); b._closing = true;
+  body.style.overflow = 'hidden';
+  body.animate([{ height: body.offsetHeight + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 420, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' })
+    .onfinish = function(){ b.click(); };
+}, true);
 
 // ---- перегляд фото програми ----
 var lb = document.getElementById('lb'), lbImg = lb.querySelector('img'), lbCap = lb.querySelector('.cap'), lbCnt = lb.querySelector('.cnt');
@@ -1333,6 +1380,7 @@ function mount(name){
     if (c !== comp) return;
     var first = !c._painted; c._painted = true;
     var before = cardSig();
+    var wasOpen = dayState();
     var keep = Array.prototype.map.call(app.querySelectorAll('.mrow, [style*="overflow-x: auto"]'), function(e){ return e.scrollLeft; });
     var vals = c.renderVals(), out = [], refs = [];
     renderChildren(tpl.content, vals, out, refs);
@@ -1340,6 +1388,7 @@ function mount(name){
     refs.forEach(function(r){ r[0](r[1]); });
     Array.prototype.forEach.call(app.querySelectorAll('.mrow, [style*="overflow-x: auto"]'), function(e, i){ if (keep[i] != null) e.scrollLeft = keep[i]; });
     motion(first, before);
+    if (!first) dayOpenAnim(wasOpen);
     setupReviews();
   };
   c._render();
