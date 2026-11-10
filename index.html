@@ -1345,26 +1345,37 @@ lb.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, { p
 lb.addEventListener('touchend', function(e){ if (tx === null) return; var d = e.changedTouches[0].clientX - tx; tx = null;
   if (Math.abs(d) > 50) lbShow(lbI + (d < 0 ? 1 : -1)); }, { passive: true });
 
-// ---- відгуки: самі повільно гортаються, коли блок на екрані; зупиняються, коли людина торкнулась ----
-var revTimer = null, revPausedUntil = 0, revObs = null;
+// ---- відгуки: повільна безперервна стрічка, коли блок на екрані; пальцем можна гортати, після паузи стрічка їде далі ----
+var revRaf = 0, revPausedUntil = 0, revObs = null, REV_SPEED = 26; // пікселів за секунду
 function setupReviews(){
-  if (revObs) { revObs.disconnect(); revObs = null; } clearInterval(revTimer); revTimer = null;
+  if (revObs) { revObs.disconnect(); revObs = null; } cancelAnimationFrame(revRaf); revRaf = 0;
   if (RM) return;
   var btn = app.querySelector('[aria-label="Наступні відгуки"]'); if (!btn) return;
   var row = btn.parentElement.querySelector('.mrow'); if (!row) return;
-  var pause = function(){ revPausedUntil = Date.now() + 8000; };
+  var orig = Array.prototype.slice.call(row.children); if (orig.length < 2) return;
+  // копія карток у кінці: стрічка зациклюється без стрибка
+  orig.forEach(function(c){ var k = c.cloneNode(true); k.setAttribute('aria-hidden', 'true'); k.dataset.clone = '1'; row.appendChild(k); });
+  var loopW = function(){ return row.children[orig.length].offsetLeft - orig[0].offsetLeft; };
+  row.style.scrollSnapType = 'none';
+  var pos = row.scrollLeft, last = 0;
+  var pause = function(){ revPausedUntil = Date.now() + 3500; row.style.scrollSnapType = ''; };
   ['pointerdown', 'touchstart', 'wheel'].forEach(function(ev){ row.addEventListener(ev, pause, { passive: true }); });
   btn.addEventListener('click', pause);
-  var tick = function(){
-    if (!document.body.contains(row) || Date.now() < revPausedUntil) return;
-    var card = row.firstElementChild, step = card ? card.getBoundingClientRect().width + 8 : 158;
-    if (row.scrollLeft + row.clientWidth >= row.scrollWidth - 4) row.scrollTo({ left: 0, behavior: 'smooth' });
-    else row.scrollBy({ left: step, behavior: 'smooth' });
+  var frame = function(ts){
+    revRaf = requestAnimationFrame(frame);
+    if (!document.body.contains(row)) { cancelAnimationFrame(revRaf); revRaf = 0; return; }
+    var dt = last ? Math.min(64, ts - last) : 0; last = ts;
+    var w = loopW();
+    if (Date.now() < revPausedUntil){ pos = row.scrollLeft; if (w > 0 && pos >= w) { pos -= w; row.scrollLeft = pos; } return; }
+    if (row.style.scrollSnapType !== 'none'){ row.style.scrollSnapType = 'none'; pos = row.scrollLeft; }
+    pos += REV_SPEED * dt / 1000;
+    if (w > 0 && pos >= w) pos -= w;
+    row.scrollLeft = pos;
   };
   revObs = new IntersectionObserver(function(en){
-    if (en[0].isIntersecting){ if (!revTimer){ revPausedUntil = Date.now() + 900; revTimer = setInterval(tick, 3200); } }
-    else { clearInterval(revTimer); revTimer = null; }
-  }, { threshold: 0.5 });
+    if (en[0].isIntersecting){ if (!revRaf){ last = 0; pos = row.scrollLeft; revRaf = requestAnimationFrame(frame); } }
+    else { cancelAnimationFrame(revRaf); revRaf = 0; }
+  }, { threshold: 0.3 });
   revObs.observe(row);
 }
 
