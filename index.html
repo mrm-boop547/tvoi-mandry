@@ -316,20 +316,23 @@ a{color:#111111}a:hover{color:#555555}
 <section id="program" style="padding: 36px 16px 0; display: flex; flex-direction: column; gap: 14px">
 <span style="align-self: flex-start; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 14px; background: #F4F4F4">Програма мандрівки</span>
 <h2 style="margin: 0; font-weight: 500; font-size: 30px; line-height: 1.05; letter-spacing: -1.2px">Три дні <span style="color: #8A8A8A">на висоті Драгобрату</span></h2>
-<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-direction: column; margin-top: 6px">
 <sc-for list="{{days}}" as="d" hint-placeholder-count="3">
-<div style="background: #F4F4F4; border-radius: 28px; padding: 8px; display: flex; flex-direction: column">
+<div style="display: flex; gap: 12px">
+<div aria-hidden="true" style="width: 32px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center">
+<span style="width: 32px; height: 32px; border-radius: 16px; background: #111111; color: #FFFFFF; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center">{{d.n}}</span>
+<sc-if value="{{d.notLast}}" hint-placeholder-val="{{true}}">
+<span style="flex: 1; width: 2px; margin-top: 6px; background: repeating-linear-gradient(180deg, #D6D6D6 0 6px, transparent 6px 12px)"></span>
+</sc-if>
+</div>
+<div style="flex: 1; min-width: 0; padding-bottom: 28px; display: flex; flex-direction: column; gap: 10px">
+<span style="height: 32px; display: flex; align-items: center; gap: 8px"><span style="font-weight: 600; font-size: 16px; letter-spacing: -0.3px">День {{d.n}}</span><span style="font-size: 14px; color: #8A8A8A">{{d.sub}}</span></span>
+<div style="background: #F4F4F4; border-radius: 26px; padding: 8px; display: flex; flex-direction: column">
 <div style="display: flex; gap: 6px; height: 150px">
 <div style="flex: 1.5; border-radius: 22px; overflow: hidden"><img src="{{d.a}}" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover"></div>
 <div style="flex: 1; border-radius: 22px; overflow: hidden"><img src="{{d.b}}" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover"></div>
 </div>
 <button onClick="{{d.toggle}}" aria-expanded="{{d.open}}" style="border: none; background: none; padding: 14px 10px 10px; display: flex; flex-direction: column; align-items: stretch; gap: 8px; text-align: left; font-family: 'Inter Tight', sans-serif; color: #111111; cursor: pointer">
-<span style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
-<span style="display: flex; align-items: center; gap: 8px">
-<span style="font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 12px; background: #111111; color: #FFFFFF">День {{d.n}}</span>
-<span style="font-size: 13px; color: #6B6B6B">{{d.sub}}</span>
-</span>
-</span>
 <span style="font-weight: 500; font-size: 20px; line-height: 1.2; letter-spacing: -0.5px">{{d.title}}</span>
 <span style="font-size: 13px; color: #6B6B6B">{{d.meta}}</span>
 <span style="{{d.ctaStyle}}">{{d.cta}}
@@ -350,6 +353,8 @@ a{color:#111111}a:hover{color:#555555}
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l-6 2v14l6-2 6 2 6-2V4l-6 2-6-2z"></path><path d="M9 4v14M15 6v14"></path></svg>Маршрут дня на карті</div>
 </div>
 </sc-if>
+</div>
+</div>
 </div>
 </sc-for>
 </div>
@@ -936,7 +941,8 @@ class Component extends DCLogic {
         cta: open ? 'Згорнути' : 'Детальніше про день',
         arrow: open ? 'M6 15l6-6 6 6' : 'M6 9l6 6 6-6',
         ctaStyle: 'margin-top:6px;height:44px;border-radius:22px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;' + (open ? 'background:#FFFFFF;color:#111111;' : 'background:#111111;color:#FFFFFF;'),
-        toggle: function () { self.setState({ day: open ? -1 : i }); }
+        toggle: function () { self.setState({ day: open ? -1 : i }); },
+        notLast: i < dayDefs.length - 1
       });
     });
     var incl = t([
