@@ -1,0 +1,1492 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>tvoi.mandry</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap">
+<style>
+:root{--outer:#E9E9E9;--site:#FFFFFF;color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--outer:#1A1A1A}}
+:root[data-theme="dark"]{--outer:#1A1A1A}
+html,body{background:var(--outer)}
+*{-webkit-tap-highlight-color:transparent}
+#app{max-width:430px;margin:0 auto;background:var(--site);min-height:100dvh;position:relative;overflow-x:clip}
+@media (min-width:600px){#app{box-shadow:0 0 0 1px rgba(0,0,0,.06),0 20px 60px rgba(0,0,0,.12)}}
+html{scroll-behavior:smooth}
+#totop{position:fixed;z-index:60;right:max(16px,calc((100vw - 430px)/2 + 16px));bottom:calc(20px + env(safe-area-inset-bottom,0px));
+  width:44px;height:44px;border-radius:22px;border:none;background:rgba(255,255,255,.92);color:#111;
+  box-shadow:0 6px 20px rgba(17,17,17,.18),0 1px 3px rgba(17,17,17,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:0;transform:translateY(12px) scale(.9);pointer-events:none;
+  transition:opacity .35s ease,transform .45s cubic-bezier(.16,1,.3,1),bottom .35s cubic-bezier(.16,1,.3,1)}
+#totop.show{opacity:1;transform:none;pointer-events:auto}
+#totop.above-bar{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+
+.sbar.off{transform:translate(-50%,28px) scale(.96)!important;opacity:0;pointer-events:none}
+.sfade.off{opacity:0}
+#toast{position:fixed;z-index:70;left:50%;top:calc(16px + env(safe-area-inset-top,0px));transform:translate(-50%,-20px);opacity:0;pointer-events:none;
+  background:#111;color:#fff;font:500 14px/1 'Inter Tight',system-ui,sans-serif;padding:12px 16px;border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,.2);
+  transition:opacity .3s ease,transform .45s cubic-bezier(.16,1,.3,1)}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+#lb{position:fixed;inset:0;z-index:100;background:rgba(8,10,12,.97);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease;touch-action:pan-y}
+#lb.open{opacity:1;pointer-events:auto}
+#lb img{max-width:100%;max-height:100%;object-fit:contain;transform:scale(.94);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .25s ease;user-select:none;-webkit-user-drag:none}
+#lb.open img{transform:none}
+#lb button{position:absolute;width:44px;height:44px;border-radius:22px;border:none;background:rgba(255,255,255,.16);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#lb .x{top:calc(16px + env(safe-area-inset-top,0px));right:16px}
+#lb .pv{left:12px;top:50%;margin-top:-22px}#lb .nx{right:12px;top:50%;margin-top:-22px}
+#lb .cap{position:absolute;left:16px;right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));color:rgba(255,255,255,.85);font:500 14px/1.4 'Inter Tight',system-ui,sans-serif;text-align:center}
+#lb .cnt{position:absolute;top:calc(28px + env(safe-area-inset-top,0px));left:0;right:0;text-align:center;color:rgba(255,255,255,.6);font:500 13px 'Inter Tight',system-ui,sans-serif}
+#totop:focus-visible{outline:2px solid #F2491D;outline-offset:2px}
+/* ---- motion: спокійні, «епплівські» анімації ---- */
+@media (prefers-reduced-motion: no-preference){
+  .scr-in{animation:scrIn .5s ease both}
+  @keyframes scrIn{from{opacity:0}to{opacity:1}}
+  .kb{animation:kb 2.4s cubic-bezier(.16,1,.3,1) both;will-change:transform}
+  @keyframes kb{from{transform:scale(1.14)}to{transform:scale(1)}}
+  .hd-in{animation:hdIn 1s .25s cubic-bezier(.16,1,.3,1) both}
+  @keyframes hdIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+  .up{animation:up 1.1s cubic-bezier(.16,1,.3,1) both}
+  @keyframes up{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+  .rv{opacity:0;transform:translateY(36px) scale(.985);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .rv.in{opacity:1;transform:none}
+  .swap{animation:swap .7s cubic-bezier(.16,1,.3,1) both}
+  @keyframes swap{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+  .tl-dot{transform:scale(.3);opacity:0;transition:transform .8s .25s cubic-bezier(.34,1.56,.64,1),opacity .4s .25s ease}
+  .in .tl-dot{transform:none;opacity:1}
+  .tl-line{transform:scaleY(0);transform-origin:top;transition:transform 1.4s .55s cubic-bezier(.16,1,.3,1)}
+  .in .tl-line{transform:none}
+  .tl-card{opacity:0;transform:translateX(18px);transition:opacity .9s .15s cubic-bezier(.16,1,.3,1),transform 1.1s .15s cubic-bezier(.16,1,.3,1)}
+  .in .tl-card{opacity:1;transform:none}
+  .sbar{transition:transform 1s cubic-bezier(.22,1,.36,1),opacity .8s cubic-bezier(.22,1,.36,1);will-change:transform,opacity}
+  .sbar.off{transition:transform .6s cubic-bezier(.4,0,.2,1),opacity .45s ease}
+  .sfade{transition:opacity .9s ease}
+  a,button{transition:transform .2s cubic-bezier(.16,1,.3,1)}
+  a:active,button:active{transform:scale(.97)}
+  @media (hover:hover){a img{transition:transform 1.2s cubic-bezier(.16,1,.3,1)} a:hover img{transform:scale(1.035)}}
+}
+body{margin:0}
+html{scrollbar-width:thin;scrollbar-color:rgba(17,17,17,0.18) transparent}
+::-webkit-scrollbar{width:3px;height:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(17,17,17,0.18);border-radius:2px}
+.mrow{scrollbar-width:none}.mrow::-webkit-scrollbar{display:none}
+a{color:#111111}a:hover{color:#555555}
+.page>*{flex-shrink:0}
+a{color:#111111}
+input::placeholder{color:#A3A3A3}
+</style>
+<style>body{margin:0;font-family:"Inter Tight",system-ui,sans-serif}img{max-width:100%}</style>
+</head>
+<body>
+
+<div id="app"></div>
+<div id="lb" role="dialog" aria-modal="true" aria-label="Фото"><span class="cnt"></span><img alt=""><span class="cap"></span>
+<button class="x" type="button" aria-label="Закрити"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+<button class="pv" type="button" aria-label="Попереднє фото"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+<button class="nx" type="button" aria-label="Наступне фото"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<button id="totop" type="button" aria-label="Нагору сторінки"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></button>
+<template id="tpl-MainV4"><div class="page" style="width: 100%; min-height: 100dvh; box-sizing: border-box; background: #FFFFFF; font-family: 'Inter Tight', system-ui, sans-serif; color: #111111; display: flex; flex-direction: column; overflow: hidden">
+
+<header style="height: 72px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; background: #FFFFFF">
+<span style="font-weight: 600; font-size: 19px; letter-spacing: -0.6px; color: #111111">tvoi<span style="color: {{acc}}">.</span>mandry</span>
+<a href="MenuV3.dc.html" aria-label="Меню" style="box-sizing: border-box; width: 44px; height: 44px; border-radius: 22px; border: none; background: #F4F4F4; display: flex; align-items: center; justify-content: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 9h14M5 15h14"></path></svg></a>
+</header>
+
+<section style="position: relative; margin: 0 12px; height: 540px; overflow: hidden; border-radius: 32px; background: #1E2830">
+<img alt="Група мандрівників йде хребтом у Карпатах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 38.5509% 98.0068%; " src="img/crop_b2a8cf9b_22533.jpg">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 300px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.5) 45%, rgba(10,14,18,0.82) 100%)"></div>
+<div style="position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; flex-direction: column; gap: 18px">
+<h1 style="margin: 0 4px; font-weight: 500; font-size: 36px; line-height: 1.04; letter-spacing: -1.5px; color: #FFFFFF"></h1><h1 style="margin: 0px; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px; color: #ffffff">Мандрівки, після яких залишаються друзі та спогади на все життя<br></h1>
+<a href="#tours" style="text-decoration: none; height: 60px; padding: 0 8px 0 22px; gap: 12px; border-radius: 30px; background: {{acc}}; color: {{accInk}}; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between">Обрати мандрівку<span style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></span></a>
+</div>
+</section>
+
+<section style="margin: 28px 16px 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px"><span style="font-weight: 500; font-size: clamp(24px, 7.6vw, 30px); letter-spacing: -1px; white-space: nowrap; font-variant-numeric: tabular-nums">85+</span><span style="font-size: 14px; color: #6B6B6B">мандрівок</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px"><span style="font-weight: 500; font-size: clamp(24px, 7.6vw, 30px); letter-spacing: -1px; white-space: nowrap; font-variant-numeric: tabular-nums">1000+</span><span style="font-size: 14px; color: #6B6B6B">мандрівників</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px"><span style="font-weight: 500; font-size: clamp(24px, 7.6vw, 30px); letter-spacing: -1px; white-space: nowrap; font-variant-numeric: tabular-nums">4 роки</span><span style="font-size: 14px; color: #6B6B6B">в мандрах</span></div>
+</section>
+
+<section id="tours" style="margin: 40px 0 0; padding: 36px 0 16px; background: #111111; color: #FFFFFF; border-radius: 0px; display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px; color: #FFFFFF">Найближчі <span style="color: rgb(154, 154, 154)">мандрівки:</span></h2>
+<div style="position: relative">
+<div role="tablist" aria-label="Місяці" class="mrow" ref="{{setRow}}" style="display: flex; gap: 6px; padding: 0 72px 0 12px; overflow-x: auto; scroll-behavior: smooth">
+<sc-for list="{{months}}" as="m" hint-placeholder-count="7">
+<button role="tab" aria-selected="{{m.on}}" onClick="{{m.pick}}" style="{{m.chipStyle}}">{{m.label}}</button>
+</sc-for>
+</div>
+<div aria-hidden="true" style="position: absolute; top: 0; right: 0; width: 96px; height: 44px; background: linear-gradient(90deg, rgba(17,17,17,0) 0%, #111111 55%); pointer-events: none"></div>
+<sc-if value="{{hasNext}}" hint-placeholder-val="{{true}}">
+<button aria-label="Наступний місяць" onClick="{{next}}" style="position: absolute; top: 0; right: 12px; width: 44px; height: 44px; border-radius: 22px; border: none; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</button>
+</sc-if>
+</div>
+<div onTouchStart="{{tStart}}" onTouchEnd="{{tEnd}}" style="display: flex; flex-direction: column; gap: 10px; padding: 0 12px">
+<sc-for list="{{tours}}" as="t" hint-placeholder-count="3">
+<a href="TourV4.dc.html" data-tour="{{t.id}}" data-d="{{t.di}}" style="text-decoration: none; color: #111111; background: #FFFFFF; border-radius: 28px; padding: 8px; display: flex; flex-direction: column">
+<div style="position: relative; height: 240px; border-radius: 22px; overflow: hidden">
+<img src="{{t.img}}" alt="{{t.name}}" style="display: block; width: 100%; height: 100%; object-fit: cover">
+<span style="{{t.badgeStyle}}"><span style="{{t.dotStyle}}"></span>{{t.seats}}</span>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 8px 8px 12px">
+<span style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-weight: 500; font-size: 22px; letter-spacing: -0.6px">{{t.name}}</span>
+<span style="font-size: 14px; color: #6B6B6B">{{t.dates}} · <span style="font-weight: 600; color: #111111">{{t.price}}</span></span>
+</span>
+<span style="width: 50px; height: 50px; flex-shrink: 0; border-radius: 25px; background: #111111; display: flex; align-items: center; justify-content: center">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+</span>
+</div>
+</a>
+</sc-for>
+</div>
+</section>
+
+<section id="photo" style="padding: 64px 0 0; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Ти гуляєш, <span style="color: #8A8A8A">ми знімаємо</span></h2>
+<p style="margin: 0 16px; font-size: 17px; line-height: 1.5; color: #444444">Фотограф їде з групою, тож ти повертаєшся з десятками своїх кадрів. Можна приїхати з ідеєю образу або просто насолоджуватися горами поки ми знімаємо вас!</p>
+<div class="mrow" data-marquee="1" aria-label="Фото учасників з минулих мандрівок" style="display: flex; gap: 8px; padding: 8px 12px 0; overflow-x: auto">
+<sc-for list="{{gal1}}" as="g" hint-placeholder-count="6">
+<div style="flex-shrink: 0; width: 150px; height: 200px; border-radius: 20px; overflow: hidden; background: #F4F4F4"><img src="{{g.src}}" alt="Учасник мандрівки tvoi.mandry" data-zoom="1" data-cap="" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></div>
+</sc-for>
+<sc-for list="{{gal2}}" as="g" hint-placeholder-count="6">
+<div style="flex-shrink: 0; width: 150px; height: 200px; border-radius: 20px; overflow: hidden; background: #F4F4F4"><img src="{{g.src}}" alt="Учасник мандрівки tvoi.mandry" data-zoom="1" data-cap="" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></div>
+</sc-for>
+</div>
+</section>
+
+<section id="about" style="margin: 64px 0 0; padding: 36px 16px 20px; background: #F4F4F4; border-radius: 0px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Привіт, ми <span style="color: #8A8A8A">Мар’ян і Тарас</span></h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #444444">Четвертий рік збираємо людей у гори та обʼєднуємо найкращих людей.</p>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 6px">
+<div style="background: #FFFFFF; border-radius: 24px; padding: 6px; display: flex; flex-direction: column">
+<div style="height: 210px; border-radius: 20px; overflow: hidden; background: #E9E9E9"><img src="img/5216b13eff7313727c3a59e25dc342d4.jpg" alt="Мар’ян з камерою" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: {{marianPos}}"></div>
+<span style="padding: 12px 8px 10px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 500; font-size: 19px; letter-spacing: -0.4px">Мар’ян</span><span style="font-size: 14px; line-height: 1.4; color: #6B6B6B">Фотограф з 2018 року. Знімає кожного в групі</span></span>
+</div>
+<div style="background: #FFFFFF; border-radius: 24px; padding: 6px; display: flex; flex-direction: column">
+<div style="height: 210px; border-radius: 20px; overflow: hidden; background: #E9E9E9"><img src="img/1e903f6857ca0aa276a7ceb5c1e47cd1.jpg" alt="Тарас" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: {{tarasPos}}"></div>
+<span style="padding: 12px 8px 10px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 500; font-size: 19px; letter-spacing: -0.4px">Тарас</span><span style="font-size: 14px; line-height: 1.4; color: #6B6B6B">[коротко про Тараса: роль у мандрівці]</span></span>
+</div>
+</div>
+</section>
+
+<section id="crew" style="padding: 64px 0 0; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Їдеш сам, <span style="color: #8A8A8A">повертаєшся з друзями</span></h2>
+<div class="mrow" data-marquee="-1" aria-label="Групові фото з мандрівок" style="display: flex; gap: 8px; padding: 8px 12px 0; overflow-x: auto">
+<sc-for list="{{crew}}" as="c" hint-placeholder-count="3">
+<div style="flex-shrink: 0; width: 270px; height: 360px; border-radius: 26px; overflow: hidden; background: #F4F4F4"><img src="{{c.src}}" alt="{{c.t}}" data-zoom="1" data-cap="" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></div>
+</sc-for>
+</div>
+<section id="reviews" style="padding: 72px 0 0; display: flex; flex-direction: column; gap: 18px">
+<span style="margin: 0 16px; align-self: flex-start; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 14px; background: #F4F4F4">Відгуки</span>
+<h2 style="margin: 0 16px; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px">Що кажуть <span style="color: rgb(138, 138, 138)">після мандрів:</span></h2>
+<div style="position: relative">
+<div class="mrow" ref="{{setRev}}" style="display: flex; gap: 8px; padding: 0 72px 0 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 12px">
+<div style="flex-shrink: 0; scroll-snap-align: start; width: 150px; height: 260px; border-radius: 20px; background: #F4F4F4; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; color: #6B6B6B; padding: 12px; box-sizing: border-box">скрін сторіз з відгуком</div>
+<div style="flex-shrink: 0; scroll-snap-align: start; width: 150px; height: 260px; border-radius: 20px; background: #F4F4F4; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; color: #6B6B6B; padding: 12px; box-sizing: border-box">скрін переписки</div>
+<div style="flex-shrink: 0; scroll-snap-align: start; width: 150px; height: 260px; border-radius: 20px; background: #F4F4F4; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; color: #6B6B6B; padding: 12px; box-sizing: border-box">скрін сторіз з відгуком</div>
+<div style="flex-shrink: 0; scroll-snap-align: start; width: 150px; height: 260px; border-radius: 20px; background: #F4F4F4; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; color: #6B6B6B; padding: 12px; box-sizing: border-box">скрін переписки</div>
+<div style="flex-shrink: 0; scroll-snap-align: start; width: 150px; height: 260px; border-radius: 20px; background: #F4F4F4; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; color: #6B6B6B; padding: 12px; box-sizing: border-box">скрін сторіз з відгуком</div>
+</div>
+<div aria-hidden="true" style="position: absolute; top: 0; right: 0; width: 96px; height: 260px; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, #FFFFFF 60%); pointer-events: none"></div>
+<button aria-label="Наступні відгуки" onClick="{{revNext}}" style="position: absolute; top: 108px; right: 12px; width: 44px; height: 44px; border-radius: 22px; border: none; background: #111111; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</button>
+</div>
+</section></section>
+
+
+
+<section id="faq" style="padding: 64px 16px 0; display: flex; flex-direction: column">
+<h2 style="margin: 0 0 12px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Питання</h2>
+<sc-for list="{{faq}}" as="f" hint-placeholder-count="4">
+<div style="border-bottom: 1px solid #ECECEC">
+<button onClick="{{f.toggle}}" aria-expanded="{{f.open}}" style="width: 100%; min-height: 64px; border: none; background: none; padding: 16px 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; text-align: left; font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 500; letter-spacing: -0.3px; color: #111111; cursor: pointer">{{f.q}}
+<span style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 16px; background: #F4F4F4; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 400; color: #111111">{{f.sign}}</span>
+</button>
+<sc-if value="{{f.open}}" hint-placeholder-val="{{false}}">
+<p style="margin: 0 0 18px; font-size: 16px; line-height: 1.5; color: #555555">[відповідь]</p>
+</sc-if>
+</div>
+</sc-for>
+</section>
+
+<section style="margin: 56px 12px 0; padding: 32px 20px 20px; background: {{acc}}; color: {{accInk}}; border-radius: 32px; display: flex; flex-direction: column; gap: 22px">
+<h2 style="margin: 0; font-weight: 500; font-size: 36px; line-height: 1.04; letter-spacing: -1.5px">Готовий до наступної пригоди?</h2>
+<a href="#tours" style="text-decoration: none; height: 60px; padding: 0 8px 0 22px; border-radius: 30px; background: #FFFFFF; color: #111111; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between">Обрати мандрівку<span style="width: 44px; height: 44px; border-radius: 22px; background: #111111; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></span></a>
+</section>
+
+<footer style="padding: 36px 16px 40px; display: flex; flex-direction: column; gap: 16px; font-size: 15px">
+<span style="font-weight: 600; font-size: 19px; letter-spacing: -0.6px">tvoi<span style="color: {{acc}}">.</span>mandry</span>
+<span style="display: flex; gap: 20px"><a href="https://instagram.com/tvoi.mandry" style="color: #111111">Instagram</a><a href="https://t.me/" style="color: #111111">Telegram</a><a href="mailto:" style="color: #111111">Пошта</a></span>
+<span style="display: flex; gap: 16px; font-size: 13px"><a href="LegalV3.dc.html" style="color: #8A8A8A">Договір-оферта</a><a href="LegalV3.dc.html" style="color: #8A8A8A">Конфіденційність</a></span>
+</footer>
+
+</div></template>
+<template id="tpl-TourV4"><div class="page" style="width: 100%; min-height: 100dvh; padding-bottom: 104px; box-sizing: border-box; background: #FFFFFF; font-family: 'Inter Tight', system-ui, sans-serif; color: #111111; display: flex; flex-direction: column; position: relative; overflow: hidden">
+
+<section style="position: relative; height: 560px; overflow: hidden; background: #26313B; border-radius: 0 0 32px 32px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px">
+<sc-if value="{{isDra}}" hint-placeholder-val="{{true}}"><img alt="Стежка на Драгобраті" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 55.4699% 100%; " src="img/crop_04284121_67236.jpg"></sc-if><sc-if value="{{notDra}}" hint-placeholder-val="{{false}}"><img alt="{{name}}" src="{{heroImg}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover"></sc-if>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 130px; background: linear-gradient(180deg, rgba(10,14,18,0.4) 0%, rgba(10,14,18,0) 100%)"></div>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 240px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.5) 50%, rgba(10,14,18,0.78) 100%)"></div>
+<header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 16px">
+<a href="MainV4.dc.html" aria-label="Назад до мандрівок" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<button aria-label="Поділитися туром" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M7 9l5-5 5 5M5 14v5h14v-5"></path></svg></button>
+</header>
+<div style="position: absolute; left: 20px; right: 20px; bottom: 26px; display: flex; flex-direction: column; gap: 8px; color: #FFFFFF">
+<span style="font-size: 16px; font-weight: 500; color: rgba(255,255,255,0.8)">{{season}}</span>
+<h1 style="margin: 0; font-weight: 500; font-size: 42px; line-height: 1; letter-spacing: -1.8px">{{title4}}</h1>
+</div>
+</section>
+<section aria-label="Про тур" style="box-sizing: border-box; padding: 32px 0 0; display: flex; flex-direction: column; gap: 20px">
+
+<p style="margin: 0 16px; font-weight: 500; font-size: 26px; line-height: 1.2; letter-spacing: -0.8px">Одне з найкрасивіших місць Карпат. <span style="color: #8A8A8A">Краєвиди на 360° і всі найвищі вершини перед тобою.</span></p><div style="margin: 0 12px; border: 1px solid #ECECEC; border-radius: 26px; padding: 4px 16px; background: #FFFFFF">
+<sc-if value="{{isDra}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 22px 0;">
+<span style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 18px; background: #F4F4F4; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg></span>
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 13px; color: #8A8A8A">Місце збору</span><span style="font-weight: 500; font-size: 17px; line-height: 1.3">Ясіня, залізничний вокзал</span><span style="font-size: 13px; line-height: 1.45; color: #6B6B6B">Сюди є прямий потяг зі Львова, Києва, Тернополя та Франківська. З квитками допоможемо.</span></span>
+</div>
+</sc-if>
+<div style="{{groupRow}}">
+<span style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 18px; background: #F4F4F4; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"></circle><path d="M3 19c.6-3.2 3-5 6-5s5.4 1.8 6 5"></path><path d="M16 4.6a3 3 0 0 1 0 5.8M18 14.2c1.7.6 2.7 2.2 3 4.8"></path></svg></span>
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 13px; color: #8A8A8A">Група</span><span style="font-weight: 500; font-size: 17px; line-height: 1.3">до 20 учасників</span><span style="font-size: 13px; line-height: 1.45; color: #6B6B6B">+ команда з 2 осіб</span></span>
+</div>
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 22px 0; border-top: 1px solid #F0F0F0;">
+<span style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 18px; background: #F4F4F4; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="3"></rect><path d="M3 10h18M16 14.5h2"></path></svg></span>
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 13px; color: #8A8A8A">Вартість</span><span style="font-weight: 500; font-size: 17px; line-height: 1.3">{{priceLabel}}</span><span style="font-size: 13px; line-height: 1.45; color: #6B6B6B">завдаток 50%</span></span>
+</div>
+</div>
+
+<sc-if value="{{isDra}}" hint-placeholder-val="{{true}}">
+
+</sc-if>
+</section>
+
+<section id="when" style="margin: 36px 0 0; padding: 18px 16px 16px; min-height: 560px; box-sizing: border-box; border-radius: 0; display: flex; flex-direction: column; gap: 16px; position: relative; z-index: {{whenZ}}; color: #FFFFFF; height: 560px">
+<div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 0; overflow: hidden; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; background: #FFFFFF">
+<img src="img/50660d63b464b30e0adad8ed87ba1242.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover">
+<img src="img/0567fee2bd71b742446b0b6a95b4a33b.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover">
+<img src="img/f833908b1249bfdfd3c5f5afdff404e4.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover">
+<div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,14,18,0.35) 0%, rgba(10,14,18,0.2) 35%, rgba(10,14,18,0.8) 100%)"></div>
+</div>
+<div style="position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); text-align: center; font-size: 14px; font-weight: 600; letter-spacing: 0.2px; color: #FFFFFF"><span>Весна</span><span>Літо</span><span>Осінь</span></div>
+<div style="flex: 1"></div>
+<div style="position: relative; display: flex; flex-direction: column; gap: 8px; padding: 0 6px">
+<h2 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px; color: #FFFFFF">Коли їдемо <span style="color: rgba(255,255,255,0.7)">{{whereTo}}?</span></h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.45; color: rgba(255,255,255,0.85)">Весна, літо чи осінь: обери свій сезон і дату.</p>
+</div>
+<button onClick="{{openSheet}}" style="position: relative; min-height: 76px; border: none; border-radius: 22px; padding: 12px 12px 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; font-family: 'Inter Tight', sans-serif; color: #111111; cursor: pointer; background-color: #FFFFFF">
+<span style="display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 600; font-size: 20px; letter-spacing: -0.4px">{{selLabel}}</span><span style="font-size: 14px; color: #6B6B6B">{{selSeats}}</span></span>
+<span style="height: 44px; padding: 0 16px; border-radius: 22px; background: #111111; color: #FFFFFF; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 6px; white-space: nowrap">Інші дати<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+</button>
+<sc-if value="{{sheet}}" hint-placeholder-val="{{false}}">
+<div role="dialog" aria-label="Усі дати" style="color: #111111; z-index: 2; position: absolute; left: 0; right: 0; top: 0; background: #FFFFFF; border-radius: 32px; padding: 22px 12px 12px; box-shadow: 0 30px 80px rgba(17,17,17,0.28); display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 0 4px 0 8px"><span style="font-weight: 500; font-size: 26px; letter-spacing: -0.8px">Усі дати</span><button onClick="{{closeSheet}}" aria-label="Закрити" style="width: 44px; height: 44px; border-radius: 22px; border: none; background: #F4F4F4; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{dates}}" as="d" hint-placeholder-count="4">
+<div style="{{d.rowStyle}}">
+<button onClick="{{d.pick}}" aria-pressed="{{d.on}}" style="flex: 1; min-height: 68px; border: none; background: none; padding: 10px 0 10px 18px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; font-family: 'Inter Tight', sans-serif; color: inherit; cursor: pointer">
+<span style="font-weight: 500; font-size: 18px; letter-spacing: -0.3px">{{d.label}}</span>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; opacity: 0.75"><span style="{{d.dotStyle}}"></span>{{d.seats}}</span>
+</button>
+<sc-if value="{{d.sold}}" hint-placeholder-val="{{false}}">
+<button onClick="{{d.wait}}" style="margin-right: 10px; height: 40px; padding: 0 14px; border-radius: 20px; border: 1px solid #CFCFCF; background: #FFFFFF; font-family: 'Inter Tight', sans-serif; font-size: 13px; font-weight: 500; color: #111111; cursor: pointer">{{d.waitLabel}}</button>
+</sc-if>
+<sc-if value="{{d.open}}" hint-placeholder-val="{{true}}">
+<span style="padding-right: 18px; font-weight: 600; font-size: 16px">{{priceLabel}}</span>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+</section>
+
+<sc-if value="{{isDra}}" hint-placeholder-val="{{true}}">
+<section id="program" style="padding: 56px 16px 0; display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Програма <span style="color: #8A8A8A">по днях</span></h2>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="3">
+<div style="padding-bottom: 16px; display: flex; flex-direction: column">
+<div style="background: #F4F4F4; border-radius: 26px; padding: 8px; display: flex; flex-direction: column">
+<div style="position: relative; height: 210px; border-radius: 20px; overflow: hidden"><img src="{{d.a}}" alt="{{d.title}}" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"><span style="position: absolute; top: 12px; left: 12px; height: 34px; padding: 0 14px; border-radius: 17px; background: #FFFFFF; color: #111111; font-weight: 600; font-size: 15px; display: flex; align-items: center; pointer-events: none">День {{d.n}}</span></div>
+<button onClick="{{d.toggle}}" aria-expanded="{{d.open}}" style="border: none; background: none; padding: 14px 8px 8px; display: flex; flex-direction: column; align-items: stretch; gap: 8px; text-align: left; font-family: 'Inter Tight', sans-serif; color: #111111; cursor: pointer">
+<span style="font-weight: 500; font-size: 20px; line-height: 1.2; letter-spacing: -0.5px">{{d.title}}</span>
+<span style="{{d.ctaStyle}}">{{d.cta}}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{d.arrow}}"></path></svg></span>
+</button>
+<sc-if value="{{d.open}}" hint-placeholder-val="{{false}}">
+<div style="padding: 2px 8px 12px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 15px; color: #6B6B6B">{{d.meta}}</span>
+<sc-for list="{{d.text}}" as="p" hint-placeholder-count="2"><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #333333">{{p.t}}</p></sc-for>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+<sc-if value="{{notDra}}" hint-placeholder-val="{{false}}">
+<section id="program" style="padding: 56px 16px 0; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Програма <span style="color: #8A8A8A">по днях</span></h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #444444">Скоро додамо сюди. Поки напиши нам, і ми розповімо про маршрут і житло.</p>
+<a href="https://ig.me/m/tvoi.mandry" style="align-self: flex-start; text-decoration: none; height: 48px; padding: 0 20px; border-radius: 24px; background: #111111; color: #FFFFFF; font-weight: 500; font-size: 15px; display: flex; align-items: center">Написати в Direct</a>
+</section>
+</sc-if>
+
+
+
+
+
+<section style="margin-top: 36px; height: 560px; box-sizing: border-box; padding: 0 16px; display: flex; flex-direction: column; gap: 14px">
+
+<h2 style="margin: 0; font-weight: 500; font-size: 30px; line-height: 1.05; letter-spacing: -1.2px">Як виглядає <span style="color: #8A8A8A">{{videoT}}</span></h2>
+<div style="position: relative; flex: 1; min-height: 0; border-radius: 26px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #26313B">
+<img src="img/b4f8f75fd03c9e17f099864d4f7ce174.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 160px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.55) 100%)"></div>
+<button aria-label="Відтворити відео зі звуком" style="position: relative; width: 76px; height: 76px; border-radius: 38px; border: none; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="#111111" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+</button>
+<span style="position: absolute; left: 16px; bottom: 16px; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: #FFFFFF; padding: 8px 12px; border-radius: 16px; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.4)">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"></path><path d="M16.5 8.5a5 5 0 0 1 0 7"></path></svg>Зі звуком</span>
+</div>
+</section><section id="incl" style="margin: 36px 0 0; min-height: 560px; box-sizing: border-box; padding: 36px 16px 28px; background: #111111; color: #FFFFFF; border-radius: 0px; display: flex; flex-direction: column; justify-content: center; gap: 28px">
+
+<h2 style="margin: 0; font-weight: 500; font-size: 30px; line-height: 1.05; letter-spacing: -1.2px">Що входить у <span style="color: {{acc}}">{{priceLabel}}</span></h2><div style="display: flex; flex-direction: column; gap: 16px">
+<sc-for list="{{incl}}" as="i" hint-placeholder-count="10">
+<div style="display: flex; align-items: flex-start; gap: 12px">
+<span style="width: 24px; height: 24px; flex-shrink: 0; border-radius: 12px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>
+</span>
+<span style="font-size: 15px; line-height: 1.4">{{i.t}}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="background: #1E1E1E; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 13px; color: #9A9A9A">Не входить у вартість</span>
+<sc-for list="{{excl}}" as="x" hint-placeholder-count="4">
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px; line-height: 1.4">
+<span style="color: #E6E6E6">{{x.t}}</span>
+<span style="color: #9A9A9A; white-space: nowrap">{{x.p}}</span>
+</div>
+</sc-for>
+</div>
+</section><section id="faq" style="padding: 56px 16px 0; display: flex; flex-direction: column">
+<h2 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px; margin: 0 0 12px">Відповіді на питання:</h2>
+<sc-for list="{{faq}}" as="f" hint-placeholder-count="5">
+<div style="border-bottom: 1px solid #ECECEC">
+<button onClick="{{f.toggle}}" aria-expanded="{{f.open}}" style="width: 100%; min-height: 64px; border: none; background: none; padding: 16px 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; text-align: left; font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 500; letter-spacing: -0.3px; color: #111111; cursor: pointer">{{f.q}}
+<span style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 16px; background: #F4F4F4; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 400">{{f.sign}}</span>
+</button>
+<sc-if value="{{f.open}}" hint-placeholder-val="{{false}}">
+<p style="margin: 0 0 18px; font-size: 16px; line-height: 1.5; color: #555555">{{f.a}}</p>
+</sc-if>
+</div>
+</sc-for>
+</section>
+
+<section style="margin: 56px 12px 0; padding: 32px 20px 20px; background: #F4F4F4; border-radius: 32px; display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Готовий(а) <span style="color: #8A8A8A">до пригоди?</span></h2>
+<a href="BookingV4.dc.html" data-tour="{{tid}}" data-d="{{dsel}}" style="text-decoration: none; height: 60px; border-radius: 30px; background: {{acc}}; color: {{accInk}}; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 22px">Забронювати місце<span style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></span></a>
+<a href="https://ig.me/m/tvoi.mandry" style="align-self: center; font-size: 15px; font-weight: 500; color: #111111">Або напиши нам у Direct</a>
+</section>
+
+<div style="height: 140px"></div>
+
+<sc-if value="{{sheet}}" hint-placeholder-val="{{false}}">
+<div onClick="{{closeSheet}}" aria-hidden="true" style="position: absolute; inset: 0; z-index: 60; background: rgba(17,17,17,0.35); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px)"></div>
+</sc-if>
+
+<div aria-hidden="true" style="position: fixed; z-index: 49; left: 50%; transform: translateX(-50%); width: min(100vw, 430px); bottom: 0; height: 120px; background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.85) 60%, #FFFFFF 100%); pointer-events: none"></div>
+<div style="position: fixed; z-index: 50; left: 50%; transform: translateX(-50%); width: calc(min(100vw, 430px) - 32px); box-sizing: border-box; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: #111111; border-radius: 32px; padding: 6px 6px 6px 18px; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 0 10px 30px rgba(17,17,17,0.22), 0 2px 6px rgba(17,17,17,0.12)">
+<span style="display: flex; flex-direction: column; gap: 2px; flex: 1 1 auto; min-width: 0">
+<span style="font-size: 12px; color: #A3A3A3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{selLabel}}</span>
+<span style="font-weight: 600; font-size: 18px; color: #FFFFFF; white-space: nowrap">{{priceLabel}}</span>
+</span>
+<a href="BookingV4.dc.html" data-tour="{{tid}}" data-d="{{dsel}}" style="text-decoration: none; flex-shrink: 0; white-space: nowrap; height: 52px; padding: 0 6px 0 16px; gap: 10px; border-radius: 26px; background: {{acc}}; color: {{accInk}}; font-weight: 600; font-size: 15px; display: flex; align-items: center">Забронювати
+<span style="width: 40px; height: 40px; border-radius: 20px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+</span>
+</a>
+</div>
+
+</div></template>
+<template id="tpl-BookingV4"><div style="width: 100%; min-height: 100dvh; box-sizing: border-box; background: #FFFFFF; font-family: 'Inter Tight', system-ui, sans-serif; color: #111111; display: flex; flex-direction: column; padding: 16px 16px 24px; overflow: hidden">
+
+<sc-if value="{{showTop}}" hint-placeholder-val="{{true}}">
+<header style="display: flex; align-items: center; gap: 14px; height: 44px">
+<sc-if value="{{firstStep}}" hint-placeholder-val="{{true}}">
+<a href="TourV4.dc.html" data-tour="{{tid}}" data-d="{{date}}" aria-label="Назад до туру" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; background: #F4F4F4; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a>
+</sc-if>
+<sc-if value="{{laterStep}}" hint-placeholder-val="{{false}}">
+<button onClick="{{back}}" aria-label="Попередній крок" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; border: none; background: #F4F4F4; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+</sc-if>
+<div style="flex: 1; display: flex; gap: 6px" aria-hidden="true">
+<sc-for list="{{bars}}" as="b" hint-placeholder-count="3"><span style="{{b.style}}"></span></sc-for>
+</div>
+<span style="font-size: 15px; font-weight: 600; color: #6B6B6B; min-width: 30px; text-align: right">{{step}}/3</span>
+</header>
+</sc-if>
+
+<sc-if value="{{s1}}" hint-placeholder-val="{{true}}">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 18px; padding-top: 26px; min-height: 0">
+<h1 style="margin: 0; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px">Твоя мандрівка</h1>
+<div style="background: #111111; color: #FFFFFF; border-radius: 26px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-weight: 600; font-size: 17px; letter-spacing: -0.5px">tvoi<span style="color: {{acc}}">.</span>mandry</span><span style="font-size: 12px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: #8A8A8A">посадковий</span></div>
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 12px">
+<span style="font-weight: 600; font-size: 32px; letter-spacing: -1.2px; line-height: 1">{{name}}</span>
+<span style="font-size: 15px; font-weight: 500; color: #C8C8C8; white-space: nowrap">3 дні · 2 ночі</span>
+</div>
+<div aria-hidden="true" style="position: relative; margin: 0 -20px; border-top: 2px dashed #3A3A3A"><span style="position: absolute; left: -13px; top: -14px; width: 26px; height: 26px; border-radius: 13px; background: #FFFFFF"></span><span style="position: absolute; right: -13px; top: -14px; width: 26px; height: 26px; border-radius: 13px; background: #FFFFFF"></span></div>
+<div style="display: flex; justify-content: space-between; align-items: flex-end"><span style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: #8A8A8A">Дата</span><span style="font-weight: 600; font-size: 22px; letter-spacing: -0.5px">{{dateLabel}}</span></span><span style="display: flex; flex-direction: column; gap: 6px; align-items: flex-end"><span style="font-size: 12px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: #8A8A8A">Разом</span><span style="font-weight: 600; font-size: 22px; letter-spacing: -0.5px; color: {{acc}}">{{total}}</span></span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 16px; font-weight: 600">Інша дата?</span>
+<div class="mrow" ref="{{setRow}}" style="display: flex; gap: 6px; overflow-x: auto; margin: 0 -16px; padding: 0 16px">
+<sc-for list="{{dates}}" as="d" hint-placeholder-count="5"><button onClick="{{d.pick}}" aria-pressed="{{d.on}}" style="{{d.style}}">{{d.label}}</button></sc-for>
+</div>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; background: #F4F4F4; border-radius: 22px; padding: 10px 10px 10px 18px">
+<span style="font-size: 17px; font-weight: 500">Кількість місць</span>
+<span style="display: flex; align-items: center; gap: 12px">
+<button onClick="{{dec}}" aria-label="Менше людей" style="width: 44px; height: 44px; border-radius: 22px; border: none; background: #FFFFFF; font-size: 22px; color: #111111; cursor: pointer">–</button>
+<span style="font-weight: 600; font-size: 20px; min-width: 18px; text-align: center">{{people}}</span>
+<button onClick="{{inc}}" aria-label="Більше людей" style="width: 44px; height: 44px; border-radius: 22px; border: none; background: #FFFFFF; font-size: 22px; color: #111111; cursor: pointer">+</button>
+</span>
+</div>
+<div style="flex: 1"></div>
+<button onClick="{{next}}" style="height: 60px; border-radius: 30px; border: none; background: {{acc}}; color: {{accInk}}; font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 22px; cursor: pointer; text-decoration: none">Так, це моя дата<span style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{s2}}" hint-placeholder-val="{{false}}">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 18px; padding-top: 26px">
+<h1 style="margin: 0; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px">Як тобі зручніше?</h1>
+<span style="font-size: 16px; color: #6B6B6B">{{summary}}</span>
+<div role="radiogroup" aria-label="Спосіб бронювання" style="display: flex; flex-direction: column; gap: 10px; margin-top: 6px">
+<sc-for list="{{ways}}" as="w" hint-placeholder-count="3">
+<button role="radio" aria-checked="{{w.on}}" onClick="{{w.pick}}" style="min-height: 92px; border-radius: 24px; border: none; background: #F4F4F4; padding: 16px 18px; display: flex; align-items: center; gap: 16px; text-align: left; font-family: 'Inter Tight', sans-serif; color: #111111; cursor: pointer">
+<span style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{w.icon}}"></path></svg></span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 600; font-size: 18px; letter-spacing: -0.3px">{{w.title}}</span><span style="font-size: 15px; color: #6B6B6B">{{w.sub}}</span></span>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{s3form}}" hint-placeholder-val="{{false}}">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 14px; padding-top: 26px">
+<h1 style="margin: 0; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px">Твої контакти</h1>
+<span style="font-size: 16px; color: #6B6B6B">{{summary}}</span>
+<input type="text" placeholder="Ім'я" aria-label="Ім'я" style="height: 56px; border-radius: 18px; border: 1px solid #E2E2E2; background: #FFFFFF; padding: 0 16px; font-family: 'Inter Tight', sans-serif; font-size: 17px; color: #111111; outline: none">
+<input type="tel" placeholder="Телефон" aria-label="Телефон" style="height: 56px; border-radius: 18px; border: 1px solid #E2E2E2; background: #FFFFFF; padding: 0 16px; font-family: 'Inter Tight', sans-serif; font-size: 17px; color: #111111; outline: none">
+<input type="text" placeholder="Telegram, необов'язково" aria-label="Telegram" style="height: 56px; border-radius: 18px; border: 1px solid #E2E2E2; background: #FFFFFF; padding: 0 16px; font-family: 'Inter Tight', sans-serif; font-size: 17px; color: #111111; outline: none">
+<div style="background: #F4F4F4; border-radius: 22px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; font-size: 16px">
+<span style="display: flex; justify-content: space-between"><span>Сьогодні</span><span style="font-weight: 600">0 грн</span></span>
+<span style="display: flex; justify-content: space-between"><span>Завдаток після підтвердження</span><span style="font-weight: 600">{{depo}}</span></span>
+</div>
+<div style="flex: 1"></div>
+<button onClick="{{confirm}}" style="height: 60px; border-radius: 30px; border: none; background: {{acc}}; color: {{accInk}}; font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 22px; cursor: pointer; text-decoration: none">Підтвердити бронювання<span style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></button>
+<span style="font-size: 13px; line-height: 1.4; color: #8A8A8A; text-align: center">Натискаючи, погоджуєшся з <a href="LegalV3.dc.html" style="color: #6B6B6B">умовами бронювання</a></span>
+</div>
+</sc-if>
+
+<sc-if value="{{s3tg}}" hint-placeholder-val="{{false}}">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 16px; padding-top: 26px">
+<h1 style="margin: 0; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px">Бронюємо в Telegram</h1>
+<span style="font-size: 17px; line-height: 1.5; color: #444444">Бот уже знає тур, дату й кількість людей. Підтвердиш контакт, і він надішле реквізити для завдатку.</span>
+<div style="flex: 1"></div>
+<a href="https://t.me/" style="height: 60px; border-radius: 30px; border: none; background: {{acc}}; color: {{accInk}}; font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 22px; cursor: pointer; text-decoration: none">Відкрити Telegram-бот<span style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+</div>
+</sc-if>
+
+<sc-if value="{{s3ig}}" hint-placeholder-val="{{false}}">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 16px; padding-top: 26px">
+<h1 style="margin: 0; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px">Напиши менеджеру</h1>
+<span style="font-size: 17px; line-height: 1.5; color: #444444">Напиши, що хочеш на {{name}}, {{dateLabel}}. Менеджер відповість і забронює місце.</span>
+<div style="flex: 1"></div>
+<a href="https://ig.me/m/tvoi.mandry" style="height: 60px; border-radius: 30px; border: none; background: {{acc}}; color: {{accInk}}; font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 22px; cursor: pointer; text-decoration: none">Написати в Instagram<span style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+<a href="https://t.me/" style="height: 56px; border-radius: 28px; background: #F4F4F4; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; text-decoration: none">Або в Telegram</a>
+</div>
+</sc-if>
+
+<sc-if value="{{s4}}" hint-placeholder-val="{{false}}">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 18px; padding-top: 40px">
+<span style="width: 72px; height: 72px; border-radius: 36px; background: {{acc}}; display: flex; align-items: center; justify-content: center"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{accInk}}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></span>
+<h1 style="margin: 0; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px; font-size: 38px">Місце <span style="color: #8A8A8A">за тобою!</span></h1>
+<span style="font-size: 17px; color: #444444">{{summary}}</span>
+<div style="display: flex; flex-direction: column; margin-top: 6px">
+<span style="font-size: 16px; font-weight: 600; margin-bottom: 4px">Що буде далі</span>
+<sc-for list="{{after}}" as="a" hint-placeholder-count="3">
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #ECECEC">
+<span style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 16px; background: #111111; color: #FFFFFF; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center">{{a.n}}</span>
+<span style="font-size: 16px; line-height: 1.45; padding-top: 5px">{{a.t}}</span>
+</div>
+</sc-for>
+</div>
+<div style="flex: 1"></div>
+<a href="https://t.me/" style="height: 60px; border-radius: 30px; border: none; background: {{acc}}; color: {{accInk}}; font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 22px; cursor: pointer; text-decoration: none">Перейти в Telegram<span style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+<a href="MainV4.dc.html" style="align-self: center; font-size: 15px; font-weight: 500; color: #111111">На головну</a>
+</div>
+</sc-if>
+
+</div></template>
+<template id="tpl-MenuV3"><div class="page" style="width: 100%; min-height: 100dvh; box-sizing: border-box; background: #FFFFFF; font-family: 'Inter Tight', system-ui, sans-serif; color: #111111; display: flex; flex-direction: column; overflow: hidden">
+
+<header style="display: flex; align-items: center; justify-content: space-between; padding: 16px">
+<span style="font-weight: 600; font-size: 19px; letter-spacing: -0.6px">tvoi<span style="color: {{acc}}">.</span>mandry</span>
+<a href="MainV3.dc.html" aria-label="Закрити меню" style="width: 44px; height: 44px; border-radius: 22px; background: #F4F4F4; display: flex; align-items: center; justify-content: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</a>
+</header>
+
+<nav aria-label="Головне меню" style="margin: 12px 16px 0; display: flex; flex-direction: column">
+<sc-for list="{{links}}" as="l" hint-placeholder-count="5">
+<a href="{{l.href}}" style="text-decoration: none; display: flex; align-items: center; justify-content: space-between; height: 64px; border-bottom: 1px solid #ECECEC; font-size: 30px; font-weight: 500; letter-spacing: -1.1px">
+<span>{{l.label}}</span>
+<span aria-hidden="true" style="width: 36px; height: 36px; border-radius: 18px; background: #F4F4F4; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</span>
+</a>
+</sc-for>
+</nav>
+
+<section style="margin: 28px 16px 0; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 500; color: #6B6B6B">Найближча мандрівка</span>
+<a href="TourV3.dc.html" data-tour="dra" data-d="4" style="text-decoration: none; display: flex; gap: 12px; align-items: center; padding: 8px; border-radius: 24px; background: #F4F4F4">
+<img alt="Драгобрат восени" src="img/0567fee2bd71b742446b0b6a95b4a33b.jpg" style="width: 76px; height: 76px; border-radius: 18px; object-fit: cover; flex-shrink: 0">
+<span style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0">
+<span style="font-size: 17px; font-weight: 500; letter-spacing: -0.3px">Драгобрат</span>
+<span style="font-size: 13px; color: #6B6B6B">16–18 жовтня · 6 950 грн</span>
+</span>
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 20px; background: #111111; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 4px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</span>
+</a>
+</section>
+
+<div style="flex: 1 1 auto"></div>
+
+<section style="padding: 0 16px 28px; display: flex; flex-direction: column; gap: 6px">
+<a href="MainV3.dc.html#tours" style="text-decoration: none; height: 60px; border-radius: 30px; background: {{acc}}; color: {{accInk}}; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 22px">Обрати мандрівку
+<span style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+</span>
+</a>
+<span style="margin: 14px 4px 4px; font-size: 13px; font-weight: 500; color: #6B6B6B">Написати нам</span>
+<div style="display: flex; gap: 6px">
+<a href="https://ig.me/m/tvoi.mandry" style="flex: 1; text-decoration: none; height: 48px; border-radius: 24px; background: #F4F4F4; font-weight: 500; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 6px">Instagram
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8A8A8A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+</a>
+<a href="https://t.me/" style="flex: 1; text-decoration: none; height: 48px; border-radius: 24px; background: #F4F4F4; font-weight: 500; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 6px">Telegram
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8A8A8A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+</a>
+<a href="mailto:" style="flex: 1; text-decoration: none; height: 48px; border-radius: 24px; background: #F4F4F4; font-weight: 500; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 6px">Пошта
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8A8A8A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+</a>
+</div>
+</section>
+
+</div></template>
+<template id="tpl-NotFoundV3"><div class="page" style="width: 100%; min-height: 100dvh; box-sizing: border-box; background: #FFFFFF; font-family: 'Inter Tight', system-ui, sans-serif; color: #111111; display: flex; flex-direction: column; overflow: hidden">
+
+<header style="display: flex; align-items: center; justify-content: space-between; padding: 16px">
+<a href="MainV3.dc.html" style="text-decoration: none; font-weight: 600; font-size: 19px; letter-spacing: -0.6px">tvoi<span style="color: {{acc}}">.</span>mandry</a>
+<a href="MenuV3.dc.html" aria-label="Меню" style="width: 44px; height: 44px; border-radius: 22px; background: #F4F4F4; display: flex; align-items: center; justify-content: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 9h14M5 15h14"></path></svg>
+</a>
+</header>
+
+<div style="position: relative; margin: 8px 12px 0; height: 380px; border-radius: 28px; overflow: hidden; background: #1E2830">
+<img alt="Туман над карпатським хребтом" src="img/b4f8f75fd03c9e17f099864d4f7ce174.jpg" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,14,18,0.15) 0%, rgba(10,14,18,0.55) 100%)"></div>
+<span style="position: absolute; left: 20px; bottom: 12px; font-size: 120px; font-weight: 500; letter-spacing: -6px; line-height: 1; color: #FFFFFF">404</span>
+</div>
+
+<section style="padding: 28px 16px 0; display: flex; flex-direction: column; gap: 12px">
+<h1 style="margin: 0; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px">Схоже, ця стежка <span style="color: #8A8A8A">нікуди не веде</span></h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #6B6B6B">Сторінку перенесли або тур уже завершився. Повертайся на маршрут: актуальні дати на головній.</p>
+</section>
+
+<div style="flex: 1 1 auto"></div>
+
+<section style="padding: 0 16px 28px; display: flex; flex-direction: column; gap: 6px">
+<a href="MainV3.dc.html#tours" style="text-decoration: none; flex-shrink: 0; height: 60px; padding: 0 8px 0 22px; gap: 12px; border-radius: 30px; background: {{acc}}; color: {{accInk}}; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between">Обрати мандрівку
+<span style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+</span>
+</a>
+<a href="MainV3.dc.html" style="text-decoration: none; height: 52px; border-radius: 26px; background: #F4F4F4; font-weight: 500; font-size: 15px; display: flex; align-items: center; justify-content: center">На головну</a>
+</section>
+
+</div></template>
+<template id="tpl-LegalV3"><div class="page" style="width: 100%; min-height: 100dvh; box-sizing: border-box; background: #FFFFFF; font-family: 'Inter Tight', system-ui, sans-serif; color: #111111; display: flex; flex-direction: column; overflow: hidden">
+
+<header style="display: flex; align-items: center; justify-content: space-between; padding: 16px">
+<a href="MainV3.dc.html" aria-label="Назад" style="width: 44px; height: 44px; border-radius: 22px; background: #F4F4F4; display: flex; align-items: center; justify-content: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+</a>
+<span style="font-weight: 600; font-size: 19px; letter-spacing: -0.6px">tvoi<span style="color: {{acc}}">.</span>mandry</span>
+<span style="width: 44px"></span>
+</header>
+
+<section style="padding: 12px 16px 0; display: flex; flex-direction: column; gap: 10px">
+<h1 style="margin: 0; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px">{{title}} <span style="color: #8A8A8A">{{titleGray}}</span></h1>
+<span style="font-size: 13px; color: #6B6B6B">Редакція від [дата] · [чорновик, перевірити з юристом]</span>
+</section>
+
+<div role="tablist" aria-label="Документи" style="margin: 20px 12px 0; display: flex; gap: 6px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="2">
+<button role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+</sc-for>
+</div>
+
+<section style="padding: 28px 16px 0; display: flex; flex-direction: column; gap: 24px">
+<sc-for list="{{sections}}" as="s" hint-placeholder-count="8">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0; display: flex; gap: 10px; font-size: 18px; font-weight: 500; letter-spacing: -0.4px"><span style="color: #8A8A8A">{{s.n}}</span>{{s.h}}</h2>
+<p style="margin: 0; font-size: 14px; line-height: 1.55; color: #6B6B6B">{{s.p}}</p>
+</div>
+</sc-for>
+</section>
+
+<div style="flex: 1 1 auto"></div>
+
+<section style="margin: 36px 12px 28px; background: #F4F4F4; border-radius: 26px; padding: 22px 18px 18px; display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 18px; font-weight: 500; letter-spacing: -0.4px">Залишились питання?</span>
+<span style="font-size: 14px; line-height: 1.5; color: #6B6B6B">ФОП [ПІБ], РНОКПП [код]. Відповідаємо протягом дня.</span>
+<div style="display: flex; gap: 6px">
+<a href="https://t.me/" style="flex: 1; text-decoration: none; height: 48px; border-radius: 24px; background: #FFFFFF; font-weight: 500; font-size: 14px; display: flex; align-items: center; justify-content: center">Telegram</a>
+<a href="mailto:" style="flex: 1; text-decoration: none; height: 48px; border-radius: 24px; background: #FFFFFF; font-weight: 500; font-size: 14px; display: flex; align-items: center; justify-content: center">Пошта</a>
+</div>
+</section>
+
+</div></template>
+<script>
+(function(){
+var SCREENS = {};
+class DCLogic {
+  constructor(props){ this.props = props || {}; this.state = {}; }
+  setState(p){ Object.assign(this.state, typeof p === 'function' ? p(this.state) : p); if (this._render) this._render(); }
+}
+window.DCLogic = DCLogic;
+SCREENS["MainV4"] = { props: {"accent": "#F2491D", "heroX": 50, "heroY": 40, "marianX": 50, "marianY": 40, "tarasX": 45, "tarasY": 30}, Cls: (function(){ 
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { month: 'jun', open: -1 };
+  }
+  renderVals() {
+    var self = this;
+    var acc = this.props.accent ?? '#F2491D';
+    var accInk = acc.toUpperCase() === '#7CC8CF' ? '#111111' : '#FFFFFF';
+    var P = this.props;
+    var pos = function (x, y, dx, dy) { return (x ?? dx) + '% ' + (y ?? dy) + '%'; };
+    /*TM-DATA*/ // єдине джерело турів і дат (потім підтягуватиметься з таблиці-адмінки)
+    var TM = {
+      tours: {
+        dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6950, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true },
+        bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false },
+        pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false }
+      },
+      // [тур, місяць, дати, статус ok/few/sold, вільних місць]
+      dates: [
+        ['bak', 'may', '9–11 травня', 'ok', 8], ['pip', 'may', '23–25 травня', 'few', 3],
+        ['pip', 'jun', '6–8 червня', 'sold', 0], ['bak', 'jun', '13–15 червня', 'few', 4], ['dra', 'jun', '27–29 червня', 'ok', 10],
+        ['bak', 'jul', '4–6 липня', 'ok', 9], ['pip', 'jul', '18–20 липня', 'ok', 12],
+        ['dra', 'aug', '8–10 серпня', 'ok', 11], ['bak', 'aug', '22–24 серпня', 'few', 2],
+        ['pip', 'sep', '12–14 вересня', 'ok', 10], ['dra', 'sep', '26–28 вересня', 'ok', 12],
+        ['dra', 'oct', '2–4 жовтня', 'sold', 0], ['dra', 'oct', '16–18 жовтня', 'few', 2], ['dra', 'oct', '30 жовтня – 1 листопада', 'ok', 12],
+        ['dra', 'nov', '6–8 листопада', 'ok', 20]
+      ],
+      fmt: function (n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн'; },
+      plural: function (n, a, b, c) { var m = n % 10, h = n % 100; return (m === 1 && h !== 11) ? a : (m >= 2 && m <= 4 && (h < 12 || h > 14)) ? b : c; },
+      forTour: function (id) { return TM.dates.filter(function (d) { return d[0] === id; }); }
+    };
+    /*TM-DATA-END*/
+    var dot = { ok: '#9A9A9A', few: acc, sold: '#111111' };
+    var labels = [['may', 'Травень'], ['jun', 'Червень'], ['jul', 'Липень'], ['aug', 'Серпень'], ['sep', 'Вересень'], ['oct', 'Жовтень'], ['nov', 'Листопад']];
+    var keys = labels.map(function (l) { return l[0]; });
+    var idx = keys.indexOf(self.state.month);
+    var go = function (i) {
+      if (i < 0 || i >= keys.length) return;
+      self.setState({ month: keys[i] });
+      try {
+        var chips = self.row ? self.row.querySelectorAll('[role=tab]') : [];
+        if (chips[i]) chips[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      } catch (e) {}
+    };
+    var months = labels.map(function (l, i) {
+      var on = self.state.month === l[0];
+      return {
+        on: on,
+        label: l[1],
+        pick: function () { go(i); },
+        chipStyle: 'flex-shrink:0;height:44px;padding:0 18px;border-radius:22px;border:none;font-family:\'Inter Tight\',sans-serif;font-weight:500;font-size:14px;cursor:pointer;' +
+          (on ? 'background:#FFFFFF;color:#111111;' : 'background:#262626;color:#FFFFFF;')
+      };
+    });
+    var tours = TM.dates.filter(function (r) { return r[1] === self.state.month; }).map(function (r) {
+      var d = TM.tours[r[0]], di = TM.forTour(r[0]).indexOf(r);
+      return {
+        id: r[0], di: di, name: d.name, price: TM.fmt(d.price), img: d.img,
+        dates: r[2], seats: r[3] === 'sold' ? 'Sold out' : (r[3] === 'few' ? 'Залишилось ' + r[4] : r[4] + ' ' + TM.plural(r[4], 'місце', 'місця', 'місць')),
+        badgeStyle: 'position:absolute;top:12px;left:12px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:6px 10px;border-radius:14px;background:#FFFFFF;color:#111111;',
+        dotStyle: 'width:7px;height:7px;border-radius:4px;background:' + dot[r[3]] + ';'
+      };
+    });
+    var qs = ['Чи підійду я за фізичною формою?', 'Можна поїхати самому чи самій?', 'Скільки передоплата?', 'Що, якщо я не зможу поїхати?'];
+    var faq = qs.map(function (q, i) {
+      var open = self.state.open === i;
+      return { q: q, open: open, sign: open ? '–' : '+', toggle: function () { self.setState({ open: open ? -1 : i }); } };
+    });
+    return {
+      acc: acc, accInk: accInk, months: months, tours: tours, faq: faq,
+      crew: [
+        ['img/82e11112df62d8a492af97d57507a9d3.jpg', "Кавун на привалі"],
+        ['img/a2ab3b2efdb4dd02befff51497ebca83.jpg', "З камерами в руках"],
+        ['img/760b6c7bb4996a0640c5a872d8370cce.jpg', "Вечір біля ватри"],
+        ['img/fa7c6e21a710a87534cfe3b8b1c95703.jpg', "Купальські вінки"],
+        ['img/21a16c94532b9d3bf7a421357f51d51f.jpg', "Біля обсерваторії на Попі Івані"],
+        ['img/3964b393da24c951a38670f4090ce01c.jpg', "Веселка після дощу"],
+        ['img/e8516124379c23e7f0539e4ee57c6cd6.jpg', "Колядники в карпатському селі"],
+        ['img/2ab1cf11146cdebf04889f05e88bd5cf.jpg', "Під старим деревом"],
+        ['img/6f2ffb47e4633faf433de46d93b4ccd7.jpg', "Спільна вечеря"],
+        ['img/18bd62cad7cf4d3bc97c015a7bdfe536.jpg', "Обід на осінньому хребті"],
+        ['img/6ace0c60fc1ff65e799998fabaed3463.jpg', "Крижаний водоспад"],
+        ['img/84a4efaeaf73d96cd5b9eaf723ad732f.jpg', "Танці на полонині"],
+        ['img/e44c642405b408a7363e791e6eb2435b.jpg', "Разом і в негоду"],
+        ['img/f833908b1249bfdfd3c5f5afdff404e4.jpg', "Захід сонця на хребті"],
+        ['img/0e37070598a5a2093770abeac4f5a8ce.jpg', "Привал у лісі"],
+        ['img/ecfc7c165f94f02e992a9bf67b0bddc0.jpg', "Обід з видом на гори"],
+        ['img/afaa8e99927481d58f341aecec39e2a2.jpg', "Привіт з полонини"],
+        ['img/50660d63b464b30e0adad8ed87ba1242.jpg', "Весняний похід"],
+        ['img/18f58924fb138cad4d45e5dddc24f607.jpg', "На стежці до вершини"],
+        ['img/d88a181ccef18efd6cb064eedff7d8b6.jpg', "Ігри на привалі"],
+        ['img/a2a0328a12e2b6cebf8d9bb4c31ce494.jpg', "Пауза на краєвид"],
+        ['img/eb96729d4801071d461c8a24ccdf348c.jpg', "Осіння компанія"]
+      ].map(function (c) { return { src: c[0], t: c[1] }; }),
+      gal1: ['img/bb1bfe68f1b46587264f6e05fec1816a.jpg', 'img/3970c97d11c8a615ac4152bbf3b5e368.jpg', 'img/3a8acccb1d86964efa0424e937cb3efa.jpg', 'img/b28ce164acaecb3e59802397b05ed4a6.jpg', 'img/d40fe5bc8ef37bf21b6b623c5e9c5d0a.jpg', 'img/db2d276cc70072dbd6da19e423968ae0.jpg', 'img/0162a72961e0d9d24105b20f74f14b01.jpg', 'img/b31769788f0d7134ea08f68490e71f54.jpg', 'img/358e22a072c5c4a13fc82442cae24315.jpg', 'img/36b88bdcc6effca6cf07372da8ed35dc.jpg'].map(function (u) { return { src: u }; }),
+      gal2: ['img/ec185f2539613d429aeb9a63401cbf33.jpg', 'img/7dce63e2dc1ce50a7ca83079ec70ee51.jpg', 'img/9f0ba1369e7172fca8583f6af505d866.jpg', 'img/1bb169d9f42f7f2ca036993067e44e24.jpg', 'img/2e45553731834befd0d33c599761a30b.jpg', 'img/32f921edc94258b6fc08e30972a6a092.jpg', 'img/2bb6757008ba9802c689a6fbc6dc37e5.jpg', 'img/132818aa68f58ab8727c9984ed82102e.jpg', 'img/6a29609d0363694e828a84e8451457ca.jpg'].map(function (u) { return { src: u }; }),
+      heroPos: pos(P.heroX, P.heroY, 50, 40),
+      marianPos: pos(P.marianX, P.marianY, 50, 40),
+      tarasPos: pos(P.tarasX, P.tarasY, 45, 30),
+      hasNext: idx < keys.length - 1,
+      next: function () { go(idx + 1); },
+      setRow: function (el) { self.row = el; },
+      setRev: function (el) { self.rev = el; },
+      revNext: function () { try { if (self.rev) self.rev.scrollBy({ left: 158, behavior: 'smooth' }); } catch (err) {} },
+      tStart: function (e) { try { self.tx = e.touches[0].clientX; self.ty = e.touches[0].clientY; } catch (err) {} },
+      tEnd: function (e) {
+        try {
+          var dx = e.changedTouches[0].clientX - self.tx;
+          var dy = e.changedTouches[0].clientY - self.ty;
+          if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? idx + 1 : idx - 1);
+        } catch (err) {}
+      }
+    };
+  }
+}
+
+ return Component; })() };
+SCREENS["TourV4"] = { props: {"accent": "#F2491D", "heroX": 50, "heroY": 60}, Cls: (function(){ 
+/*TM-DATA*/ // єдине джерело турів і дат (потім підтягуватиметься з таблиці-адмінки)
+var TM = {
+  tours: {
+    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6950, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true },
+    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false },
+    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false }
+  },
+  // [тур, місяць, дати, статус ok/few/sold, вільних місць]
+  dates: [
+    ['bak', 'may', '9–11 травня', 'ok', 8], ['pip', 'may', '23–25 травня', 'few', 3],
+    ['pip', 'jun', '6–8 червня', 'sold', 0], ['bak', 'jun', '13–15 червня', 'few', 4], ['dra', 'jun', '27–29 червня', 'ok', 10],
+    ['bak', 'jul', '4–6 липня', 'ok', 9], ['pip', 'jul', '18–20 липня', 'ok', 12],
+    ['dra', 'aug', '8–10 серпня', 'ok', 11], ['bak', 'aug', '22–24 серпня', 'few', 2],
+    ['pip', 'sep', '12–14 вересня', 'ok', 10], ['dra', 'sep', '26–28 вересня', 'ok', 12],
+    ['dra', 'oct', '2–4 жовтня', 'sold', 0], ['dra', 'oct', '16–18 жовтня', 'few', 2], ['dra', 'oct', '30 жовтня – 1 листопада', 'ok', 12],
+    ['dra', 'nov', '6–8 листопада', 'ok', 20]
+  ],
+  fmt: function (n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн'; },
+  plural: function (n, a, b, c) { var m = n % 10, h = n % 100; return (m === 1 && h !== 11) ? a : (m >= 2 && m <= 4 && (h < 12 || h > 14)) ? b : c; },
+  forTour: function (id) { return TM.dates.filter(function (d) { return d[0] === id; }); }
+};
+/*TM-DATA-END*/
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var id = props && props.tour && TM.tours[props.tour] ? props.tour : 'dra', list = TM.forTour(id), d = props && props.d != null ? +props.d : -1;
+    if (!(d >= 0 && d < list.length) || list[d][3] === 'sold') { d = list.findIndex(function (r) { return r[3] !== 'sold'; }); if (d < 0) d = 0; }
+    this.state = { date: d, open: -1, day: -1, waited: {}, tab: 0 };
+  }
+  renderVals() {
+    var self = this;
+    var P = this.props;
+    var acc = P.accent ?? '#F2491D';
+    var accInk = acc.toUpperCase() === '#7CC8CF' ? '#111111' : '#FFFFFF';
+    var IMG = {
+      bak: 'img/bb85142f4c469e600cd4a53a37804f07.jpg',
+      pip: 'img/efb98218d63a5047618b5502e6704c31.jpg',
+      dra: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg',
+      grp: 'img/b4f8f75fd03c9e17f099864d4f7ce174.jpg'
+    };
+    var TID = P.tour && TM.tours[P.tour] ? P.tour : 'dra', TOUR = TM.tours[TID], isDra = TID === 'dra';
+    var seatsTxt = function (r) { var w = r[4] + ' ' + TM.plural(r[4], 'місце', 'місця', 'місць'); return r[3] === 'sold' ? 'Sold out' : (r[3] === 'few' ? 'Залишилось ' + w : w); };
+    var raw = TM.forTour(TID).map(function (r) { return [r[2], seatsTxt(r), r[3]]; });
+    var dots = { ok: '#9A9A9A', few: acc, sold: '#9A9A9A' };
+    var dates = raw.map(function (r, i) {
+      var sold = r[2] === 'sold';
+      var on = !sold && self.state.date === i;
+      var waited = !!self.state.waited[i];
+      return {
+        label: r[0], seats: sold ? (waited ? 'Ти в листі очікування' : r[1]) : r[1], sold: sold, open: !sold, on: on,
+        pick: function () { if (!sold) self.setState({ date: i, sheet: false }); },
+        wait: function () { var w = Object.assign({}, self.state.waited); w[i] = true; self.setState({ waited: w }); },
+        waitLabel: waited ? 'Готово' : 'Лист очікування',
+        rowStyle: 'display:flex;align-items:center;justify-content:space-between;border-radius:22px;' +
+          (on ? 'background:#111111;color:#FFFFFF;' : 'background:#F4F4F4;color:#111111;') + (sold ? 'color:#8A8A8A;' : ''),
+        dotStyle: 'width:7px;height:7px;border-radius:4px;background:' + (on && r[2] !== 'few' ? '#FFFFFF' : dots[r[2]]) + ';'
+      };
+    });
+    var t = function (arr) { return arr.map(function (s) { return { t: s }; }); };
+    var TABS = [['when', 'Коли'], ['program', 'Програма'], ['incl', 'Що входить'], ['how', 'Як забронювати'], ['faq', 'Питання']];
+    var goTab = function (i, jump) {
+      if (i < 0 || i >= TABS.length) return;
+      self.setState({ tab: i });
+      try {
+        var chips = self.nav ? self.nav.querySelectorAll('a') : [];
+        if (chips[i]) chips[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        if (jump) { var sec = document.getElementById(TABS[i][0]); if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      } catch (e) {}
+    };
+    var dayDefs = [
+      { n: '1', sub: 'п’ятниця', title: 'Підйом на Драгобрат, озеро Івор і Жандарм', meta: 'Легкий день, без довгих маршрутів', a: IMG.dra, b: IMG.grp,
+        locs: ['Ясіня', 'ГАЗ-66, 40–50 хв', 'Озеро Івор', 'г. Жандарм', 'Захід сонця'],
+        text: ['Зранку зустрічаємось на вокзалі в Ясіні й пересідаємо на позашляховик ГАЗ-66. Він за 40–50 хвилин підніме нас на найвисокогірніший курорт України. Розкладаємо речі, снідаємо, знайомимось.',
+          'Далі легка прогулянка до озера Івор під вершиною Жандарм, перекус і підйом на саму вершину з краєвидами на 360°. Захід сонця зустрічаємо на оглядовому майданчику, а ввечері вечеря і вільний час разом.'] },
+      { n: '2', sub: 'субота', title: 'Озера Ворожеска і Герешаска', meta: '≈ 8 км в один бік · неспішний темп', a: IMG.grp, b: IMG.pip,
+        locs: ['Свидовецький хребет', 'Озеро Ворожеска', 'Озеро Герешаска', 'Хатинка з фільму «Довбуш»'],
+        text: ['Мета дня: два найкрасивіші гірські озера Українських Карпат. Виходимо після сніданку, повертаємось увечері. Дорога йде хребтом і не складна, тож краєвиди відкриваються в обидва боки весь шлях.',
+          'Багато знімаємо і тримаємо комфортний для всіх темп. Дорогою назад заходимо в автентичну хатинку, де знімали фільм «Довбуш». Після заходу сонця вільний вечір: чан або баня, настільні ігри, глінтвейн.'] },
+      { n: '3', sub: 'неділя', title: 'Світанок над туманом', meta: 'Світанок, вільний час і дорога додому', a: IMG.pip, b: IMG.dra,
+        locs: ['Світанок над Говерлою', 'Зйомка в лісі', 'Ясіня'],
+        text: ['Починаємо із зустрічі світанку. Схід сонця на Драгобраті це окрема естетика: в долині хвилями пливе туман, а над Говерлою сходить сонце.',
+          'Після сніданку вільний час на прогулянку Драгобратом і маленьку зйомку в лісі. Потім позашляховиком спускаємось у Ясіню до вокзалу. Прощання і завершення мандрівки.'] }
+    ];
+    var days = dayDefs.map(function (d, i) {
+      var open = self.state.day === i;
+      return Object.assign({}, d, {
+        locs: t(d.locs), text: t(d.text), open: open, sign: open ? '–' : '+',
+        cta: open ? 'Згорнути' : 'Детальніше про день',
+        arrow: open ? 'M6 15l6-6 6 6' : 'M6 9l6 6 6-6',
+        ctaStyle: 'margin-top:6px;height:44px;border-radius:22px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;' + (open ? 'background:#FFFFFF;color:#111111;' : 'background:#111111;color:#FFFFFF;'),
+        toggle: function () { self.setState({ day: open ? -1 : i }); },
+        notLast: i < dayDefs.length - 1
+      });
+    });
+    var incl = t((isDra ? ['3 дні / 2 ночі в котеджі'] : []).concat([
+      'Сніданки й вечері, перекус у горах',
+      'Усі переїзди на місці',
+      'Фотосесія для кожного на локаціях',
+      'Фото й відео з поїздки',
+      'Супровід команди 24/7'
+    ]));
+    var excl = [['Квитки на потяг', 'допоможемо з підбором'], ['Чан / сауна, за бажанням', '≈ 400 грн'], ['Обіди', '≈ 350 грн'], ['Власні витрати', '']].map(function (x) { return { t: x[0], p: x[1] }; });
+    var qs = ['Я ніколи не був(ла) в горах. Мені підійде цей тур?', 'Можна їхати самому чи самій?', 'А якщо буде дощ або туман?', 'Це фототур? Мені треба вміти позувати?', 'Що потрібно брати з собою?', 'Що, якщо я передумаю?', 'Де старт туру і як туди дістатися?', 'Що з харчуванням? Чи враховуються особливі побажання?', 'Чи буде вільний час?'];
+    var ANS = {}; ANS[3] = 'Так, більшість наших мандрівок проходять у форматі фототуру, але він не для фотографів. Позувати вміти не треба: можна приїхати з ідеєю образу, і ми допоможемо її втілити на локації, а можна просто йти маршрутом, поки фотограф ловить живі кадри дорогою.';
+    var faq = qs.slice(0, 5).map(function (q, i) {
+      var open = self.state.open === i;
+      return { q: q, a: ANS[i] || '[відповідь]', open: open, sign: open ? '–' : '+', toggle: function () { self.setState({ open: open ? -1 : i }); } };
+    });
+    return {
+      acc: acc, accInk: accInk, dates: dates, days: days, incl: incl, excl: excl, faq: faq,
+      whereTo: { dra: 'на Драгобрат', bak: 'на Бакоту', pip: 'на Піп Іван' }[TID] || TOUR.name,
+      sheet: !!this.state.sheet, whenZ: this.state.sheet ? '61' : 'auto', selSeats: raw[this.state.date][1],
+      openSheet: function () { self.setState({ sheet: true }); }, closeSheet: function () { self.setState({ sheet: false }); },
+      season: isDra ? 'Осінній виїзд · 3 дні · фототур' : '3 дні · фототур', title4: isDra ? '«Планета Драгобрат»' : TOUR.name,
+      tid: TID, dsel: this.state.date, isDra: isDra, notDra: !isDra, name: TOUR.name, gen: TOUR.gen, heroImg: TOUR.img,
+      h1a: TOUR.h1a, h1b: TOUR.h1b, priceLabel: TM.fmt(TOUR.price), videoT: isDra ? '«Планета Драгобрат»' : TOUR.name,
+      inPlace: { bak: 'на Дністрі', pip: 'у Карпатах' }[TID] || '',
+      chips: [{ t: 'Фототур' }, { t: '3 дні / 2 ночі' }, { t: TOUR.place }],
+      groupRow: 'display:flex;gap:14px;align-items:flex-start;padding:22px 0;' + (isDra ? 'border-top:1px solid #F0F0F0;' : ''),
+      docTitle: TOUR.name + ' · tvoi.mandry',
+      heroPos: (P.heroX ?? 50) + '% ' + (P.heroY ?? 60) + '%',
+      selLabel: raw[this.state.date][0],
+      setRev: function (el) { self.rev = el; },
+      setNav: function (el) { self.nav = el; },
+      tabs: TABS.map(function (tb, i) {
+        var on = self.state.tab === i;
+        return {
+          label: tb[1], href: '#' + tb[0],
+          pick: function () { goTab(i, false); },
+          style: 'flex-shrink:0;text-decoration:none;height:40px;padding:0 16px;border-radius:20px;font-size:14px;font-weight:500;display:flex;align-items:center;' +
+            (on ? 'background:#111111;color:#FFFFFF;' : 'background:#F4F4F4;color:#111111;')
+        };
+      }),
+      tabNext: self.state.tab < TABS.length - 1,
+      nextTab: function () { goTab(self.state.tab + 1, true); },
+      revNext: function () { try { if (self.rev) self.rev.scrollBy({ left: 158, behavior: 'smooth' }); } catch (err) {} }
+    };
+  }
+}
+
+ return Component; })() };
+SCREENS["BookingV4"] = { props: {"accent": "#F2491D", "startStep": 1}, Cls: (function(){ 
+/*TM-DATA*/ // єдине джерело турів і дат (потім підтягуватиметься з таблиці-адмінки)
+var TM = {
+  tours: {
+    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6950, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true },
+    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false },
+    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false }
+  },
+  // [тур, місяць, дати, статус ok/few/sold, вільних місць]
+  dates: [
+    ['bak', 'may', '9–11 травня', 'ok', 8], ['pip', 'may', '23–25 травня', 'few', 3],
+    ['pip', 'jun', '6–8 червня', 'sold', 0], ['bak', 'jun', '13–15 червня', 'few', 4], ['dra', 'jun', '27–29 червня', 'ok', 10],
+    ['bak', 'jul', '4–6 липня', 'ok', 9], ['pip', 'jul', '18–20 липня', 'ok', 12],
+    ['dra', 'aug', '8–10 серпня', 'ok', 11], ['bak', 'aug', '22–24 серпня', 'few', 2],
+    ['pip', 'sep', '12–14 вересня', 'ok', 10], ['dra', 'sep', '26–28 вересня', 'ok', 12],
+    ['dra', 'oct', '2–4 жовтня', 'sold', 0], ['dra', 'oct', '16–18 жовтня', 'few', 2], ['dra', 'oct', '30 жовтня – 1 листопада', 'ok', 12],
+    ['dra', 'nov', '6–8 листопада', 'ok', 20]
+  ],
+  fmt: function (n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн'; },
+  plural: function (n, a, b, c) { var m = n % 10, h = n % 100; return (m === 1 && h !== 11) ? a : (m >= 2 && m <= 4 && (h < 12 || h > 14)) ? b : c; },
+  forTour: function (id) { return TM.dates.filter(function (d) { return d[0] === id; }); }
+};
+/*TM-DATA-END*/
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var id = props && props.tour && TM.tours[props.tour] ? props.tour : 'dra', L = TM.forTour(id);
+    var d = props && props.d != null && L[+props.d] ? +props.d : (id === 'dra' ? 4 : 0);
+    this.state = { step: Math.max(1, Math.min(4, +(props && props.startStep) || 1)), date: d, people: 1, way: 'form' };
+  }
+  renderVals() {
+    var self = this, P = this.props, S = this.state;
+    var acc = P.accent ?? '#F2491D';
+    var accInk = acc.toUpperCase() === '#7CC8CF' ? '#111111' : '#FFFFFF';
+    var TID = P.tour && TM.tours[P.tour] ? P.tour : 'dra', TOUR = TM.tours[TID], L = TM.forTour(TID);
+    var step = S.step, p = S.people, row = L[S.date] || L[0];
+    var go = function (n) { return function () { self.setState({ step: n }); }; };
+    var dates = L.map(function (r, i) {
+      var on = i === S.date, sold = r[3] === 'sold';
+      return { label: r[2], on: on,
+        pick: function () { if (!sold) self.setState({ date: i }); },
+        style: 'flex-shrink:0;height:48px;padding:0 18px;border-radius:24px;border:none;font-family:\'Inter Tight\',sans-serif;font-size:15px;font-weight:500;cursor:' + (sold ? 'default' : 'pointer') + ';' +
+          (on ? 'background:#111111;color:#FFFFFF;' : 'background:#F4F4F4;color:' + (sold ? '#B5B5B5;text-decoration:line-through;' : '#111111;')) };
+    });
+    var waysDef = [['form', 'M4 20h4L19 9l-4-4L4 16v4zM13 7l4 4', 'Тут, на сайті', 'Ім’я і телефон, 30 секунд'], ['tg', 'M21 4L3 11l7 3 3 7 8-17zM10 14l5-5', 'У Telegram-боті', 'Бронювання й нагадування в боті'], ['ig', 'M4 5h16v11H9l-5 4V5z', 'Написати менеджеру', 'Якщо хочеш спершу поговорити']];
+    var ways = waysDef.map(function (w) { return { icon: w[1], title: w[2], sub: w[3], on: S.way === w[0], pick: function () { self.setState({ way: w[0], step: 3 }); } }; });
+    var bars = [1, 2, 3].map(function (n) { return { style: 'flex:1;height:5px;border-radius:3px;background:' + (n <= step ? '#111111' : '#E4E4E4') + ';' }; });
+    var word = p === 1 ? 'людина' : (p < 5 ? 'людини' : 'людей');
+    return {
+      acc: acc, accInk: accInk, tid: TID, date: S.date, name: TOUR.name, dateLabel: row[2], people: p,
+      total: TM.fmt(TOUR.price * p), depo: TM.fmt(Math.round(TOUR.price / 2) * p),
+      summary: TOUR.name + ', ' + row[2] + ' · ' + p + ' ' + word,
+      dates: dates, ways: ways, bars: bars, step: Math.min(step, 3),
+      showTop: step < 4, firstStep: step === 1, laterStep: step > 1 && step < 4,
+      s1: step === 1, s2: step === 2, s3form: step === 3 && S.way === 'form', s3tg: step === 3 && S.way === 'tg', s3ig: step === 3 && S.way === 'ig', s4: step === 4,
+      after: [
+        { n: '1', t: 'Тримаємо місце без оплати [24 години].' },
+        { n: '2', t: 'Менеджер напише в Telegram з реквізитами для завдатку 50%.' },
+        { n: '3', t: 'За 10 днів до мандрівки додамо в чат групи й надішлемо список речей.' }
+      ],
+      next: go(2), back: go(step - 1), confirm: go(4),
+      inc: function () { self.setState({ people: Math.min(p + 1, 6) }); },
+      dec: function () { self.setState({ people: Math.max(p - 1, 1) }); },
+      setRow: function (el) { setTimeout(function () { var on = el && el.querySelector('[aria-pressed="true"]'); if (on) el.scrollLeft = on.offsetLeft - 16; }, 0); },
+      docTitle: 'Бронювання · ' + TOUR.name + ' · tvoi.mandry'
+    };
+  }
+}
+
+ return Component; })() };
+SCREENS["MenuV3"] = { props: {"accent": "#F2491D"}, Cls: (function(){ 
+class Component extends DCLogic {
+  renderVals() {
+    var acc = this.props.accent ?? '#F2491D';
+    var accInk = acc.toUpperCase() === '#7CC8CF' ? '#111111' : '#FFFFFF';
+    var links = [
+      ['MainV3.dc.html#tours', 'Мандрівки', ''],
+      ['MainV3.dc.html#about', 'Про нас', ''],
+      ['MainV3.dc.html#video', 'Відео з мандрівок', ''],
+      ['MainV3.dc.html#reviews', 'Відгуки', ''],
+      ['MainV3.dc.html#faq', 'Питання й відповіді', '']
+    ].map(function (l) { return { href: l[0], label: l[1], note: l[2] }; });
+    return { acc: acc, accInk: accInk, links: links };
+  }
+}
+
+ return Component; })() };
+SCREENS["NotFoundV3"] = { props: {"accent": "#F2491D"}, Cls: (function(){ 
+class Component extends DCLogic {
+  renderVals() {
+    var acc = this.props.accent ?? '#F2491D';
+    return { acc: acc, accInk: acc.toUpperCase() === '#7CC8CF' ? '#111111' : '#FFFFFF' };
+  }
+}
+
+ return Component; })() };
+SCREENS["LegalV3"] = { props: {"accent": "#F2491D"}, Cls: (function(){ 
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { doc: 0 };
+  }
+  renderVals() {
+    var self = this;
+    var DOCS = [
+      {
+        tab: 'Договір-оферта', title: 'Договір', gray: 'публічної оферти',
+        s: [
+          ['Загальні положення', 'Цей договір є публічною пропозицією ФОП [ПІБ] (далі Виконавець) укласти договір про надання послуг з організації подорожі. Оплата завдатку означає повну згоду з умовами.'],
+          ['Предмет договору', 'Виконавець організовує мандрівку за програмою, опублікованою на сторінці туру: маршрут, супровід, проживання і трансфер у межах пункту «Що входить».'],
+          ['Бронювання та оплата', 'Місце бронюється після оплати завдатку 50% від вартості на рахунок ФОП. Решта оплачується при заселенні. Без завдатку місце тримаємо 24 години.'],
+          ['Скасування і повернення', 'Якщо учасник скасовує участь більш ніж за [N] днів, завдаток повертається або переноситься на іншу дату. Пізніше завдаток не повертається, але місце можна передати іншій людині.'],
+          ['Зміни програми', 'Через погоду чи безпеку маршрут може змінитися. Рішення ухвалює гід. Якщо тур скасовує Виконавець, кошти повертаються в повному обсязі.'],
+          ['Обов\'язки учасника', 'Дотримуватися вказівок гіда, мати відповідне спорядження за списком і повідомити про обмеження у фізичній формі до виїзду.'],
+          ['Відповідальність', 'Учасник самостійно відповідає за свої речі та стан здоров\'я. Рекомендуємо мати страховку, що покриває активний відпочинок у горах.'],
+          ['Реквізити Виконавця', 'ФОП [ПІБ], РНОКПП [код], IBAN [рахунок], [банк]. Контакти: [пошта], [телефон].']
+        ]
+      },
+      {
+        tab: 'Конфіденційність', title: 'Політика', gray: 'конфіденційності',
+        s: [
+          ['Які дані збираємо', 'Ім\'я, телефон, нікнейм у Telegram або Instagram, кількість учасників і обрану дату. Тільки те, що ти вводиш у форму бронювання.'],
+          ['Навіщо', 'Щоб підтвердити бронювання, надіслати реквізити, деталі зборів і нагадування перед виїздом.'],
+          ['Де зберігаються', 'У захищеній таблиці Google і в Telegram-боті tvoi.mandry. Доступ мають лише організатори.'],
+          ['Кому передаємо', 'Нікому, окрім власника житла чи перевізника, якщо це потрібно для поселення або трансферу. Дані не продаємо.'],
+          ['Скільки зберігаємо', 'Поки ти з нами мандруєш, але не довше [N] років після останньої мандрівки.'],
+          ['Твої права', 'Можеш попросити показати, змінити або видалити свої дані. Напиши нам, і ми зробимо це протягом 7 днів.']
+        ]
+      }
+    ];
+    var d = DOCS[self.state.doc];
+    return {
+      acc: this.props.accent ?? '#F2491D',
+      title: d.title, titleGray: d.gray,
+      tabs: DOCS.map(function (x, i) {
+        var on = self.state.doc === i;
+        return {
+          on: on, label: x.tab,
+          pick: function () { self.setState({ doc: i }); },
+          style: 'flex:1;height:44px;border-radius:22px;border:none;font-family:\'Inter Tight\',sans-serif;font-weight:500;font-size:14px;cursor:pointer;' +
+            (on ? 'background:#111111;color:#FFFFFF;' : 'background:#F4F4F4;color:#111111;')
+        };
+      }),
+      sections: d.s.map(function (x, i) { return { n: (i < 9 ? '0' : '') + (i + 1), h: x[0], p: x[1] }; })
+    };
+  }
+}
+
+ return Component; })() };
+
+var HOLE = /\{\{\s*([A-Za-z_$][\w$.]*)\s*\}\}/g;
+var FULL = /^\{\{\s*([A-Za-z_$][\w$.]*)\s*\}\}$/;
+function look(path, scope){
+  var parts = path.split('.'), v = scope[parts[0]];
+  for (var i = 1; i < parts.length && v != null; i++) v = v[parts[i]];
+  return v;
+}
+function interp(str, scope){
+  return str.replace(HOLE, function(_, p){ var v = look(p, scope); return v == null || v === false ? '' : String(v); });
+}
+function renderChildren(parent, scope, out, refs){
+  for (var c = parent.firstChild; c; c = c.nextSibling) renderNode(c, scope, out, refs);
+}
+function renderNode(node, scope, out, refs){
+  if (node.nodeType === 3){ out.push(document.createTextNode(interp(node.nodeValue, scope))); return; }
+  if (node.nodeType !== 1) return;
+  var tag = node.localName;
+  if (tag === 'sc-for'){
+    var m = FULL.exec(node.getAttribute('list') || ''), list = m ? look(m[1], scope) : null, as = node.getAttribute('as') || 'item';
+    (list || []).forEach(function(item, i){ var s = Object.create(scope); s[as] = item; s.$index = i; renderChildren(node, s, out, refs); });
+    return;
+  }
+  if (tag === 'sc-if'){
+    var mv = FULL.exec(node.getAttribute('value') || '');
+    if (mv && look(mv[1], scope)) renderChildren(node, scope, out, refs);
+    return;
+  }
+  var el = node.namespaceURI === 'http://www.w3.org/2000/svg' ? document.createElementNS(node.namespaceURI, tag) : document.createElement(tag);
+  for (var i = 0; i < node.attributes.length; i++){
+    var a = node.attributes[i], name = a.name, val = a.value;
+    if (name.indexOf('hint-') === 0) continue;
+    var f = FULL.exec(val);
+    if (name.slice(0,2) === 'on' && f){ var fn = look(f[1], scope); if (typeof fn === 'function') el.addEventListener(name.slice(2), fn); continue; }
+    if (name === 'ref'){ if (f){ var rf = look(f[1], scope); if (typeof rf === 'function') refs.push([rf, el]); } continue; }
+    if (f){
+      var v = look(f[1], scope);
+      if (v === false || v == null){ if (name.indexOf('aria-') === 0) el.setAttribute(name, 'false'); continue; }
+      el.setAttribute(name, v === true ? (name.indexOf('aria-') === 0 ? 'true' : '') : String(v));
+    } else el.setAttribute(name, val.indexOf('{{') >= 0 ? interp(val, scope) : val);
+  }
+  var kids = []; renderChildren(node.content || node, scope, kids, refs);
+  kids.forEach(function(k){ el.appendChild(k); });
+  out.push(el);
+}
+
+// ---------------- motion ----------------
+var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var io = null;
+function cardSig(){
+  var t = document.getElementById('tours');
+  if (!t) return null;
+  return Array.prototype.map.call(t.querySelectorAll('a img'), function(i){ return i.getAttribute('src').slice(-40) + i.alt; }).join('|');
+}
+function countUp(el){
+  var m = /^(\d+)(.*)$/.exec(el.textContent.trim()); if (!m) return;
+  var to = +m[1], tail = m[2], t0 = null, dur = 1400;
+  function step(ts){ if (!t0) t0 = ts; var p = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(to * e) + tail; if (p < 1) requestAnimationFrame(step); }
+  el.textContent = '0' + tail; requestAnimationFrame(step);
+}
+function syncBar(){
+  var bar = app.querySelector('[style*="position: fixed"][style*="z-index: 50"]');
+  var fade = app.querySelector('[style*="position: fixed"][style*="z-index: 49"]');
+  if (!bar) return false;
+  bar.classList.add('sbar'); if (fade) fade.classList.add('sfade');
+  // V4: плашка з'являється, коли людина вже побачила відео й підходить до ціни (блок «Що входить»),
+  // і ховається біля фінального блоку з великою кнопкою, щоб не дублювати її
+  var vh = window.innerHeight, incl = document.getElementById('incl'), show;
+  var fin = Array.prototype.slice.call(app.querySelectorAll('section')).filter(function(x){ return /Готов/.test(x.textContent); }).pop();
+  if (!incl) show = true;
+  else {
+    var it = incl.getBoundingClientRect().top;
+    show = it < vh * 0.8 ? true : (it > vh * 0.95 ? false : !!syncBar.last);
+    if (fin && fin.getBoundingClientRect().top < vh * 0.75) show = false;
+  }
+  syncBar.last = show;
+  bar.classList.toggle('off', !show); if (fade) fade.classList.toggle('off', !show);
+  return show;
+}
+function motion(first, before){
+  syncTop();
+  if (RM) return;
+  var root = app.firstElementChild; if (!root) return;
+  if (!first){
+    var after = cardSig();
+    if (before !== null && after !== null && before !== after){
+      Array.prototype.forEach.call(document.getElementById('tours').querySelectorAll('a'), function(a, i){
+        if (!a.querySelector('img')) return;
+        a.classList.remove('swap'); a.classList.remove('rv'); a.style.animationDelay = (i * 140) + 'ms'; a.classList.add('swap');
+      });
+    }
+    return;
+  }
+  if (io) io.disconnect();
+  syncBar.last = false;
+  root.classList.add('scr-in');
+  var hero = root.querySelector(':scope > section');
+  var heroImg = hero && hero.querySelector(':scope > img');
+  var topHd = root.firstElementChild && root.firstElementChild.tagName === 'HEADER' ? root.firstElementChild : null;
+  if (topHd) topHd.classList.add('hd-in');
+  if (heroImg && hero.getBoundingClientRect().top < 160){
+    heroImg.classList.add('kb');
+    var hd = hero.querySelector(':scope > header'); if (hd) hd.classList.add('hd-in');
+    var h1 = hero.querySelector('h1');
+    var txt = h1 && h1.parentElement;
+    if (txt && txt !== hero) Array.prototype.forEach.call(txt.children, function(el, i){ el.classList.add('up'); el.style.animationDelay = (0.35 + i * 0.14) + 's'; });
+  } else hero = null;
+  // scroll reveal
+  var targets = [];
+  Array.prototype.forEach.call(root.children, function(sec){
+    if (sec === hero || sec === topHd || /position: (fixed|absolute)/.test(sec.getAttribute('style') || '')) return;
+    // програма: кожен день окремо, кружок «вистрибує», пунктир домальовується вниз, картка заїжджає збоку
+    if (sec.id === 'program'){
+      var list = sec.lastElementChild;
+      Array.prototype.forEach.call(sec.children, function(k, i){ if (k === list) return; k.classList.add('rv'); k.style.transitionDelay = (i * 80) + 'ms'; targets.push(k); });
+      Array.prototype.forEach.call(list.children, function(row){
+        var rail = row.firstElementChild, card = row.children[1];
+        if (!rail || !card) return;
+        if (rail.children[0]) rail.children[0].classList.add('tl-dot');
+        if (rail.children[1]) rail.children[1].classList.add('tl-line');
+        card.classList.add('tl-card');
+        row.dataset.card = '1'; targets.push(row);
+      });
+      return;
+    }
+    var kids = sec.children.length > 1 ? Array.prototype.slice.call(sec.children) : [sec];
+    kids.forEach(function(k, i){
+      if (/position: (fixed|absolute)/.test(k.getAttribute('style') || '')) return;
+      // група карток (тури, відгуки): кожна картка з'являється окремо, по черзі
+      var cards = Array.prototype.filter.call(k.querySelectorAll('a'), function(a){ return a.querySelector('img'); });
+      if (cards.length > 1){
+        cards.forEach(function(c){ c.classList.add('rv'); c.dataset.card = '1'; targets.push(c); });
+        return;
+      }
+      k.classList.add('rv'); k.style.transitionDelay = (Math.min(i, 6) * 80) + 'ms'; targets.push(k);
+    });
+  });
+  var nums = Array.prototype.filter.call(root.querySelectorAll('section span'), function(sp){
+    return /grid-template-columns: repeat\(3/.test(sp.closest('section').getAttribute('style') || '') && /^\d+/.test(sp.textContent.trim()) && sp.children.length === 0 && /font-size: clamp/.test(sp.getAttribute('style') || '');
+  });
+  io = new IntersectionObserver(function(entries){
+    var n = 0;
+    entries.forEach(function(en){
+      if (!en.isIntersecting) return;
+      if (en.target.dataset.card) en.target.style.transitionDelay = (n++ * 140) + 'ms';
+      en.target.classList.add('in'); io.unobserve(en.target);
+      nums.forEach(function(n){ if (en.target.contains(n) && !n._done){ n._done = true; countUp(n); } });
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  targets.forEach(function(t){ io.observe(t); });
+}
+
+// ---- розгортання дня програми: плавно відкривається і так само плавно закривається ----
+var EASE = 'cubic-bezier(.16,1,.3,1)';
+function dayBtns(){ return Array.prototype.slice.call(app.querySelectorAll('#program button[aria-expanded]')); }
+function dayState(){ return dayBtns().map(function(b){ return b.getAttribute('aria-expanded') === 'true'; }); }
+function dayOpenAnim(was){
+  if (RM || !Element.prototype.animate) return;
+  dayBtns().forEach(function(b, i){
+    if (b.getAttribute('aria-expanded') !== 'true' || was[i]) return;
+    var body = b.nextElementSibling; if (!body) return;
+    var h = body.offsetHeight; body.style.overflow = 'hidden';
+    body.animate([{ height: '0px', opacity: 0 }, { height: h + 'px', opacity: 1 }], { duration: 650, easing: EASE })
+      .onfinish = function(){ body.style.overflow = ''; };
+    Array.prototype.forEach.call(body.children, function(c, j){
+      c.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 700, delay: 120 + j * 70, easing: EASE, fill: 'backwards' });
+    });
+  });
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest && e.target.closest('#program button[aria-expanded="true"]');
+  if (!b || RM || b._closing || !Element.prototype.animate) return;
+  var body = b.nextElementSibling; if (!body) return;
+  e.preventDefault(); e.stopPropagation(); b._closing = true;
+  body.style.overflow = 'hidden';
+  body.animate([{ height: body.offsetHeight + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 420, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' })
+    .onfinish = function(){ b.click(); };
+}, true);
+
+// ---- перегляд фото програми ----
+var lb = document.getElementById('lb'), lbImg = lb.querySelector('img'), lbCap = lb.querySelector('.cap'), lbCnt = lb.querySelector('.cnt');
+var lbList = [], lbI = 0;
+function lbShow(i){
+  lbI = (i + lbList.length) % lbList.length; var im = lbList[lbI];
+  lbImg.src = im.currentSrc || im.src; lbCap.textContent = im.hasAttribute('data-cap') ? im.getAttribute('data-cap') : (im.alt || '');
+  lbCnt.textContent = lbList.length > 1 ? (lbI + 1) + ' / ' + lbList.length : '';
+  lb.querySelector('.pv').style.display = lb.querySelector('.nx').style.display = lbList.length > 1 ? '' : 'none';
+}
+function lbOpen(img){
+  // копії карток у стрічці не дублюємо в перегляді
+  var scope = img.closest('section') || app;
+  lbList = Array.prototype.filter.call(scope.querySelectorAll('img[data-zoom]'), function(i){ return !i.closest('[data-clone]'); });
+  var at = lbList.indexOf(img);
+  if (at < 0) at = lbList.findIndex(function(i){ return i.src === img.src; });
+  lbShow(Math.max(0, at)); lb.classList.add('open'); document.documentElement.style.overflow = 'hidden';
+}
+function lbClose(){ lb.classList.remove('open'); document.documentElement.style.overflow = ''; }
+document.addEventListener('click', function(e){
+  var im = e.target.closest && e.target.closest('img[data-zoom]');
+  if (im && Date.now() < mqDragUntil){ e.preventDefault(); e.stopPropagation(); return; } // це був свайп, а не натискання
+  if (im && app.contains(im)){ e.preventDefault(); e.stopPropagation(); lbOpen(im); }
+}, true);
+lb.addEventListener('click', function(e){
+  if (e.target.closest('.pv')) return lbShow(lbI - 1);
+  if (e.target.closest('.nx')) return lbShow(lbI + 1);
+  if (e.target === lbImg) return;
+  lbClose();
+});
+document.addEventListener('keydown', function(e){
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') lbClose(); if (e.key === 'ArrowLeft') lbShow(lbI - 1); if (e.key === 'ArrowRight') lbShow(lbI + 1);
+});
+var tx = null;
+lb.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, { passive: true });
+lb.addEventListener('touchend', function(e){ if (tx === null) return; var d = e.changedTouches[0].clientX - tx; tx = null;
+  if (Math.abs(d) > 50) lbShow(lbI + (d < 0 ? 1 : -1)); }, { passive: true });
+
+// ---- стрічки (відгуки, галерея фото): повільна безперервна прокрутка, коли видно на екрані; пальцем можна гортати, після паузи стрічка їде далі ----
+var mqList = [], REV_SPEED = 26; // пікселів за секунду
+function startMarquee(row, dir, btn){
+  var orig = Array.prototype.slice.call(row.children); if (orig.length < 2) return;
+  // копія карток у кінці: стрічка зациклюється без стрибка
+  orig.forEach(function(c){ var k = c.cloneNode(true); k.setAttribute('aria-hidden', 'true'); k.dataset.clone = '1'; row.appendChild(k); });
+  var st = { raf: 0, obs: null, until: 0 };
+  var loopW = function(){ return row.children[orig.length].offsetLeft - orig[0].offsetLeft; };
+  row.style.scrollSnapType = 'none';
+  if (dir < 0 && row.scrollLeft < 1) row.scrollLeft = loopW();
+  var pos = row.scrollLeft, last = 0;
+  var pause = function(){ st.until = Date.now() + 3500; row.style.scrollSnapType = ''; };
+  ['pointerdown', 'touchstart', 'wheel'].forEach(function(ev){ row.addEventListener(ev, pause, { passive: true }); });
+  if (btn) btn.addEventListener('click', pause);
+  var wrap = function(w){ if (w <= 0) return; if (pos >= w) pos -= w; else if (pos <= 0) pos += w; };
+  var frame = function(ts){
+    st.raf = requestAnimationFrame(frame);
+    if (!document.body.contains(row)) { cancelAnimationFrame(st.raf); st.raf = 0; return; }
+    var dt = last ? Math.min(64, ts - last) : 0; last = ts;
+    var w = loopW();
+    if (Date.now() < st.until){ pos = row.scrollLeft; var p0 = pos; wrap(w); if (pos !== p0) row.scrollLeft = pos; return; }
+    if (row.style.scrollSnapType !== 'none'){ row.style.scrollSnapType = 'none'; pos = row.scrollLeft; }
+    pos += dir * REV_SPEED * dt / 1000; wrap(w);
+    row.scrollLeft = pos;
+  };
+  st.obs = new IntersectionObserver(function(en){
+    if (en[0].isIntersecting){ if (!st.raf){ last = 0; pos = row.scrollLeft; st.raf = requestAnimationFrame(frame); } }
+    else { cancelAnimationFrame(st.raf); st.raf = 0; }
+  }, { threshold: 0.3 });
+  st.obs.observe(row);
+  mqList.push(st);
+}
+// ---- галереї фото: стрічка на transform (рух з точністю до долі пікселя, без ривків), пальцем тягнеться з інерцією ----
+var mqDragUntil = 0;
+function startTrack(row, dir){
+  var orig = Array.prototype.slice.call(row.children); if (orig.length < 2) return;
+  var gap = parseFloat(getComputedStyle(row).columnGap) || 8;
+  var track = document.createElement('div');
+  track.style.cssText = 'display:flex;gap:' + gap + 'px;will-change:transform;transform:translate3d(0,0,0)';
+  orig.forEach(function(c){ track.appendChild(c); });
+  orig.forEach(function(c){ var k = c.cloneNode(true); k.setAttribute('aria-hidden', 'true'); k.dataset.clone = '1'; track.appendChild(k); });
+  row.appendChild(track);
+  row.style.overflow = 'hidden'; row.style.touchAction = 'pan-y'; row.style.cursor = 'grab';
+  var st = { raf: 0, obs: null }, until = 0, pos = 0, vel = 0, last = 0, w = 0;
+  var measure = function(){ w = track.children[orig.length].offsetLeft - track.children[0].offsetLeft; };
+  measure(); if (dir < 0) pos = w / 2;
+  var wrap = function(){ if (w <= 0) return; pos = ((pos % w) + w) % w; };
+  var paint = function(){ track.style.transform = 'translate3d(' + (-pos).toFixed(2) + 'px,0,0)'; };
+  // перетягування пальцем або мишею
+  var drag = null;
+  row.addEventListener('pointerdown', function(e){
+    drag = { x: e.clientX, p: pos, moved: false, lx: e.clientX, lt: performance.now() }; vel = 0; until = Infinity;
+  });
+  row.addEventListener('pointermove', function(e){
+    if (!drag) return;
+    var dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) > 6){ drag.moved = true; try { row.setPointerCapture(e.pointerId); } catch (er) {} row.style.cursor = 'grabbing'; }
+    if (!drag.moved) return;
+    var now = performance.now(), dt = Math.max(1, now - drag.lt);
+    vel = -(e.clientX - drag.lx) / dt * 1000; drag.lx = e.clientX; drag.lt = now;
+    pos = drag.p - dx; wrap(); paint();
+  });
+  var end = function(){
+    if (!drag) return;
+    if (drag.moved) mqDragUntil = Date.now() + 350; else vel = 0;
+    drag = null; row.style.cursor = 'grab'; until = Date.now() + 2500;
+  };
+  row.addEventListener('pointerup', end); row.addEventListener('pointercancel', end);
+  // горизонтальний свайп тачпадом
+  row.addEventListener('wheel', function(e){
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+    e.preventDefault(); vel = 0; pos += e.deltaX; wrap(); paint(); until = Date.now() + 2500;
+  }, { passive: false });
+  var frame = function(ts){
+    st.raf = requestAnimationFrame(frame);
+    if (!document.body.contains(row)) { cancelAnimationFrame(st.raf); st.raf = 0; return; }
+    var dt = last ? Math.min(64, ts - last) / 1000 : 0; last = ts;
+    if (drag) return;
+    if (Math.abs(vel) > 5){ pos += vel * dt; vel *= Math.pow(0.04, dt); wrap(); paint(); return; }   // інерція після свайпу
+    vel = 0;
+    if (Date.now() < until) return;
+    pos += dir * REV_SPEED * dt; wrap(); paint();
+  };
+  st.obs = new IntersectionObserver(function(en){
+    if (en[0].isIntersecting){ if (!st.raf){ last = 0; measure(); st.raf = requestAnimationFrame(frame); } }
+    else { cancelAnimationFrame(st.raf); st.raf = 0; }
+  }, { threshold: 0.1 });
+  st.obs.observe(row);
+  paint();
+  mqList.push(st);
+}
+function setupReviews(){
+  mqList.forEach(function(st){ st.obs.disconnect(); cancelAnimationFrame(st.raf); }); mqList = [];
+  if (RM) return;
+  var btn = app.querySelector('[aria-label="Наступні відгуки"]');
+  var rev = btn && btn.parentElement.querySelector('.mrow');
+  if (rev) startMarquee(rev, 1, btn);
+  Array.prototype.forEach.call(app.querySelectorAll('[data-marquee]'), function(r){ startTrack(r, +r.dataset.marquee < 0 ? -1 : 1); });
+}
+
+var app = document.getElementById('app');
+var current = null, currentKey = null, comp = null;
+var TITLES = { MainV4: 'tvoi.mandry · фото- і пригодницькі тури Карпатами', MenuV3: 'Меню · tvoi.mandry', LegalV3: 'Оферта і конфіденційність · tvoi.mandry', NotFoundV3: 'Сторінку не знайдено · tvoi.mandry' };
+function mount(name, params, key){
+  if (!SCREENS[name]) name = 'NotFoundV3';
+  current = name; currentKey = key != null ? key : (KEY[name] || '');
+  var def = SCREENS[name], tpl = document.getElementById('tpl-' + name);
+  comp = new def.Cls(Object.assign({}, def.props, params || {}));
+  var c = comp;
+  c._render = function(){
+    if (c !== comp) return;
+    var first = !c._painted; c._painted = true;
+    var before = cardSig();
+    var wasOpen = dayState();
+    var keep = Array.prototype.map.call(app.querySelectorAll('.mrow, [style*="overflow-x: auto"]'), function(e){ return e.scrollLeft; });
+    var vals = c.renderVals(), out = [], refs = [];
+    document.title = vals.docTitle || TITLES[current] || 'tvoi.mandry';
+    renderChildren(tpl.content, vals, out, refs);
+    app.replaceChildren.apply(app, out);
+    refs.forEach(function(r){ r[0](r[1]); });
+    Array.prototype.forEach.call(app.querySelectorAll('.mrow, [style*="overflow-x: auto"]'), function(e, i){ if (keep[i] != null) e.scrollLeft = keep[i]; });
+    motion(first, before);
+    if (!first) dayOpenAnim(wasOpen);
+    setupReviews();
+  };
+  c._render();
+}
+var KEY = { MainV4: 'main', TourV4: 'tour', BookingV4: 'booking', MenuV3: 'menu', NotFoundV3: 'notfound', LegalV3: 'legal' };
+var BYKEY = {}; Object.keys(KEY).forEach(function(k){ BYKEY[KEY[k]] = k; });
+// старі посилання з меню, 404 і оферти ведуть на V4
+KEY.MainV3 = 'main'; KEY.TourV3 = 'tour'; KEY.BookingV3 = 'booking';
+function parse(){
+  var h = (location.hash || '').replace(/^#/, ''), i = h.indexOf('-');
+  var key = i < 0 ? h : h.slice(0, i), anchor = i < 0 ? '' : h.slice(i + 1);
+  var parts = key.split('~'), params = parts[1] ? { tour: parts[1], d: parts[2] != null ? +parts[2] : null } : {};
+  return { screen: h ? (BYKEY[parts[0]] || 'NotFoundV3') : 'MainV4', anchor: anchor, key: key, params: params };
+}
+function route(){
+  var r = parse();
+  if (r.key !== currentKey) mount(r.screen, r.params, r.key);
+  if (r.anchor){ var t = document.getElementById(r.anchor); if (t){ t.scrollIntoView({ block: 'start', behavior: 'instant' }); return; } }
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+document.addEventListener('click', function(e){
+  var a = e.target.closest && e.target.closest('a[href]');
+  if (!a) return;
+  var href = a.getAttribute('href');
+  var m = /^([A-Za-z0-9_-]+)\.dc\.html(?:#(.*))?$/.exec(href);
+  if (m){ e.preventDefault(); var tp = a.getAttribute('data-tour') ? '~' + a.getAttribute('data-tour') + '~' + (a.getAttribute('data-d') || 0) : '';
+    var nh = '#' + (KEY[m[1]] || 'notfound') + tp + (m[2] ? '-' + m[2] : ''); if (location.hash === nh) route(); else location.hash = nh; return; }
+  if (href.charAt(0) === '#'){ e.preventDefault(); var t = document.getElementById(href.slice(1)); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+  if (/^https?:/.test(href)){ a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener'); }
+});
+window.addEventListener('hashchange', function(){
+  var r = parse();
+  if (r.key !== currentKey){ mount(r.screen, r.params, r.key); }
+  if (r.anchor){ var t = document.getElementById(r.anchor); if (t){ t.scrollIntoView({ block: 'start', behavior: 'instant' }); return; } }
+  window.scrollTo({ top: 0, behavior: 'instant' });
+});
+var totop = document.getElementById('totop');
+function syncTop(){
+  var barShown = syncBar();
+  totop.classList.toggle('show', window.scrollY > window.innerHeight * 0.9);
+  totop.classList.toggle('above-bar', !!barShown);
+}
+window.addEventListener('scroll', syncTop, { passive: true });
+window.addEventListener('hashchange', function(){ setTimeout(syncTop, 50); });
+totop.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' }); });
+// «Поділитися туром»: системне меню на телефоні, інакше копіюємо посилання
+var toast = document.getElementById('toast'), toastT = null;
+function say(t){ toast.textContent = t; toast.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(function(){ toast.classList.remove('show'); }, 2200); }
+document.addEventListener('click', function(e){
+  var btn = e.target.closest && e.target.closest('[aria-label="Поділитися туром"]');
+  if (!btn) return;
+  var h1 = app.querySelector('h1'), title = h1 ? h1.textContent.trim() : 'tvoi.mandry';
+  var url = location.href;
+  if (navigator.share) { navigator.share({ title: title, text: title + ' · tvoi.mandry', url: url }).catch(function(){}); return; }
+  var done = function(){ say('Посилання скопійовано'); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function(){ say(url); });
+  else say(url);
+});
+route(); syncTop();
+})();
+</script>
+
+</body>
+</html>
