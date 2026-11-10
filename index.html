@@ -1175,7 +1175,7 @@ function motion(first, before){
     if (before !== null && after !== null && before !== after){
       Array.prototype.forEach.call(document.getElementById('tours').querySelectorAll('a'), function(a, i){
         if (!a.querySelector('img')) return;
-        a.classList.remove('swap'); a.style.animationDelay = (i * 70) + 'ms'; a.classList.add('swap');
+        a.classList.remove('swap'); a.classList.remove('rv'); a.style.animationDelay = (i * 140) + 'ms'; a.classList.add('swap');
       });
     }
     return;
@@ -1200,6 +1200,12 @@ function motion(first, before){
     var kids = sec.children.length > 1 ? Array.prototype.slice.call(sec.children) : [sec];
     kids.forEach(function(k, i){
       if (/position: (fixed|absolute)/.test(k.getAttribute('style') || '')) return;
+      // група карток (тури, відгуки): кожна картка з'являється окремо, по черзі
+      var cards = Array.prototype.filter.call(k.querySelectorAll('a'), function(a){ return a.querySelector('img'); });
+      if (cards.length > 1){
+        cards.forEach(function(c){ c.classList.add('rv'); c.dataset.card = '1'; targets.push(c); });
+        return;
+      }
       k.classList.add('rv'); k.style.transitionDelay = (Math.min(i, 6) * 80) + 'ms'; targets.push(k);
     });
   });
@@ -1207,8 +1213,10 @@ function motion(first, before){
     return /grid-template-columns: repeat\(3/.test(sp.closest('section').getAttribute('style') || '') && /^\d+/.test(sp.textContent.trim()) && sp.children.length === 0 && /font-size: clamp/.test(sp.getAttribute('style') || '');
   });
   io = new IntersectionObserver(function(entries){
+    var n = 0;
     entries.forEach(function(en){
       if (!en.isIntersecting) return;
+      if (en.target.dataset.card) en.target.style.transitionDelay = (n++ * 140) + 'ms';
       en.target.classList.add('in'); io.unobserve(en.target);
       nums.forEach(function(n){ if (en.target.contains(n) && !n._done){ n._done = true; countUp(n); } });
     });
