@@ -380,6 +380,35 @@ a{color:#111111}a:hover{color:#555555}
 </div>
 </section>
 
+<section id="photo" style="padding: 36px 0 0; display: flex; flex-direction: column; gap: 14px">
+<span style="margin: 0 16px; align-self: flex-start; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 14px; background: #F4F4F4">Формат фототуру</span>
+<h2 style="margin: 0 16px; font-weight: 500; font-size: 30px; line-height: 1.05; letter-spacing: -1.2px">Ти гуляєш, <span style="color: #8A8A8A">ми знімаємо</span></h2>
+<p style="margin: 0 16px; font-size: 15px; line-height: 1.5; color: #333333">Більшість наших мандрівок проходять у форматі фототуру. Він не для фотографів, а для тих, хто хоче привезти з гір гарні фото себе.</p>
+<div style="margin: 0 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px">
+<div style="background: #F4F4F4; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 6px">
+<span aria-hidden="true" style="width: 34px; height: 34px; border-radius: 17px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; margin-bottom: 4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path></svg></span>
+<span style="font-size: 15px; font-weight: 600; letter-spacing: -0.2px">Свій образ</span>
+<span style="font-size: 13px; line-height: 1.4; color: #6B6B6B">Приїжджай з ідеєю, і ми втілимо її на локації</span>
+</div>
+<div style="background: #F4F4F4; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 6px">
+<span aria-hidden="true" style="width: 34px; height: 34px; border-radius: 17px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; margin-bottom: 4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg></span>
+<span style="font-size: 15px; font-weight: 600; letter-spacing: -0.2px">Або просто похід</span>
+<span style="font-size: 13px; line-height: 1.4; color: #6B6B6B">Живі кадри дорогою, без позування весь день</span>
+</div>
+</div>
+<div class="mrow" data-marquee="1" aria-label="Фото учасників з минулих мандрівок" style="display: flex; gap: 8px; padding: 6px 12px 0; overflow-x: auto">
+<sc-for list="{{gal1}}" as="g" hint-placeholder-count="8">
+<div style="flex-shrink: 0; width: 132px; height: 176px; border-radius: 18px; background: {{g.bg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: #8A8A8A; text-align: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8A8A8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>фото учасника</div>
+</sc-for>
+</div>
+<div class="mrow" data-marquee="-1" style="display: flex; gap: 8px; padding: 0 12px; overflow-x: auto">
+<sc-for list="{{gal2}}" as="g" hint-placeholder-count="8">
+<div style="flex-shrink: 0; width: 132px; height: 176px; border-radius: 18px; background: {{g.bg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: #8A8A8A; text-align: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8A8A8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>фото учасника</div>
+</sc-for>
+</div>
+<span style="margin: 0 16px; font-size: 13px; color: #8A8A8A">Кадри учасників з минулих мандрівок</span>
+</section>
+
 <section style="padding: 36px 16px 0; display: flex; flex-direction: column; gap: 14px">
 <span style="align-self: flex-start; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 14px; background: #F4F4F4">Досвід мандрів</span>
 <h2 style="margin: 0; font-weight: 500; font-size: 30px; line-height: 1.05; letter-spacing: -1.2px">Як виглядає <span style="color: #8A8A8A">«Планета Драгобрат»</span></h2>
@@ -930,7 +959,7 @@ class Component extends DCLogic {
       };
     });
     var t = function (arr) { return arr.map(function (s) { return { t: s }; }); };
-    var TABS = [['when', 'Коли'], ['program', 'Програма'], ['incl', 'Що входить'], ['how', 'Як забронювати'], ['faq', 'Питання']];
+    var TABS = [['when', 'Коли'], ['program', 'Програма'], ['photo', 'Фото'], ['incl', 'Що входить'], ['how', 'Як забронювати'], ['faq', 'Питання']];
     var goTab = function (i, jump) {
       if (i < 0 || i >= TABS.length) return;
       self.setState({ tab: i });
@@ -984,6 +1013,8 @@ class Component extends DCLogic {
     });
     return {
       acc: acc, accInk: accInk, dates: dates, days: days, incl: incl, excl: excl, faq: faq,
+      gal1: [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return { bg: i % 2 ? '#ECECEC' : '#F4F4F4' }; }),
+      gal2: [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return { bg: i % 2 ? '#F4F4F4' : '#ECECEC' }; }),
       heroPos: (P.heroX ?? 50) + '% ' + (P.heroY ?? 60) + '%',
       selLabel: raw[this.state.date][0],
       setRev: function (el) { self.rev = el; },
@@ -1345,38 +1376,45 @@ lb.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, { p
 lb.addEventListener('touchend', function(e){ if (tx === null) return; var d = e.changedTouches[0].clientX - tx; tx = null;
   if (Math.abs(d) > 50) lbShow(lbI + (d < 0 ? 1 : -1)); }, { passive: true });
 
-// ---- відгуки: повільна безперервна стрічка, коли блок на екрані; пальцем можна гортати, після паузи стрічка їде далі ----
-var revRaf = 0, revPausedUntil = 0, revObs = null, REV_SPEED = 26; // пікселів за секунду
-function setupReviews(){
-  if (revObs) { revObs.disconnect(); revObs = null; } cancelAnimationFrame(revRaf); revRaf = 0;
-  if (RM) return;
-  var btn = app.querySelector('[aria-label="Наступні відгуки"]'); if (!btn) return;
-  var row = btn.parentElement.querySelector('.mrow'); if (!row) return;
+// ---- стрічки (відгуки, галерея фото): повільна безперервна прокрутка, коли видно на екрані; пальцем можна гортати, після паузи стрічка їде далі ----
+var mqList = [], REV_SPEED = 26; // пікселів за секунду
+function startMarquee(row, dir, btn){
   var orig = Array.prototype.slice.call(row.children); if (orig.length < 2) return;
   // копія карток у кінці: стрічка зациклюється без стрибка
   orig.forEach(function(c){ var k = c.cloneNode(true); k.setAttribute('aria-hidden', 'true'); k.dataset.clone = '1'; row.appendChild(k); });
+  var st = { raf: 0, obs: null, until: 0 };
   var loopW = function(){ return row.children[orig.length].offsetLeft - orig[0].offsetLeft; };
   row.style.scrollSnapType = 'none';
+  if (dir < 0 && row.scrollLeft < 1) row.scrollLeft = loopW();
   var pos = row.scrollLeft, last = 0;
-  var pause = function(){ revPausedUntil = Date.now() + 3500; row.style.scrollSnapType = ''; };
+  var pause = function(){ st.until = Date.now() + 3500; row.style.scrollSnapType = ''; };
   ['pointerdown', 'touchstart', 'wheel'].forEach(function(ev){ row.addEventListener(ev, pause, { passive: true }); });
-  btn.addEventListener('click', pause);
+  if (btn) btn.addEventListener('click', pause);
+  var wrap = function(w){ if (w <= 0) return; if (pos >= w) pos -= w; else if (pos <= 0) pos += w; };
   var frame = function(ts){
-    revRaf = requestAnimationFrame(frame);
-    if (!document.body.contains(row)) { cancelAnimationFrame(revRaf); revRaf = 0; return; }
+    st.raf = requestAnimationFrame(frame);
+    if (!document.body.contains(row)) { cancelAnimationFrame(st.raf); st.raf = 0; return; }
     var dt = last ? Math.min(64, ts - last) : 0; last = ts;
     var w = loopW();
-    if (Date.now() < revPausedUntil){ pos = row.scrollLeft; if (w > 0 && pos >= w) { pos -= w; row.scrollLeft = pos; } return; }
+    if (Date.now() < st.until){ pos = row.scrollLeft; var p0 = pos; wrap(w); if (pos !== p0) row.scrollLeft = pos; return; }
     if (row.style.scrollSnapType !== 'none'){ row.style.scrollSnapType = 'none'; pos = row.scrollLeft; }
-    pos += REV_SPEED * dt / 1000;
-    if (w > 0 && pos >= w) pos -= w;
+    pos += dir * REV_SPEED * dt / 1000; wrap(w);
     row.scrollLeft = pos;
   };
-  revObs = new IntersectionObserver(function(en){
-    if (en[0].isIntersecting){ if (!revRaf){ last = 0; pos = row.scrollLeft; revRaf = requestAnimationFrame(frame); } }
-    else { cancelAnimationFrame(revRaf); revRaf = 0; }
+  st.obs = new IntersectionObserver(function(en){
+    if (en[0].isIntersecting){ if (!st.raf){ last = 0; pos = row.scrollLeft; st.raf = requestAnimationFrame(frame); } }
+    else { cancelAnimationFrame(st.raf); st.raf = 0; }
   }, { threshold: 0.3 });
-  revObs.observe(row);
+  st.obs.observe(row);
+  mqList.push(st);
+}
+function setupReviews(){
+  mqList.forEach(function(st){ st.obs.disconnect(); cancelAnimationFrame(st.raf); }); mqList = [];
+  if (RM) return;
+  var btn = app.querySelector('[aria-label="Наступні відгуки"]');
+  var rev = btn && btn.parentElement.querySelector('.mrow');
+  if (rev) startMarquee(rev, 1, btn);
+  Array.prototype.forEach.call(app.querySelectorAll('[data-marquee]'), function(r){ startMarquee(r, +r.dataset.marquee < 0 ? -1 : 1, null); });
 }
 
 var app = document.getElementById('app');
