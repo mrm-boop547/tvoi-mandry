@@ -92,7 +92,7 @@ a{color:#111111}a:hover{color:#555555}
 <a href="MenuV3.dc.html" aria-label="Меню" style="box-sizing: border-box; width: 44px; height: 44px; border-radius: 22px; border: none; background: #F4F4F4; display: flex; align-items: center; justify-content: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 9h14M5 15h14"></path></svg></a>
 </header>
 <section style="position: relative; margin: 0 12px; height: 451px; overflow: hidden; border-radius: 30px; background: #1E2830">
-<img alt="Група мандрівників йде хребтом у Карпатах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 38.5509% 98.0068%; " src="img/crop_b2a8cf9b_52903.jpg">
+<img alt="Група мандрівників йде хребтом у Карпатах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 38.5509% 98.0068%; " src="img/crop_b2a8cf9b_23489.jpg">
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 320px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.45) 40%, rgba(10,14,18,0.8) 100%)"></div>
 <div style="position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; flex-direction: column; gap: 14px">
 <div style="padding: 0 4px; display: flex; flex-direction: column; gap: 10px">
@@ -186,7 +186,7 @@ a{color:#111111}a:hover{color:#555555}
 <span style="font-weight: 500; font-size: 22px; letter-spacing: -0.6px; margin-top: 18px">Хто створює ці мандрівки?</span>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
 <div style="background: #F4F4F4; border-radius: 28px; padding: 8px; display: flex; flex-direction: column">
-<div style="height: 220px; border-radius: 22px; overflow: hidden; background: #E9E9E9"><img src="img/crop_5216b13e_7100.jpg" alt="Мар’ян з камерою" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 44.5801% 58.4992%; "></div>
+<div style="height: 220px; border-radius: 22px; overflow: hidden; background: #E9E9E9"><img src="img/crop_5216b13e_80743.jpg" alt="Мар’ян з камерою" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 44.5801% 58.4992%; "></div>
 <div style="padding: 12px 6px 6px; display: flex; flex-direction: column; gap: 4px">
 <span style="font-weight: 500; font-size: 20px; letter-spacing: -0.5px">Мар’ян</span>
 <span style="font-size: 12px; color: #6B6B6B">Співзасновник · фотограф</span>
@@ -236,12 +236,10 @@ a{color:#111111}a:hover{color:#555555}
 <span style="margin: 0 16px; align-self: flex-start; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 14px; background: #F4F4F4">Атмосфера</span>
 <h2 style="margin: 0 16px; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px">Їдеш сам, <span style="color: #8A8A8A">повертаєшся з друзями</span></h2>
 <p style="margin: 0 16px; font-size: 15px; line-height: 1.5; color: #333333">Вечори біля ватри, спільні вечері, свята й прогулянки хребтами. Багато хто після першої мандрівки повертається з нами знову.</p>
-<div class="mrow" aria-label="Групові фото з мандрівок" style="display: flex; gap: 8px; padding: 0 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 16px">
+<div class="mrow" data-marquee="1" aria-label="Групові фото з мандрівок" style="display: flex; gap: 8px; padding: 0 12px; overflow-x: auto">
 <sc-for list="{{crew}}" as="c" hint-placeholder-count="4">
-<div style="position: relative; flex-shrink: 0; scroll-snap-align: start; width: 300px; height: 400px; border-radius: 24px; overflow: hidden; background: #F4F4F4">
-<img src="{{c.src}}" alt="{{c.t}}" data-zoom="1" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in">
-<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.55) 100%); pointer-events: none"></div>
-<span style="position: absolute; left: 18px; right: 18px; bottom: 16px; font-size: 15px; font-weight: 500; letter-spacing: -0.2px; color: #FFFFFF; pointer-events: none">{{c.t}}</span>
+<div style="flex-shrink: 0; width: 300px; height: 400px; border-radius: 24px; overflow: hidden; background: #F4F4F4">
+<img src="{{c.src}}" alt="{{c.t}}" data-zoom="1" data-cap="" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in">
 </div>
 </sc-for>
 </div>
@@ -300,7 +298,7 @@ a{color:#111111}a:hover{color:#555555}
 <template id="tpl-TourV3"><div class="page" style="width: 100%; min-height: 100dvh; padding-bottom: 104px; box-sizing: border-box; background: #FFFFFF; font-family: 'Inter Tight', system-ui, sans-serif; color: #111111; display: flex; flex-direction: column; position: relative; overflow: hidden">
 
 <section style="position: relative; height: 460px; overflow: hidden; background: #26313B; border-radius: 0 0 30px 30px">
-<img alt="Стежка на Драгобраті" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 74.4026% 93.7742%; " src="img/crop_04284121_97712.jpg">
+<img alt="Стежка на Драгобраті" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 74.4026% 93.7742%; " src="img/crop_04284121_43155.jpg">
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 130px; background: linear-gradient(180deg, rgba(10,14,18,0.4) 0%, rgba(10,14,18,0) 100%)"></div>
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 209px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.42) 45%, rgba(10,14,18,0.72) 100%)"></div>
 <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 16px">
