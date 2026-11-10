@@ -146,6 +146,35 @@ a{color:#111111}a:hover{color:#555555}
 </div>
 </section>
 
+<section id="photo" style="padding: 72px 0 0; display: flex; flex-direction: column; gap: 14px">
+<span style="margin: 0 16px; align-self: flex-start; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 14px; background: #F4F4F4">Формат фототуру</span>
+<h2 style="margin: 0 16px; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px">Ти гуляєш, <span style="color: #8A8A8A">ми знімаємо</span></h2>
+<p style="margin: 0 16px; font-size: 15px; line-height: 1.5; color: #333333">Більшість наших мандрівок проходять у форматі фототуру. Він не для фотографів, а для тих, хто хоче привезти з гір гарні фото себе.</p>
+<div style="margin: 0 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px">
+<div style="background: #F4F4F4; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 6px">
+<span aria-hidden="true" style="width: 34px; height: 34px; border-radius: 17px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; margin-bottom: 4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path></svg></span>
+<span style="font-size: 15px; font-weight: 600; letter-spacing: -0.2px">Свій образ</span>
+<span style="font-size: 13px; line-height: 1.4; color: #6B6B6B">Приїжджай з ідеєю, і ми втілимо її на локації</span>
+</div>
+<div style="background: #F4F4F4; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 6px">
+<span aria-hidden="true" style="width: 34px; height: 34px; border-radius: 17px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; margin-bottom: 4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg></span>
+<span style="font-size: 15px; font-weight: 600; letter-spacing: -0.2px">Або просто похід</span>
+<span style="font-size: 13px; line-height: 1.4; color: #6B6B6B">Живі кадри дорогою, без позування весь день</span>
+</div>
+</div>
+<div class="mrow" data-marquee="1" aria-label="Фото учасників з минулих мандрівок" style="display: flex; gap: 8px; padding: 6px 12px 0; overflow-x: auto">
+<sc-for list="{{gal1}}" as="g" hint-placeholder-count="8">
+<div style="flex-shrink: 0; width: 132px; height: 176px; border-radius: 18px; background: {{g.bg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: #8A8A8A; text-align: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8A8A8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>фото учасника</div>
+</sc-for>
+</div>
+<div class="mrow" data-marquee="-1" style="display: flex; gap: 8px; padding: 0 12px; overflow-x: auto">
+<sc-for list="{{gal2}}" as="g" hint-placeholder-count="8">
+<div style="flex-shrink: 0; width: 132px; height: 176px; border-radius: 18px; background: {{g.bg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: #8A8A8A; text-align: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8A8A8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>фото учасника</div>
+</sc-for>
+</div>
+<span style="margin: 0 16px; font-size: 13px; color: #8A8A8A">Кадри учасників з минулих мандрівок</span>
+</section>
+
 <section id="about" style="padding: 72px 16px 0; display: flex; flex-direction: column; gap: 18px">
 <span style="align-self: flex-start; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 14px; background: #F4F4F4">Про нас</span>
 <p style="margin: 0; font-weight: 500; font-size: 25px; line-height: 1.18; letter-spacing: -0.8px">З любов'ю до пригод&nbsp;<span style="color: rgb(138, 138, 138)">ми створюємо маршрути, які надихають, знайомлять соулметів і назавжди залишаються в пам'яті</span></p>
@@ -380,35 +409,6 @@ a{color:#111111}a:hover{color:#555555}
 </div>
 </section>
 
-<section id="photo" style="padding: 36px 0 0; display: flex; flex-direction: column; gap: 14px">
-<span style="margin: 0 16px; align-self: flex-start; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 14px; background: #F4F4F4">Формат фототуру</span>
-<h2 style="margin: 0 16px; font-weight: 500; font-size: 30px; line-height: 1.05; letter-spacing: -1.2px">Ти гуляєш, <span style="color: #8A8A8A">ми знімаємо</span></h2>
-<p style="margin: 0 16px; font-size: 15px; line-height: 1.5; color: #333333">Більшість наших мандрівок проходять у форматі фототуру. Він не для фотографів, а для тих, хто хоче привезти з гір гарні фото себе.</p>
-<div style="margin: 0 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px">
-<div style="background: #F4F4F4; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 6px">
-<span aria-hidden="true" style="width: 34px; height: 34px; border-radius: 17px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; margin-bottom: 4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path></svg></span>
-<span style="font-size: 15px; font-weight: 600; letter-spacing: -0.2px">Свій образ</span>
-<span style="font-size: 13px; line-height: 1.4; color: #6B6B6B">Приїжджай з ідеєю, і ми втілимо її на локації</span>
-</div>
-<div style="background: #F4F4F4; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 6px">
-<span aria-hidden="true" style="width: 34px; height: 34px; border-radius: 17px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; margin-bottom: 4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg></span>
-<span style="font-size: 15px; font-weight: 600; letter-spacing: -0.2px">Або просто похід</span>
-<span style="font-size: 13px; line-height: 1.4; color: #6B6B6B">Живі кадри дорогою, без позування весь день</span>
-</div>
-</div>
-<div class="mrow" data-marquee="1" aria-label="Фото учасників з минулих мандрівок" style="display: flex; gap: 8px; padding: 6px 12px 0; overflow-x: auto">
-<sc-for list="{{gal1}}" as="g" hint-placeholder-count="8">
-<div style="flex-shrink: 0; width: 132px; height: 176px; border-radius: 18px; background: {{g.bg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: #8A8A8A; text-align: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8A8A8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>фото учасника</div>
-</sc-for>
-</div>
-<div class="mrow" data-marquee="-1" style="display: flex; gap: 8px; padding: 0 12px; overflow-x: auto">
-<sc-for list="{{gal2}}" as="g" hint-placeholder-count="8">
-<div style="flex-shrink: 0; width: 132px; height: 176px; border-radius: 18px; background: {{g.bg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: #8A8A8A; text-align: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8A8A8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>фото учасника</div>
-</sc-for>
-</div>
-<span style="margin: 0 16px; font-size: 13px; color: #8A8A8A">Кадри учасників з минулих мандрівок</span>
-</section>
-
 <section style="padding: 36px 16px 0; display: flex; flex-direction: column; gap: 14px">
 <span style="align-self: flex-start; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 14px; background: #F4F4F4">Досвід мандрів</span>
 <h2 style="margin: 0; font-weight: 500; font-size: 30px; line-height: 1.05; letter-spacing: -1.2px">Як виглядає <span style="color: #8A8A8A">«Планета Драгобрат»</span></h2>
@@ -503,7 +503,7 @@ a{color:#111111}a:hover{color:#555555}
 <span style="font-size: 22px; font-weight: 400">{{f.sign}}</span>
 </button>
 <sc-if value="{{f.open}}" hint-placeholder-val="{{false}}">
-<p style="margin: 0 0 16px; font-size: 14px; line-height: 1.5; color: #6B6B6B">[відповідь]</p>
+<p style="margin: 0 0 16px; font-size: 14px; line-height: 1.5; color: #6B6B6B">{{f.a}}</p>
 </sc-if>
 </div>
 </sc-for>
@@ -899,6 +899,8 @@ class Component extends DCLogic {
     });
     return {
       acc: acc, accInk: accInk, months: months, tours: tours, faq: faq,
+      gal1: [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return { bg: i % 2 ? '#ECECEC' : '#F4F4F4' }; }),
+      gal2: [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return { bg: i % 2 ? '#F4F4F4' : '#ECECEC' }; }),
       heroPos: pos(P.heroX, P.heroY, 50, 40),
       marianPos: pos(P.marianX, P.marianY, 50, 40),
       tarasPos: pos(P.tarasX, P.tarasY, 45, 30),
@@ -959,7 +961,7 @@ class Component extends DCLogic {
       };
     });
     var t = function (arr) { return arr.map(function (s) { return { t: s }; }); };
-    var TABS = [['when', 'Коли'], ['program', 'Програма'], ['photo', 'Фото'], ['incl', 'Що входить'], ['how', 'Як забронювати'], ['faq', 'Питання']];
+    var TABS = [['when', 'Коли'], ['program', 'Програма'], ['incl', 'Що входить'], ['how', 'Як забронювати'], ['faq', 'Питання']];
     var goTab = function (i, jump) {
       if (i < 0 || i >= TABS.length) return;
       self.setState({ tab: i });
@@ -1006,15 +1008,14 @@ class Component extends DCLogic {
       'Супровід команди з 2 осіб 24/7'
     ]);
     var excl = [['Квитки на потяг', 'допоможемо з підбором'], ['Чан / сауна, за бажанням', '≈ 400 грн'], ['Обіди', '≈ 350 грн'], ['Власні витрати', '']].map(function (x) { return { t: x[0], p: x[1] }; });
-    var qs = ['Я ніколи не був(ла) в горах. Мені підійде цей тур?', 'Можна їхати самому чи самій?', 'А якщо буде дощ або туман?', 'Скільки буде фото? Чи отримаю кадри з собою?', 'Що потрібно брати з собою?', 'Що, якщо я передумаю?', 'Де старт туру і як туди дістатися?', 'Що з харчуванням? Чи враховуються особливі побажання?', 'Чи буде вільний час?'];
+    var qs = ['Я ніколи не був(ла) в горах. Мені підійде цей тур?', 'Можна їхати самому чи самій?', 'А якщо буде дощ або туман?', 'Це фототур? Мені треба вміти позувати?', 'Що потрібно брати з собою?', 'Що, якщо я передумаю?', 'Де старт туру і як туди дістатися?', 'Що з харчуванням? Чи враховуються особливі побажання?', 'Чи буде вільний час?'];
+    var ANS = {}; ANS[3] = 'Так, більшість наших мандрівок проходять у форматі фототуру, але він не для фотографів. Позувати вміти не треба: можна приїхати з ідеєю образу, і ми допоможемо її втілити на локації, а можна просто йти маршрутом, поки фотограф ловить живі кадри дорогою.';
     var faq = qs.map(function (q, i) {
       var open = self.state.open === i;
-      return { q: q, open: open, sign: open ? '–' : '+', toggle: function () { self.setState({ open: open ? -1 : i }); } };
+      return { q: q, a: ANS[i] || '[відповідь]', open: open, sign: open ? '–' : '+', toggle: function () { self.setState({ open: open ? -1 : i }); } };
     });
     return {
       acc: acc, accInk: accInk, dates: dates, days: days, incl: incl, excl: excl, faq: faq,
-      gal1: [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return { bg: i % 2 ? '#ECECEC' : '#F4F4F4' }; }),
-      gal2: [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return { bg: i % 2 ? '#F4F4F4' : '#ECECEC' }; }),
       heroPos: (P.heroX ?? 50) + '% ' + (P.heroY ?? 60) + '%',
       selLabel: raw[this.state.date][0],
       setRev: function (el) { self.rev = el; },
