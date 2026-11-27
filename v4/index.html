@@ -80,7 +80,7 @@ input::placeholder{color:#A3A3A3}
 </header>
 
 <section style="position: relative; margin: 0; height: 540px; overflow: hidden; border-radius: 0px; background: #1E2830">
-<img alt="Група мандрівників йде хребтом у Карпатах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 64.2177% 100%; " src="img/crop_390ab91a_23976.jpg">
+<img alt="Група мандрівників йде хребтом у Карпатах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 64.2177% 100%; " src="img/crop_390ab91a_20723.jpg">
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 300px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.5) 45%, rgba(10,14,18,0.82) 100%)"></div>
 <div style="position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; flex-direction: column; gap: 18px">
 <h1 style="margin: 0 4px; font-weight: 500; font-size: 36px; line-height: 1.04; letter-spacing: -1.5px; color: #FFFFFF"></h1><h1 style="margin: 0px; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px; color: #ffffff">Авторські фототури, після яких залишаються друзі та спогади на все життя!<br></h1>
@@ -95,48 +95,25 @@ input::placeholder{color:#A3A3A3}
 </section>
 
 <section id="tours" style="margin: 34px 0 0; padding: 36px 0 16px; background: #111111; color: #FFFFFF; border-radius: 0px; display: flex; flex-direction: column; gap: 18px">
-<h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px; color: #FFFFFF">Найближчі <span style="color: rgb(154, 154, 154)">мандрівки:</span></h2>
-<div style="position: relative">
-<div role="tablist" aria-label="Місяці" class="mrow" ref="{{setRow}}" style="display: flex; gap: 6px; padding: 0 72px 0 12px; overflow-x: auto; scroll-behavior: smooth">
-<sc-for list="{{months}}" as="m" hint-placeholder-count="7">
-<button role="tab" aria-selected="{{m.on}}" onClick="{{m.pick}}" style="{{m.chipStyle}}">{{m.label}}</button>
-</sc-for>
-</div>
-<div aria-hidden="true" style="position: absolute; top: 0; right: 0; width: 96px; height: 44px; background: linear-gradient(90deg, rgba(17,17,17,0) 0%, #111111 55%); pointer-events: none"></div>
+<h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px; color: #FFFFFF">Найближчі <span style="color: rgb(154, 154, 154)">виїзди:</span></h2>
 <sc-if value="{{hasNext}}" hint-placeholder-val="{{true}}">
-<button aria-label="Наступний місяць" onClick="{{next}}" style="position: absolute; top: 0; right: 12px; width: 44px; height: 44px; border-radius: 22px; border: none; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-</button>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 0 12px">
+<sc-for list="{{nextList}}" as="n" hint-placeholder-count="3"><a href="{{n.href}}" data-tour="{{n.id}}" data-d="{{n.di}}" style="text-decoration: none; color: #111111; background: #FFFFFF; border-radius: 14px; padding: 10px 10px 10px 10px; display: flex; align-items: center; gap: 14px">
+<span style="flex-shrink: 0; width: 72px; height: 64px; border-radius: 10px; background: #F4F4F4; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px"><span style="font-weight: 600; font-size: 19px; letter-spacing: -0.5px">{{n.day}}</span><span style="font-size: 12px; color: #6B6B6B">{{n.mon}}</span></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px"><span style="font-weight: 500; font-size: 18px; letter-spacing: -0.4px">{{n.name}}</span><span style="{{n.seatStyle}}">{{n.seats}}</span></span>
+<span style="flex-shrink: 0; font-weight: 600; font-size: 15px; padding-right: 6px">{{n.price}}</span>
+</a></sc-for>
+</div>
 </sc-if>
-</div>
-<div onTouchStart="{{tStart}}" onTouchEnd="{{tEnd}}" style="display: flex; flex-direction: column; gap: 10px; padding: 0 12px">
-<sc-for list="{{tours}}" as="t" hint-placeholder-count="3">
-<a href="{{t.href}}" data-tour="{{t.id}}" data-d="{{t.di}}" style="text-decoration: none; color: #111111; background: #FFFFFF; border-radius: 14px; padding: 8px; display: flex; flex-direction: column">
-<div style="position: relative; height: 240px; border-radius: 10px; overflow: hidden">
-<sc-if value="{{t.is_kup}}" hint-placeholder-val="{{false}}"><img src="img/fa7c6e21a710a87534cfe3b8b1c95703.jpg" alt="Івана Купала" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_shp}}" hint-placeholder-val="{{false}}"><img src="img/crop_e8992a52_10629.jpg" alt="Шпиці та Червона Рута" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 68.9336% 75.9011%; "></sc-if><sc-if value="{{t.is_rot}}" hint-placeholder-val="{{false}}"><img src="img/6ace0c60fc1ff65e799998fabaed3463.jpg" alt="Ротило та Комори Довбуша" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_sec}}" hint-placeholder-val="{{false}}"><img src="img/0e37070598a5a2093770abeac4f5a8ce.jpg" alt="Секретна подорож" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_dra}}" hint-placeholder-val="{{false}}"><img src="img/9832bcc0cbb15d22bef3f95f94a2c4c7.jpg" alt="Драгобрат" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_bak}}" hint-placeholder-val="{{false}}"><img src="img/bb85142f4c469e600cd4a53a37804f07.jpg" alt="Бакота" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_pip}}" hint-placeholder-val="{{false}}"><img src="img/efb98218d63a5047618b5502e6704c31.jpg" alt="Піп Іван" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if>
+<sc-if value="{{noNext}}" hint-placeholder-val="{{false}}"><p style="margin: 0 16px; font-size: 16px; line-height: 1.45; color: rgba(255,255,255,0.75)">Нові дати сезону анонсуємо найближчим часом. Обери тур нижче, і ми напишемо першим(ою).</p></sc-if>
+<h3 style="margin: 22px 16px 0; font-weight: 500; font-size: 28px; line-height: 1.05; letter-spacing: -1px; color: #FFFFFF">Усі мандрівки <span style="color: rgb(154, 154, 154)">· {{tourCount}}</span></h3>
+<a href="CalendarV4.dc.html" style="margin: 6px 12px 0; text-decoration: none; height: 56px; padding: 0 8px 0 20px; border-radius: 28px; border: 1px solid rgba(255,255,255,0.35); color: #FFFFFF; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between">Усі дати в календарі<span style="width: 40px; height: 40px; border-radius: 20px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 0 12px">
+<sc-for list="{{tours}}" as="t" hint-placeholder-count="6"><a href="{{t.href}}" data-tour="{{t.id}}" data-d="{{t.di}}" style="text-decoration: none; color: #111111; background: #FFFFFF; border-radius: 14px; padding: 6px; display: flex; flex-direction: column; min-width: 0"><div style="position: relative; height: 150px; border-radius: 10px; overflow: hidden">
+<sc-if value="{{t.is_gen}}" hint-placeholder-val="{{false}}"><img src="img/tours/ph.jpg" alt="{{t.name}}" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_kup}}" hint-placeholder-val="{{false}}"><img src="img/fa7c6e21a710a87534cfe3b8b1c95703.jpg" alt="Івана Купала" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_shp}}" hint-placeholder-val="{{false}}"><img src="img/crop_e8992a52_30001.jpg" alt="Шпиці та Червона Рута" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 68.9336% 75.9011%; "></sc-if><sc-if value="{{t.is_rot}}" hint-placeholder-val="{{false}}"><img src="img/6ace0c60fc1ff65e799998fabaed3463.jpg" alt="Ротило та Комори Довбуша" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_sec}}" hint-placeholder-val="{{false}}"><img src="img/0e37070598a5a2093770abeac4f5a8ce.jpg" alt="Секретна подорож" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_dra}}" hint-placeholder-val="{{false}}"><img src="img/9832bcc0cbb15d22bef3f95f94a2c4c7.jpg" alt="Драгобрат" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_bak}}" hint-placeholder-val="{{false}}"><img src="img/bb85142f4c469e600cd4a53a37804f07.jpg" alt="Бакота" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_pip}}" hint-placeholder-val="{{false}}"><img src="img/efb98218d63a5047618b5502e6704c31.jpg" alt="Піп Іван" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if>
 <span style="{{t.badgeStyle}}"><span style="{{t.dotStyle}}"></span>{{t.seats}}</span>
-</div>
-<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 8px 8px 12px">
-<span style="display: flex; flex-direction: column; gap: 4px">
-<span style="font-weight: 500; font-size: 22px; letter-spacing: -0.6px">{{t.name}}</span>
-<span style="font-size: 14px; color: #6B6B6B">{{t.dates}} · <span style="font-weight: 600; color: #111111">{{t.price}}</span></span>
-</span>
-<span style="width: 50px; height: 50px; flex-shrink: 0; border-radius: 25px; background: #111111; display: flex; align-items: center; justify-content: center">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg>
-</span>
-</div>
-</a>
-</sc-for>
+</div><span style="padding: 10px 6px 6px; display: flex; flex-direction: column; gap: 3px; min-width: 0"><span style="font-weight: 500; font-size: 16px; line-height: 1.2; letter-spacing: -0.3px">{{t.name}}</span><span style="font-size: 12px; color: #6B6B6B">{{t.dates}}</span><span style="font-size: 14px; font-weight: 600">{{t.price}}</span></span></a></sc-for>
 </div>
 
-<sc-if value="{{hasMore}}" hint-placeholder-val="{{true}}">
-<div style="display: flex; flex-direction: column; gap: 14px; padding-top: 18px">
-<h3 style="margin: 0 16px; font-weight: 500; font-size: 26px; line-height: 1.1; letter-spacing: -0.9px; color: #FFFFFF">Інші мандрівки <span style="color: #9A9A9A">· дати анонсуємо</span></h3>
-<div class="mrow" style="display: flex; gap: 10px; padding: 0 12px; overflow-x: auto">
-<sc-for list="{{more}}" as="o" hint-placeholder-count="4"><a href="TourV4.dc.html" data-tour="{{o.id}}" data-d="0" style="flex-shrink: 0; width: 236px; text-decoration: none; color: #111111; background: #FFFFFF; border-radius: 12px; padding: 6px; display: flex; flex-direction: column"><div style="height: 168px; border-radius: 10px; overflow: hidden"><img src="{{o.img}}" alt="{{o.name}}" style="display: block; width: 100%; height: 100%; object-fit: cover"></div><span style="padding: 12px 8px 8px; display: flex; flex-direction: column; gap: 3px"><span style="font-weight: 500; font-size: 18px; letter-spacing: -0.4px">{{o.name}}</span><span style="font-size: 13px; color: #6B6B6B">{{o.when}}</span></span></a></sc-for>
-</div>
-</div>
-</sc-if>
 </section>
 
 <section id="photo" style="padding: 64px 0 0; display: flex; flex-direction: column; gap: 16px">
@@ -153,7 +130,7 @@ input::placeholder{color:#A3A3A3}
 </section>
 
 <section id="about" style="margin: 64px 0 0; padding: 36px 16px 20px; background: #F4F4F4; border-radius: 0px; display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Привіт, ми <span style="color: #8A8A8A">Мар’ян і Тарас</span></h2>
+<h2 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Привіт, ми <br><span style="color: rgb(138, 138, 138)">Мар’ян і Тарас</span></h2>
 <p style="margin: 0; font-size: 17px; line-height: 1.5; color: #444444">Четвертий рік збираємо людей у мандри!</p>
 <a href="AboutV4.dc.html" style="text-decoration: none; display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 8px; border-radius: 14px; background: #FFFFFF; color: #111111">
 <span style="display: flex; flex-shrink: 0"><img src="img/5216b13eff7313727c3a59e25dc342d4.jpg" alt="" style="width: 48px; height: 48px; border-radius: 24px; object-fit: cover; object-position: {{marianPos}}; border: 2px solid #FFFFFF"><img src="img/1e903f6857ca0aa276a7ceb5c1e47cd1.jpg" alt="" style="width: 48px; height: 48px; border-radius: 24px; object-fit: cover; object-position: {{tarasPos}}; border: 2px solid #FFFFFF; margin-left: -14px"></span>
@@ -163,7 +140,7 @@ input::placeholder{color:#A3A3A3}
 </section>
 
 <section id="crew" style="padding: 64px 0 0; display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Їдеш сам, <span style="color: #8A8A8A">повертаєшся з друзями</span></h2>
+<h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Їдеш сам, <span style="color: #8A8A8A">повертаєшся <br>з друзями</span></h2>
 <div class="mrow" data-marquee="-1" aria-label="Групові фото з мандрівок" style="display: flex; gap: 8px; padding: 8px 12px 0; overflow-x: auto">
 <sc-for list="{{crew}}" as="c" hint-placeholder-count="3">
 <div style="flex-shrink: 0; width: 270px; height: 360px; border-radius: 14px; overflow: hidden; background: #F4F4F4"><img src="{{c.src}}" alt="{{c.t}}" data-zoom="1" data-cap="" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></div>
@@ -220,7 +197,7 @@ input::placeholder{color:#A3A3A3}
 <template id="tpl-TourV4"><div class="page" style="width: 100%; min-height: 100dvh; padding-bottom: 104px; box-sizing: border-box; background: #FFFFFF; font-family: 'Inter Tight', system-ui, sans-serif; color: #111111; display: flex; flex-direction: column; position: relative; overflow: hidden">
 
 <section style="position: relative; height: 660px; overflow: hidden; background: #26313B; border-radius: 0 0 32px 32px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px">
-<sc-if value="{{isDra}}" hint-placeholder-val="{{true}}"><img alt="Стежка на Драгобраті" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 100%; " src="img/crop_b2e2fa2d_47091.jpg"></sc-if><sc-if value="{{isBak}}" hint-placeholder-val="{{false}}"><img alt="Бакота" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover" src="img/63c48a54320f1919776dc6e2d4c49f3b.jpg"></sc-if><sc-if value="{{isPip}}" hint-placeholder-val="{{false}}"><img alt="Піп Іван + Верховина" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 56.008% 33.2181%; " src="img/crop_c3a73d7b_54899.jpg"></sc-if><sc-if value="{{isKup}}" hint-placeholder-val="{{false}}"><img alt="Івана Купала" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 41.3487% 100%" src="img/fa7c6e21a710a87534cfe3b8b1c95703.jpg"></sc-if><sc-if value="{{isShp}}" hint-placeholder-val="{{false}}"><img alt="Шпиці та Червона Рута" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 65.3972% 99.9236%; " src="img/crop_e8992a52_17610.jpg"></sc-if><sc-if value="{{isRot}}" hint-placeholder-val="{{false}}"><img alt="Ротило та Комори Довбуша" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover" src="img/56cd7803011eb7626742322217b235b5.jpg"></sc-if><sc-if value="{{genHero}}" hint-placeholder-val="{{false}}"><img alt="{{name}}" src="{{heroImg}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover"></sc-if>
+<sc-if value="{{isDra}}" hint-placeholder-val="{{true}}"><img alt="Стежка на Драгобраті" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 100%; " src="img/crop_b2e2fa2d_87330.jpg"></sc-if><sc-if value="{{isBak}}" hint-placeholder-val="{{false}}"><img alt="Бакота" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover" src="img/63c48a54320f1919776dc6e2d4c49f3b.jpg"></sc-if><sc-if value="{{isPip}}" hint-placeholder-val="{{false}}"><img alt="Піп Іван + Верховина" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 56.008% 33.2181%; " src="img/crop_c3a73d7b_47705.jpg"></sc-if><sc-if value="{{isKup}}" hint-placeholder-val="{{false}}"><img alt="Івана Купала" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 41.3487% 100%" src="img/fa7c6e21a710a87534cfe3b8b1c95703.jpg"></sc-if><sc-if value="{{isShp}}" hint-placeholder-val="{{false}}"><img alt="Шпиці та Червона Рута" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 65.3972% 99.9236%; " src="img/crop_e8992a52_1150.jpg"></sc-if><sc-if value="{{isRot}}" hint-placeholder-val="{{false}}"><img alt="Ротило та Комори Довбуша" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover" src="img/56cd7803011eb7626742322217b235b5.jpg"></sc-if><sc-if value="{{genHero}}" hint-placeholder-val="{{false}}"><img alt="{{name}}" src="{{heroImg}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover"></sc-if>
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 130px; background: linear-gradient(180deg, rgba(10,14,18,0.4) 0%, rgba(10,14,18,0) 100%)"></div>
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 270px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.55) 45%, rgba(10,14,18,0.85) 100%)"></div>
 <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 16px">
@@ -329,7 +306,7 @@ input::placeholder{color:#A3A3A3}
 <sc-for list="{{days}}" as="d" hint-placeholder-count="3">
 <div style="padding-bottom: 16px; display: flex; flex-direction: column">
 <div style="background: #F4F4F4; border-radius: 14px; padding: 8px; display: flex; flex-direction: column">
-<div style="position: relative; height: 210px; border-radius: 10px; overflow: hidden"><sc-if value="{{d.p0}}" hint-placeholder-val="{{true}}"><img src="img/7a813c22cfa8a684bb8626376255c90c.jpg" alt="Підйом на Драгобрат, озеро Івор і Жандарм" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></sc-if><sc-if value="{{d.p1}}" hint-placeholder-val="{{true}}"><img src="img/2bd7c66f848d9aca63f550f469471fef.jpg" alt="Озера Ворожеска і Герешаска" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></sc-if><sc-if value="{{d.p2}}" hint-placeholder-val="{{true}}"><img src="img/crop_9a29a80d_83793.jpg" alt="Світанок над туманом" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; object-position: 50.1678% 60.4733%; "></sc-if><span style="position: absolute; top: 12px; left: 12px; height: 34px; padding: 0 14px; border-radius: 17px; background: #FFFFFF; color: #111111; font-weight: 600; font-size: 15px; display: flex; align-items: center; pointer-events: none">День {{d.n}}</span></div>
+<div style="position: relative; height: 210px; border-radius: 10px; overflow: hidden"><sc-if value="{{d.p0}}" hint-placeholder-val="{{true}}"><img src="img/7a813c22cfa8a684bb8626376255c90c.jpg" alt="Підйом на Драгобрат, озеро Івор і Жандарм" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></sc-if><sc-if value="{{d.p1}}" hint-placeholder-val="{{true}}"><img src="img/2bd7c66f848d9aca63f550f469471fef.jpg" alt="Озера Ворожеска і Герешаска" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></sc-if><sc-if value="{{d.p2}}" hint-placeholder-val="{{true}}"><img src="img/crop_9a29a80d_91674.jpg" alt="Світанок над туманом" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; object-position: 50.1678% 60.4733%; "></sc-if><span style="position: absolute; top: 12px; left: 12px; height: 34px; padding: 0 14px; border-radius: 17px; background: #FFFFFF; color: #111111; font-weight: 600; font-size: 15px; display: flex; align-items: center; pointer-events: none">День {{d.n}}</span></div>
 <button onClick="{{d.toggle}}" aria-expanded="{{d.open}}" style="border: none; background: none; padding: 14px 8px 8px; display: flex; flex-direction: column; align-items: stretch; gap: 8px; text-align: left; font-family: 'Inter Tight', sans-serif; color: #111111; cursor: pointer">
 <span style="font-weight: 500; font-size: 20px; line-height: 1.2; letter-spacing: -0.5px">{{d.title}}</span>
 <span style="{{d.ctaStyle}}">{{d.cta}}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{d.arrow}}"></path></svg></span>
@@ -428,7 +405,7 @@ input::placeholder{color:#A3A3A3}
 
 <h2 style="margin: 0; font-weight: 500; font-size: 30px; line-height: 1.05; letter-spacing: -1.2px">Як виглядає <span style="color: #8A8A8A">{{videoT}}</span></h2>
 <div style="position: relative; flex: 1; min-height: 0; border-radius: 14px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #26313B">
-<img src="img/crop_2b8315cd_70999.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 51.356% 84.4396%; ">
+<img src="img/crop_2b8315cd_47526.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 51.356% 84.4396%; ">
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 160px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.55) 100%)"></div>
 <button aria-label="Відтворити відео зі звуком" style="position: relative; width: 76px; height: 76px; border-radius: 38px; border: none; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer">
 <svg width="26" height="26" viewBox="0 0 24 24" fill="#111111" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
@@ -763,7 +740,7 @@ input::placeholder{color:#A3A3A3}
 </header>
 
 <section style="position: relative; margin: 0; height: 560px; overflow: hidden; border-radius: 0px; background: #1E2830">
-<img src="img/crop_1ce8da16_75862.jpg" alt="Група біля ватри ввечері в горах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 45.61% 100%; ">
+<img src="img/crop_1ce8da16_14516.jpg" alt="Група біля ватри ввечері в горах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 45.61% 100%; ">
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 280px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.78) 100%)"></div>
 <div style="position: absolute; left: 20px; right: 20px; bottom: 22px; display: flex; flex-direction: column; gap: 8px; color: #FFFFFF">
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; opacity: 0.75">Про нас</span>
@@ -787,7 +764,7 @@ input::placeholder{color:#A3A3A3}
 <section style="padding: 48px 0 0; display: flex; flex-direction: column; gap: 28px">
 <h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Хто <span style="color: #8A8A8A">поруч у мандрівці</span></h2>
 <article style="display: flex; flex-direction: column; gap: 12px">
-<div style="position: relative; height: 480px; border-radius: 0; overflow: hidden; background: #E9E9E9"><img src="img/crop_050a1086_93934.jpg" alt="Мар’ян з камерою" data-zoom="1" data-cap="" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 59.1622% 51.9483%; ">
+<div style="position: relative; height: 480px; border-radius: 0; overflow: hidden; background: #E9E9E9"><img src="img/crop_050a1086_30683.jpg" alt="Мар’ян з камерою" data-zoom="1" data-cap="" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 59.1622% 51.9483%; ">
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 160px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.7) 100%)"></div>
 <span style="position: absolute; left: 20px; bottom: 18px; display: flex; flex-direction: column; gap: 2px; color: #FFFFFF"><span style="font-weight: 500; font-size: 30px; letter-spacing: -1.1px">Мар’ян</span><span style="font-size: 15px; opacity: 0.8">Співзасновник, фотограф</span></span>
 <a href="https://instagram.com/tvoi.mandry" aria-label="Instagram: Мар’ян" style="position: absolute; right: 14px; bottom: 16px; width: 44px; height: 44px; border-radius: 22px; background: rgba(255,255,255,0.22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="#FFFFFF"></circle></svg></a>
@@ -879,7 +856,7 @@ input::placeholder{color:#A3A3A3}
 
 <sc-if value="{{form}}" hint-placeholder-val="{{true}}">
 <section style="position: relative; height: 420px; overflow: hidden; background: #1E2830">
-<img src="img/crop_3964b393_5880.jpg" alt="Група біля ватри в горах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 43.4717% 97.4945%; ">
+<img src="img/crop_3964b393_53370.jpg" alt="Група біля ватри в горах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 43.4717% 97.4945%; ">
 <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,14,18,0.1) 0%, rgba(10,14,18,0.8) 100%); height: 234px; top: 186px"></div>
 <div style="position: absolute; left: 16px; right: 16px; bottom: 22px; display: flex; flex-direction: column; gap: 10px; color: #FFFFFF">
 
@@ -942,7 +919,7 @@ class DCLogic {
   setState(p){ Object.assign(this.state, typeof p === 'function' ? p(this.state) : p); if (this._render) this._render(); }
 }
 window.DCLogic = DCLogic;
-SCREENS["MainV4"] = { props: {"accent": "#F2491D", "heroX": 50, "heroY": 40, "marianX": 50, "marianY": 40, "tarasX": 45, "tarasY": 30}, Cls: (function(){ 
+SCREENS["MainV4"] = { props: {"today": "2026-06-01", "accent": "#F2491D", "heroX": 50, "heroY": 40, "marianX": 50, "marianY": 40, "tarasX": 45, "tarasY": 30}, Cls: (function(){ 
 class Component extends DCLogic {
   constructor(props) {
     super(props);
@@ -1019,15 +996,39 @@ class Component extends DCLogic {
           (on ? 'color:#FFFFFF;font-weight:600;' : 'color:rgba(255,255,255,0.55);font-weight:500;')
       };
     });
-    var tours = TM.dates.filter(function (r) { return r[1] === self.state.month; }).map(function (r) {
-      var d = TM.tours[r[0]], di = TM.forTour(r[0]).indexOf(r);
+    // варіант A: найближчі виїзди за датою + одна картка на кожен тур
+    var GEN = { 'січня': 0, 'лютого': 1, 'березня': 2, 'квітня': 3, 'травня': 4, 'червня': 5, 'липня': 6, 'серпня': 7, 'вересня': 8, 'жовтня': 9, 'листопада': 10, 'грудня': 11 };
+    var YEAR = 2026;
+    var span = function (label) {
+      var m = /^(\d+)(?:\s+([^\s–-]+))?\s*[–-]\s*(\d+)\s+(\S+)/.exec(label); if (!m || GEN[m[4]] == null) return null;
+      var m2 = GEN[m[4]], m1 = m[2] && GEN[m[2]] != null ? GEN[m[2]] : m2;
+      return { s: Date.UTC(YEAR, m1, +m[1]), e: Date.UTC(YEAR, m2, +m[3]), day: m[2] ? m[1] + '.' + (m1 + 1 < 10 ? '0' : '') + (m1 + 1) + '–' + m[3] : m[1] + '–' + m[3], mon: m[4] };
+    };
+    // «сьогодні»: на полотні можна виставити дату перегляду, на сайті береться реальна
+    var TODAY = Date.parse(P.today ?? '2026-06-01');
+    var up = TM.dates.map(function (r) { var p = span(r[2]); return p ? { r: r, p: p, di: TM.forTour(r[0]).indexOf(r) } : null; })
+      .filter(function (x) { return x && x.p.e >= TODAY && x.r[3] !== 'sold'; }).sort(function (a, b) { return a.p.s - b.p.s; });
+    var seatTxt = function (r) { return r[3] === 'few' ? 'Залишилось ' + r[4] + ' ' + TM.plural(r[4], 'місце', 'місця', 'місць') : r[4] + ' ' + TM.plural(r[4], 'вільне місце', 'вільні місця', 'вільних місць'); };
+    var next = up.slice(0, 3).map(function (x) {
+      var d = TM.tours[x.r[0]], link = d.page !== false;
+      return { id: link ? x.r[0] : '', di: link ? x.di : '', href: link ? 'TourV4.dc.html' : 'https://ig.me/m/tvoi.mandry', day: x.p.day, mon: x.p.mon, name: d.name,
+        seats: seatTxt(x.r), seatStyle: 'font-size:13px;' + (x.r[3] === 'few' ? 'color:' + acc + ';font-weight:600;' : 'color:#6B6B6B;'), price: TM.priceOf(x.r) ? TM.fmt(TM.priceOf(x.r)) : (d.note || '') };
+    });
+    var LIT = ['dra', 'bak', 'pip', 'kup', 'shp', 'rot', 'sec'];
+    var ids = Object.keys(TM.tours);
+    var firstUp = function (id) { return up.filter(function (x) { return x.r[0] === id; }); };
+    ids.sort(function (a, b) { var A1 = firstUp(a)[0], B1 = firstUp(b)[0]; if (A1 && B1) return A1.p.s - B1.p.s; if (A1) return -1; if (B1) return 1; return ids.indexOf(a) - ids.indexOf(b); });
+    var tours = ids.map(function (id) {
+      var d = TM.tours[id], list = firstUp(id), f = list[0], link = d.page !== false;
+      var badge = list.length > 1 ? 'ще ' + (list.length - 1) + ' ' + TM.plural(list.length - 1, 'дата', 'дати', 'дат') : (list.length === 1 ? seatTxt(f.r) : 'Дати скоро');
       return {
-        id: d.page === false ? '' : r[0], di: d.page === false ? '' : di, name: d.name, price: TM.priceOf(r) ? TM.fmt(TM.priceOf(r)) : (d.note || ''), img: d.img, href: d.page === false ? 'https://ig.me/m/tvoi.mandry' : 'TourV4.dc.html', is_other: d.page === false,
-        // фото картки стоїть у розмітці окремо для кожного туру, щоб його можна було замінити на полотні
-        is_dra: r[0] === 'dra', is_bak: r[0] === 'bak', is_pip: r[0] === 'pip', is_kup: r[0] === 'kup', is_shp: r[0] === 'shp', is_rot: r[0] === 'rot', is_sec: r[0] === 'sec',
-        dates: r[2], seats: r[3] === 'sold' ? 'Sold out' : (r[3] === 'few' ? 'Залишилось ' + r[4] : r[4] + ' ' + TM.plural(r[4], 'місце', 'місця', 'місць')),
-        badgeStyle: 'position:absolute;top:12px;left:12px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:6px 10px;border-radius:7px;background:#FFFFFF;color:#111111;',
-        dotStyle: 'width:7px;height:7px;border-radius:4px;background:' + dot[r[3]] + ';'
+        id: link ? id : '', di: link && f ? f.di : (link ? 0 : ''), name: d.name, img: d.img, href: link ? 'TourV4.dc.html' : 'https://ig.me/m/tvoi.mandry', is_other: !link,
+        is_dra: id === 'dra', is_bak: id === 'bak', is_pip: id === 'pip', is_kup: id === 'kup', is_shp: id === 'shp', is_rot: id === 'rot', is_sec: id === 'sec', is_gen: LIT.indexOf(id) < 0,
+        dates: f ? f.r[2] : (d.when || d.note || 'Дати скоро'),
+        price: f && TM.priceOf(f.r) ? TM.fmt(TM.priceOf(f.r)) : (d.price ? TM.fmt(d.price) : (d.note || '')),
+        seats: badge,
+        badgeStyle: 'position:absolute;top:8px;left:8px;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:5px 8px;border-radius:7px;background:#FFFFFF;color:#111111;',
+        dotStyle: 'width:7px;height:7px;border-radius:4px;background:' + (f ? (f.r[3] === 'few' ? acc : '#2BA84A') : '#9A9A9A') + ';'
       };
     });
     var qs = ['Чи підійду я за фізичною формою?', 'Можна поїхати самому чи самій?', 'Скільки передоплата?', 'Що, якщо я не зможу поїхати?'];
@@ -1037,7 +1038,7 @@ class Component extends DCLogic {
     });
     // мандрівки без дат цього сезону: окремим рядом під картками
     var more = Object.keys(TM.tours).filter(function (id) { var d = TM.tours[id]; return d.page && d.when && !TM.dates.some(function (r) { return r[0] === id; }); }).map(function (id) { var d = TM.tours[id]; return { id: id, name: d.name, img: d.img, when: d.when }; });
-    return { more: more, hasMore: more.length > 0,
+    return { more: more, hasMore: false, nextList: next, hasNext: next.length > 0, noNext: next.length === 0, tourCount: tours.length,
       acc: acc, accInk: accInk, months: months, tours: tours, faq: faq,
       crew: [
         ['img/82e11112df62d8a492af97d57507a9d3.jpg', "Кавун на привалі"],
