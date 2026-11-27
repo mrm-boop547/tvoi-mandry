@@ -15,6 +15,10 @@ html,body{background:var(--outer)}
 #app{max-width:430px;margin:0 auto;background:var(--site);min-height:100dvh;position:relative;overflow-x:clip}
 @media (min-width:600px){#app{box-shadow:0 0 0 1px rgba(0,0,0,.06),0 20px 60px rgba(0,0,0,.12)}}
 html{scroll-behavior:smooth}
+/* зручні для пальця цілі: мінімум 44 px по висоті */
+#app footer a{min-height:44px;display:inline-flex;align-items:center}
+#app footer span{gap:0 !important}
+#app header > a:not([aria-label]){min-height:44px;display:inline-flex;align-items:center}
 #totop{position:fixed;z-index:60;right:max(16px,calc((100vw - 430px)/2 + 16px));bottom:calc(20px + env(safe-area-inset-bottom,0px));
   width:44px;height:44px;border-radius:22px;border:none;background:rgba(255,255,255,.92);color:#111;
   box-shadow:0 6px 20px rgba(17,17,17,.18),0 1px 3px rgba(17,17,17,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;
@@ -80,10 +84,10 @@ input::placeholder{color:#A3A3A3}
 </header>
 
 <section style="position: relative; margin: 0; height: 540px; overflow: hidden; border-radius: 0px; background: #1E2830">
-<img alt="Група мандрівників йде хребтом у Карпатах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 64.2177% 100%; " src="img/crop_390ab91a_20723.jpg">
+<img alt="Група мандрівників йде хребтом у Карпатах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 64.2177% 100%; " src="img/crop_390ab91a_99631.jpg">
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 300px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.5) 45%, rgba(10,14,18,0.82) 100%)"></div>
 <div style="position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; flex-direction: column; gap: 18px">
-<h1 style="margin: 0 4px; font-weight: 500; font-size: 36px; line-height: 1.04; letter-spacing: -1.5px; color: #FFFFFF"></h1><h1 style="margin: 0px; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px; color: #ffffff">Авторські фототури, після яких залишаються друзі та спогади на все життя!<br></h1>
+<h1 style="margin: 0px; font-weight: 500; font-size: 32px; line-height: 1.05; letter-spacing: -1.3px; color: #ffffff">Авторські фототури, після яких залишаються друзі та спогади на все життя!<br></h1>
 <a href="#tours" style="text-decoration: none; height: 60px; padding: 0 8px 0 22px; gap: 12px; border-radius: 30px; background: {{acc}}; color: {{accInk}}; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between"><span>Обери свою мандрівку</span><span style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transform: rotate(180deg)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></span></a>
 </div>
 </section>
@@ -109,7 +113,7 @@ input::placeholder{color:#A3A3A3}
 <h3 style="margin: 22px 16px 0; font-weight: 500; font-size: 28px; line-height: 1.05; letter-spacing: -1px; color: #FFFFFF">Усі мандрівки <span style="color: rgb(154, 154, 154)">· {{tourCount}}</span></h3>
 <a href="CalendarV4.dc.html" style="margin: 6px 12px 0; text-decoration: none; height: 56px; padding: 0 8px 0 20px; border-radius: 28px; border: 1px solid rgba(255,255,255,0.35); color: #FFFFFF; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between">Усі дати в календарі<span style="width: 40px; height: 40px; border-radius: 20px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 0 12px">
 <sc-for list="{{tours}}" as="t" hint-placeholder-count="6"><a href="{{t.href}}" data-tour="{{t.id}}" data-d="{{t.di}}" style="text-decoration: none; color: #111111; background: #FFFFFF; border-radius: 14px; padding: 6px; display: flex; flex-direction: column; min-width: 0"><div style="position: relative; height: 150px; border-radius: 10px; overflow: hidden">
-<sc-if value="{{t.is_gen}}" hint-placeholder-val="{{false}}"><img src="img/tours/ph.jpg" alt="{{t.name}}" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_kup}}" hint-placeholder-val="{{false}}"><img src="img/fa7c6e21a710a87534cfe3b8b1c95703.jpg" alt="Івана Купала" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_shp}}" hint-placeholder-val="{{false}}"><img src="img/crop_e8992a52_30001.jpg" alt="Шпиці та Червона Рута" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 68.9336% 75.9011%; "></sc-if><sc-if value="{{t.is_rot}}" hint-placeholder-val="{{false}}"><img src="img/6ace0c60fc1ff65e799998fabaed3463.jpg" alt="Ротило та Комори Довбуша" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_sec}}" hint-placeholder-val="{{false}}"><img src="img/0e37070598a5a2093770abeac4f5a8ce.jpg" alt="Секретна подорож" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_dra}}" hint-placeholder-val="{{false}}"><img src="img/9832bcc0cbb15d22bef3f95f94a2c4c7.jpg" alt="Драгобрат" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_bak}}" hint-placeholder-val="{{false}}"><img src="img/bb85142f4c469e600cd4a53a37804f07.jpg" alt="Бакота" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_pip}}" hint-placeholder-val="{{false}}"><img src="img/efb98218d63a5047618b5502e6704c31.jpg" alt="Піп Іван" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if>
+<sc-if value="{{t.is_gen}}" hint-placeholder-val="{{false}}"><img src="img/tours/ph.jpg" alt="{{t.name}}" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_kup}}" hint-placeholder-val="{{false}}"><img src="img/fa7c6e21a710a87534cfe3b8b1c95703.jpg" alt="Івана Купала" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_shp}}" hint-placeholder-val="{{false}}"><img src="img/crop_e8992a52_68678.jpg" alt="Шпиці та Червона Рута" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 68.9336% 75.9011%; "></sc-if><sc-if value="{{t.is_rot}}" hint-placeholder-val="{{false}}"><img src="img/6ace0c60fc1ff65e799998fabaed3463.jpg" alt="Ротило та Комори Довбуша" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_sec}}" hint-placeholder-val="{{false}}"><img src="img/0e37070598a5a2093770abeac4f5a8ce.jpg" alt="Секретна подорож" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_dra}}" hint-placeholder-val="{{false}}"><img src="img/9832bcc0cbb15d22bef3f95f94a2c4c7.jpg" alt="Драгобрат" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_bak}}" hint-placeholder-val="{{false}}"><img src="img/bb85142f4c469e600cd4a53a37804f07.jpg" alt="Бакота" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if><sc-if value="{{t.is_pip}}" hint-placeholder-val="{{false}}"><img src="img/efb98218d63a5047618b5502e6704c31.jpg" alt="Піп Іван" style="display: block; width: 100%; height: 100%; object-fit: cover"></sc-if>
 <span style="{{t.badgeStyle}}"><span style="{{t.dotStyle}}"></span>{{t.seats}}</span>
 </div><span style="padding: 10px 6px 6px; display: flex; flex-direction: column; gap: 3px; min-width: 0"><span style="font-weight: 500; font-size: 16px; line-height: 1.2; letter-spacing: -0.3px">{{t.name}}</span><span style="font-size: 12px; color: #6B6B6B">{{t.dates}}</span><span style="font-size: 14px; font-weight: 600">{{t.price}}</span></span></a></sc-for>
 </div>
@@ -117,8 +121,8 @@ input::placeholder{color:#A3A3A3}
 </section>
 
 <section id="photo" style="padding: 64px 0 0; display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">У нас формат фототуру - ти гуляєш, <span style="color: rgb(138, 138, 138)">ми знімаємо</span></h2>
-<p style="margin: 0 16px; font-size: 17px; line-height: 1.5; color: #444444">Фотограф їде з групою, тож ти повертаєшся з десятками своїх кадрів. Можна приїхати з ідеєю образу або просто насолоджуватися горами поки ми знімаємо вас!</p>
+<h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">У нас формат фототуру -<br>ти гуляєш, <span style="color: rgb(138, 138, 138)">ми знімаємо</span></h2>
+<p style="margin: 0 16px; font-size: 17px; line-height: 1.5; color: #444444">Фотограф їде з групою, тож ти повертаєшся з десятками твоїх кадрів. Можна приїхати з ідеєю образу, або просто насолоджуватися горами поки ми знімаємо вас.</p>
 <div class="mrow" data-marquee="1" aria-label="Фото учасників з минулих мандрівок" style="display: flex; gap: 8px; padding: 8px 12px 0; overflow-x: auto">
 <sc-for list="{{gal1}}" as="g" hint-placeholder-count="6">
 <div style="flex-shrink: 0; width: 150px; height: 200px; border-radius: 10px; overflow: hidden; background: #F4F4F4"><img src="{{g.src}}" alt="Учасник мандрівки tvoi.mandry" data-zoom="1" data-cap="" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></div>
@@ -168,7 +172,7 @@ input::placeholder{color:#A3A3A3}
 
 
 
-<section id="faq" style="padding: 64px 16px 0; display: flex; flex-direction: column">
+<section id="faq" data-ph="1" style="padding: 64px 16px 0; display: flex; flex-direction: column">
 <h2 style="margin: 0 0 12px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Питання</h2>
 <sc-for list="{{faq}}" as="f" hint-placeholder-count="4">
 <div style="border-bottom: 1px solid #ECECEC">
@@ -197,7 +201,7 @@ input::placeholder{color:#A3A3A3}
 <template id="tpl-TourV4"><div class="page" style="width: 100%; min-height: 100dvh; padding-bottom: 104px; box-sizing: border-box; background: #FFFFFF; font-family: 'Inter Tight', system-ui, sans-serif; color: #111111; display: flex; flex-direction: column; position: relative; overflow: hidden">
 
 <section style="position: relative; height: 660px; overflow: hidden; background: #26313B; border-radius: 0 0 32px 32px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px">
-<sc-if value="{{isDra}}" hint-placeholder-val="{{true}}"><img alt="Стежка на Драгобраті" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 100%; " src="img/crop_b2e2fa2d_87330.jpg"></sc-if><sc-if value="{{isBak}}" hint-placeholder-val="{{false}}"><img alt="Бакота" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover" src="img/63c48a54320f1919776dc6e2d4c49f3b.jpg"></sc-if><sc-if value="{{isPip}}" hint-placeholder-val="{{false}}"><img alt="Піп Іван + Верховина" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 56.008% 33.2181%; " src="img/crop_c3a73d7b_47705.jpg"></sc-if><sc-if value="{{isKup}}" hint-placeholder-val="{{false}}"><img alt="Івана Купала" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 41.3487% 100%" src="img/fa7c6e21a710a87534cfe3b8b1c95703.jpg"></sc-if><sc-if value="{{isShp}}" hint-placeholder-val="{{false}}"><img alt="Шпиці та Червона Рута" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 65.3972% 99.9236%; " src="img/crop_e8992a52_1150.jpg"></sc-if><sc-if value="{{isRot}}" hint-placeholder-val="{{false}}"><img alt="Ротило та Комори Довбуша" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover" src="img/56cd7803011eb7626742322217b235b5.jpg"></sc-if><sc-if value="{{genHero}}" hint-placeholder-val="{{false}}"><img alt="{{name}}" src="{{heroImg}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover"></sc-if>
+<sc-if value="{{isDra}}" hint-placeholder-val="{{true}}"><img alt="Стежка на Драгобраті" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 100%; " src="img/crop_b2e2fa2d_8156.jpg"></sc-if><sc-if value="{{isBak}}" hint-placeholder-val="{{false}}"><img alt="Бакота" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover" src="img/63c48a54320f1919776dc6e2d4c49f3b.jpg"></sc-if><sc-if value="{{isPip}}" hint-placeholder-val="{{false}}"><img alt="Піп Іван + Верховина" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 56.008% 33.2181%; " src="img/crop_c3a73d7b_81159.jpg"></sc-if><sc-if value="{{isKup}}" hint-placeholder-val="{{false}}"><img alt="Івана Купала" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 41.3487% 100%" src="img/fa7c6e21a710a87534cfe3b8b1c95703.jpg"></sc-if><sc-if value="{{isShp}}" hint-placeholder-val="{{false}}"><img alt="Шпиці та Червона Рута" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 65.3972% 99.9236%; " src="img/crop_e8992a52_20693.jpg"></sc-if><sc-if value="{{isRot}}" hint-placeholder-val="{{false}}"><img alt="Ротило та Комори Довбуша" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover" src="img/56cd7803011eb7626742322217b235b5.jpg"></sc-if><sc-if value="{{genHero}}" hint-placeholder-val="{{false}}"><img alt="{{name}}" src="{{heroImg}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover"></sc-if>
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 130px; background: linear-gradient(180deg, rgba(10,14,18,0.4) 0%, rgba(10,14,18,0) 100%)"></div>
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 270px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.55) 45%, rgba(10,14,18,0.85) 100%)"></div>
 <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 16px">
@@ -306,7 +310,7 @@ input::placeholder{color:#A3A3A3}
 <sc-for list="{{days}}" as="d" hint-placeholder-count="3">
 <div style="padding-bottom: 16px; display: flex; flex-direction: column">
 <div style="background: #F4F4F4; border-radius: 14px; padding: 8px; display: flex; flex-direction: column">
-<div style="position: relative; height: 210px; border-radius: 10px; overflow: hidden"><sc-if value="{{d.p0}}" hint-placeholder-val="{{true}}"><img src="img/7a813c22cfa8a684bb8626376255c90c.jpg" alt="Підйом на Драгобрат, озеро Івор і Жандарм" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></sc-if><sc-if value="{{d.p1}}" hint-placeholder-val="{{true}}"><img src="img/2bd7c66f848d9aca63f550f469471fef.jpg" alt="Озера Ворожеска і Герешаска" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></sc-if><sc-if value="{{d.p2}}" hint-placeholder-val="{{true}}"><img src="img/crop_9a29a80d_91674.jpg" alt="Світанок над туманом" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; object-position: 50.1678% 60.4733%; "></sc-if><span style="position: absolute; top: 12px; left: 12px; height: 34px; padding: 0 14px; border-radius: 17px; background: #FFFFFF; color: #111111; font-weight: 600; font-size: 15px; display: flex; align-items: center; pointer-events: none">День {{d.n}}</span></div>
+<div style="position: relative; height: 210px; border-radius: 10px; overflow: hidden"><sc-if value="{{d.p0}}" hint-placeholder-val="{{true}}"><img src="img/7a813c22cfa8a684bb8626376255c90c.jpg" alt="Підйом на Драгобрат, озеро Івор і Жандарм" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></sc-if><sc-if value="{{d.p1}}" hint-placeholder-val="{{true}}"><img src="img/2bd7c66f848d9aca63f550f469471fef.jpg" alt="Озера Ворожеска і Герешаска" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in"></sc-if><sc-if value="{{d.p2}}" hint-placeholder-val="{{true}}"><img src="img/crop_9a29a80d_25131.jpg" alt="Світанок над туманом" data-zoom="1" style="display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; object-position: 50.1678% 60.4733%; "></sc-if><span style="position: absolute; top: 12px; left: 12px; height: 34px; padding: 0 14px; border-radius: 17px; background: #FFFFFF; color: #111111; font-weight: 600; font-size: 15px; display: flex; align-items: center; pointer-events: none">День {{d.n}}</span></div>
 <button onClick="{{d.toggle}}" aria-expanded="{{d.open}}" style="border: none; background: none; padding: 14px 8px 8px; display: flex; flex-direction: column; align-items: stretch; gap: 8px; text-align: left; font-family: 'Inter Tight', sans-serif; color: #111111; cursor: pointer">
 <span style="font-weight: 500; font-size: 20px; line-height: 1.2; letter-spacing: -0.5px">{{d.title}}</span>
 <span style="{{d.ctaStyle}}">{{d.cta}}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{d.arrow}}"></path></svg></span>
@@ -405,7 +409,7 @@ input::placeholder{color:#A3A3A3}
 
 <h2 style="margin: 0; font-weight: 500; font-size: 30px; line-height: 1.05; letter-spacing: -1.2px">Як виглядає <span style="color: #8A8A8A">{{videoT}}</span></h2>
 <div style="position: relative; flex: 1; min-height: 0; border-radius: 14px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #26313B">
-<img src="img/crop_2b8315cd_47526.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 51.356% 84.4396%; ">
+<img src="img/crop_2b8315cd_77621.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 51.356% 84.4396%; ">
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 160px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.55) 100%)"></div>
 <button aria-label="Відтворити відео зі звуком" style="position: relative; width: 76px; height: 76px; border-radius: 38px; border: none; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer">
 <svg width="26" height="26" viewBox="0 0 24 24" fill="#111111" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
@@ -435,6 +439,13 @@ input::placeholder{color:#A3A3A3}
 </div>
 </sc-for>
 </div>
+</section><section id="reviews" aria-label="Відгуки" style="padding: 56px 0 0; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Що кажуть <span style="color: #8A8A8A">після мандрів</span></h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 0 12px">
+<div style="height: 300px; border-radius: 10px; overflow: hidden; background: #1E2834"><img src="img/tours/rev-1.jpg" alt="Відгук: Марія" data-zoom="1" data-cap="Марія" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0%; cursor: zoom-in"></div>
+<div style="height: 300px; border-radius: 10px; overflow: hidden; background: #1E2834"><img src="img/tours/rev-2.jpg" alt="Відгук: Олександр" data-zoom="1" data-cap="Олександр" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0%; cursor: zoom-in"></div>
+</div>
+<a href="MainV4.dc.html#reviews" style="margin: 0 16px; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 15px; font-weight: 500; color: #111111; text-decoration: none">Усі відгуки<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 </section><section id="faq" style="padding: 56px 16px 0; display: flex; flex-direction: column">
 <h2 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px; margin: 0 0 12px">Відповіді на питання:</h2>
 <sc-for list="{{faq}}" as="f" hint-placeholder-count="5">
@@ -450,7 +461,12 @@ input::placeholder{color:#A3A3A3}
 </section>
 
 <section style="margin: 56px 12px 0; padding: 32px 20px 20px; background: #F4F4F4; border-radius: 14px; display: flex; flex-direction: column; gap: 20px">
-<h2 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px; color: #111111"></h2><h2 style="color: #111111; margin: 0px; font-weight: 500; font-size: 36px; line-height: 1.04; letter-spacing: -1.5px">Готовий(а) до нової пригоди?</h2>
+<h2 style="color: #111111; margin: 0px; font-weight: 500; font-size: 36px; line-height: 1.04; letter-spacing: -1.5px">Готовий(а) до нової пригоди?</h2>
+<sc-if value="{{hasDates}}" hint-placeholder-val="{{true}}"><ol aria-label="Як забронювати" style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px">
+<li style="display: flex; gap: 12px; align-items: flex-start"><span style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 14px; background: #111111; color: #FFFFFF; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center">1</span><span style="font-size: 16px; line-height: 1.4; padding-top: 3px">Обираєш дату й залишаєш заявку. Це хвилина.</span></li>
+<li style="display: flex; gap: 12px; align-items: flex-start"><span style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 14px; background: #111111; color: #FFFFFF; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center">2</span><span style="font-size: 16px; line-height: 1.4; padding-top: 3px">Менеджер пише тобі й підтверджує місце.</span></li>
+<li style="display: flex; gap: 12px; align-items: flex-start"><span style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 14px; background: #111111; color: #FFFFFF; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center">3</span><span style="font-size: 16px; line-height: 1.4; padding-top: 3px">Вносиш завдаток, і місце закріплене за тобою.</span></li>
+</ol></sc-if>
 <a href="{{bookHref}}" data-tour="{{tid}}" data-d="{{dsel}}" style="text-decoration: none; height: 60px; border-radius: 30px; background: {{acc}}; color: {{accInk}}; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 22px"><span>{{bookCta}}</span><span style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></span></a>
 <a href="https://ig.me/m/tvoi.mandry" style="align-self: center; font-size: 15px; font-weight: 500; color: #111111">Або напиши нам у Direct</a>
 </section>
@@ -620,19 +636,21 @@ input::placeholder{color:#A3A3A3}
 </sc-for>
 </nav>
 
+<sc-if value="{{hasNext}}" hint-placeholder-val="{{true}}">
 <section style="margin: 28px 16px 0; display: flex; flex-direction: column; gap: 10px">
 <span style="font-size: 13px; font-weight: 500; color: #6B6B6B">Найближча мандрівка</span>
-<a href="TourV3.dc.html" data-tour="dra" data-d="4" style="text-decoration: none; display: flex; gap: 12px; align-items: center; padding: 8px; border-radius: 24px; background: #F4F4F4">
-<img alt="Драгобрат восени" src="img/0567fee2bd71b742446b0b6a95b4a33b.jpg" style="width: 76px; height: 76px; border-radius: 18px; object-fit: cover; flex-shrink: 0">
+<a href="TourV4.dc.html" data-tour="{{nx.id}}" data-d="{{nx.di}}" style="text-decoration: none; display: flex; gap: 12px; align-items: center; padding: 8px; border-radius: 14px; background: #F4F4F4">
+<img alt="{{nx.name}}" src="{{nx.img}}" style="width: 76px; height: 76px; border-radius: 10px; object-fit: cover; flex-shrink: 0; background: #E4E4E4">
 <span style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0">
-<span style="font-size: 17px; font-weight: 500; letter-spacing: -0.3px">Драгобрат</span>
-<span style="font-size: 13px; color: #6B6B6B">16–18 жовтня · 6 950 грн</span>
+<span style="font-size: 17px; font-weight: 500; letter-spacing: -0.3px">{{nx.name}}</span>
+<span style="font-size: 13px; color: #6B6B6B">{{nx.when}}</span>
 </span>
-<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 20px; background: #111111; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 4px">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 22px; background: #111111; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 4px">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
 </span>
 </a>
 </section>
+</sc-if>
 
 <div style="flex: 1 1 auto"></div>
 
@@ -740,7 +758,7 @@ input::placeholder{color:#A3A3A3}
 </header>
 
 <section style="position: relative; margin: 0; height: 560px; overflow: hidden; border-radius: 0px; background: #1E2830">
-<img src="img/crop_1ce8da16_14516.jpg" alt="Група біля ватри ввечері в горах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 45.61% 100%; ">
+<img src="img/crop_1ce8da16_24706.jpg" alt="Група біля ватри ввечері в горах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 45.61% 100%; ">
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 280px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.78) 100%)"></div>
 <div style="position: absolute; left: 20px; right: 20px; bottom: 22px; display: flex; flex-direction: column; gap: 8px; color: #FFFFFF">
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; opacity: 0.75">Про нас</span>
@@ -764,7 +782,7 @@ input::placeholder{color:#A3A3A3}
 <section style="padding: 48px 0 0; display: flex; flex-direction: column; gap: 28px">
 <h2 style="margin: 0 16px; font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -1.4px">Хто <span style="color: #8A8A8A">поруч у мандрівці</span></h2>
 <article style="display: flex; flex-direction: column; gap: 12px">
-<div style="position: relative; height: 480px; border-radius: 0; overflow: hidden; background: #E9E9E9"><img src="img/crop_050a1086_30683.jpg" alt="Мар’ян з камерою" data-zoom="1" data-cap="" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 59.1622% 51.9483%; ">
+<div style="position: relative; height: 480px; border-radius: 0; overflow: hidden; background: #E9E9E9"><img src="img/crop_050a1086_29109.jpg" alt="Мар’ян з камерою" data-zoom="1" data-cap="" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 59.1622% 51.9483%; ">
 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 160px; background: linear-gradient(180deg, rgba(10,14,18,0) 0%, rgba(10,14,18,0.7) 100%)"></div>
 <span style="position: absolute; left: 20px; bottom: 18px; display: flex; flex-direction: column; gap: 2px; color: #FFFFFF"><span style="font-weight: 500; font-size: 30px; letter-spacing: -1.1px">Мар’ян</span><span style="font-size: 15px; opacity: 0.8">Співзасновник, фотограф</span></span>
 <a href="https://instagram.com/tvoi.mandry" aria-label="Instagram: Мар’ян" style="position: absolute; right: 14px; bottom: 16px; width: 44px; height: 44px; border-radius: 22px; background: rgba(255,255,255,0.22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="#FFFFFF"></circle></svg></a>
@@ -818,7 +836,7 @@ input::placeholder{color:#A3A3A3}
 </div>
 <div style="background: #FFFFFF; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
 <sc-for list="{{weeks}}" as="w" hint-placeholder-count="5">
-<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); row-gap: 6px; padding: 6px 4px 8px; border-top: 1px solid #EFEFEF; min-height: 52px">
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); row-gap: 6px; padding: 6px 4px 8px; border-top: 1px solid #EFEFEF; min-height: 64px">
 <sc-for list="{{w.days}}" as="d" hint-placeholder-count="7"><a href="{{d.href}}" data-tour="{{d.id}}" data-d="{{d.di}}" tabindex="{{d.tab}}" style="{{d.style}}">{{d.n}}</a></sc-for>
 <sc-for list="{{w.events}}" as="e" hint-placeholder-count="1">
 <a href="{{e.href}}" data-tour="{{e.id}}" data-d="{{e.di}}" aria-label="{{e.aria}}" style="{{e.style}}">
@@ -856,7 +874,7 @@ input::placeholder{color:#A3A3A3}
 
 <sc-if value="{{form}}" hint-placeholder-val="{{true}}">
 <section style="position: relative; height: 420px; overflow: hidden; background: #1E2830">
-<img src="img/crop_3964b393_53370.jpg" alt="Група біля ватри в горах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 43.4717% 97.4945%; ">
+<img src="img/crop_3964b393_18496.jpg" alt="Група біля ватри в горах" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 43.4717% 97.4945%; ">
 <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,14,18,0.1) 0%, rgba(10,14,18,0.8) 100%); height: 234px; top: 186px"></div>
 <div style="position: absolute; left: 16px; right: 16px; bottom: 22px; display: flex; flex-direction: column; gap: 10px; color: #FFFFFF">
 
@@ -932,47 +950,47 @@ class Component extends DCLogic {
     var P = this.props;
     var pos = function (x, y, dx, dy) { return (x ?? dx) + '% ' + (y ?? dy) + '%'; };
     /*TM-DATA*/ // єдине джерело турів і дат (потім підтягуватиметься з таблиці-адмінки)
-    var TM = {
-      tours: {
-        dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6750, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true },
-        bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false },
-        pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false },
-        // тури без власної сторінки: картка веде в Direct (фото тимчасові)
-        kup: { name: 'Івана Купала', price: 7800, img: 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg', page: true },
-        shp: { name: 'Шпиці та Червона Рута', price: 7200, img: 'img/18f58924fb138cad4d45e5dddc24f607.jpg', page: true },
-        rot: { name: 'Ротило та Верховина', price: 6800, img: 'img/6ace0c60fc1ff65e799998fabaed3463.jpg', page: true },
-        krk: { name: 'У пошуках крокусів', price: 5900, img: 'img/tours/ph.jpg', page: true, when: 'Квітень · Микуличин' },
-        hut: { name: 'Гуцульщина', price: 6600, img: 'img/tours/ph.jpg', page: true, when: 'Травень · Косів і Криворівня' },
-        rzd: { name: 'Різдво в Карпатах', price: 8700, img: 'img/tours/ph.jpg', page: true, when: '24–26 грудня · Верховина' },
-        drw: { name: 'Зимова «Планета Драгобрат»', price: 5350, img: 'img/tours/ph.jpg', page: true, when: 'Січень–лютий · лижі й борд' },
-        sec: { name: 'Секретна подорож', price: 0, note: 'анонс у профілі', img: 'img/0e37070598a5a2093770abeac4f5a8ce.jpg', page: false }
-      },
-      // [тур, місяць, дати, статус ok/few/sold, вільних місць]
-      dates: [
-        ['dra', 'jun', '12–14 червня', 'ok', 10],
-        ['kup', 'jun', '22–24 червня', 'ok', 10],
-        ['shp', 'jun', '26–28 червня', 'ok', 10],
-        ['rot', 'jul', '3–5 липня', 'ok', 10],
-        ['dra', 'jul', '10–12 липня', 'ok', 10],
-        ['bak', 'jul', '17–19 липня', 'ok', 10],
-        ['pip', 'jul', '24–26 липня', 'ok', 10],
-        ['bak', 'aug', '31 липня – 2 серпня', 'ok', 10],
-        ['dra', 'aug', '7–9 серпня', 'ok', 10],
-        ['pip', 'aug', '14–16 серпня', 'ok', 10],
-        ['sec', 'aug', '20–23 серпня', 'ok', 10],
-        ['bak', 'aug', '28–30 серпня', 'ok', 10],
-        ['dra', 'sep', '25–27 вересня', 'ok', 10, 6950],
-        ['dra', 'oct', '2–4 жовтня', 'ok', 10, 6950],
-        ['dra', 'oct', '16–18 жовтня', 'ok', 10, 6950],
-        ['dra', 'oct', '30 жовтня – 1 листопада', 'ok', 10, 6950],
-        ['dra', 'nov', '6–8 листопада', 'ok', 10, 6950]
-      ],
-      priceOf: function (r) { return r[5] || TM.tours[r[0]].price; }, // ціна конкретної дати (осінній Драгобрат дорожчий)
-      fmt: function (n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн'; },
-      plural: function (n, a, b, c) { var m = n % 10, h = n % 100; return (m === 1 && h !== 11) ? a : (m >= 2 && m <= 4 && (h < 12 || h > 14)) ? b : c; },
-      forTour: function (id) { return TM.dates.filter(function (d) { return d[0] === id; }); }
-    };
-    /*TM-DATA-END*/
+var TM = {
+  tours: {
+    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6750, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true, seasons: [['Літо', 'img/eec1ae232dee3513b4739ee943be7efb.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg'], ['Зима', 'img/2b9561ffbe87cb6a2c790e94b280b697.jpg']], page: true, lvl: '', days: 3 },
+    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false, seasons: [['Літо', 'img/bb85142f4c469e600cd4a53a37804f07.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/efb98218d63a5047618b5502e6704c31.jpg'], ['Осінь', 'img/f833908b1249bfdfd3c5f5afdff404e4.jpg']], page: true, lvl: 'Середній', days: 3 },
+    kup: { name: 'Івана Купала', gen: 'Івана Купала', price: 7800, img: 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg', h1a: 'Івана Купала', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    shp: { name: 'Шпиці та Червона Рута', gen: 'Шпиців', price: 7200, img: 'img/18f58924fb138cad4d45e5dddc24f607.jpg', h1a: 'Шпиці та Червона Рута', h1b: '', place: 'Чорногора', full: false, seasons: [['Літо', 'img/18f58924fb138cad4d45e5dddc24f607.jpg']], page: true, lvl: 'Середній', days: 3 },
+    rot: { name: 'Ротило та Верховина', gen: 'Ротила', price: 6800, img: 'img/6ace0c60fc1ff65e799998fabaed3463.jpg', h1a: 'Ротило та Верховина', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/6ace0c60fc1ff65e799998fabaed3463.jpg']], page: true, lvl: 'Середній', days: 3 },
+    krk: { name: "У пошуках крокусів", gen: "крокусів", price: 5900, img: 'img/tours/ph.jpg', h1a: "У пошуках крокусів", h1b: '', place: "Микуличин", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Квітень · Микуличин', lvl: 'Середній', days: 3 },
+    hut: { name: "Гуцульщина", gen: "Гуцульщини", price: 6600, img: 'img/tours/ph.jpg', h1a: "Гуцульщина", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Травень · Косів і Криворівня', lvl: 'Легкий', days: 2 },
+    rzd: { name: "Різдво в Карпатах", gen: "Різдва", price: 8700, img: 'img/tours/ph.jpg', h1a: "Різдво в Карпатах", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: '24–26 грудня · Верховина', lvl: '', days: 3 },
+    drw: { name: "Зимова «Планета Драгобрат»", gen: "зимового Драгобрату", price: 5350, img: 'img/tours/ph.jpg', h1a: "Зимова «Планета Драгобрат»", h1b: '', place: "Свидовець", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: 'Січень–лютий · лижі й борд', lvl: 'Легкий', days: 3 },
+    sec: { name: 'Секретна подорож', gen: 'Секретної подорожі', price: 0, img: 'img/0e37070598a5a2093770abeac4f5a8ce.jpg', h1a: 'Секретна подорож', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/0e37070598a5a2093770abeac4f5a8ce.jpg']], page: false, note: 'анонс у профілі', lvl: '', days: 4 }
+  },
+  // lvl: складність маршруту, days: днів у турі (порожньо = не показуємо)
+  // [тур, місяць, дати, статус ok/few/sold, вільних місць]
+  dates: [
+    ['dra', 'jun', '12–14 червня', 'ok', 10],
+    ['dra', 'jul', '10–12 липня', 'ok', 10],
+    ['bak', 'jul', '17–19 липня', 'ok', 10],
+    ['pip', 'jul', '24–26 липня', 'ok', 10],
+    ['bak', 'aug', '31 липня – 2 серпня', 'ok', 10],
+    ['dra', 'aug', '7–9 серпня', 'ok', 10],
+    ['pip', 'aug', '14–16 серпня', 'ok', 10],
+    ['bak', 'aug', '28–30 серпня', 'ok', 10],
+    ['kup', 'jun', '22–24 червня', 'ok', 10],
+    ['shp', 'jun', '26–28 червня', 'ok', 10],
+    ['rot', 'jul', '3–5 липня', 'ok', 10],
+    ['sec', 'aug', '20–23 серпня', 'ok', 10],
+    ['dra', 'sep', '25–27 вересня', 'ok', 10, 6950],
+    ['dra', 'oct', '2–4 жовтня', 'ok', 10, 6950],
+    ['dra', 'oct', '16–18 жовтня', 'ok', 10, 6950],
+    ['dra', 'oct', '30 жовтня – 1 листопада', 'ok', 10, 6950],
+    ['dra', 'nov', '6–8 листопада', 'ok', 10, 6950]
+  ],
+  priceOf: function (r) { return r[5] || TM.tours[r[0]].price; }, // ціна конкретної дати (осінній Драгобрат дорожчий)
+  fmt: function (n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн'; },
+  plural: function (n, a, b, c) { var m = n % 10, h = n % 100; return (m === 1 && h !== 11) ? a : (m >= 2 && m <= 4 && (h < 12 || h > 14)) ? b : c; },
+  forTour: function (id) { return TM.dates.filter(function (d) { return d[0] === id; }); }
+};
+/*TM-DATA-END*/
     var dot = { ok: '#9A9A9A', few: acc, sold: '#111111' };
     var labels = [['may', 'Травень'], ['jun', 'Червень'], ['jul', 'Липень'], ['aug', 'Серпень'], ['sep', 'Вересень'], ['oct', 'Жовтень'], ['nov', 'Листопад']].filter(function (l) { return TM.dates.some(function (r) { return r[1] === l[0]; }); }); // місяці без мандрівок не показуємо
     var keys = labels.map(function (l) { return l[0]; });
@@ -1091,18 +1109,19 @@ SCREENS["TourV4"] = { props: {"accent": "#F2491D", "heroX": 50, "heroY": 60}, Cl
 /*TM-DATA*/ // єдине джерело турів і дат (потім підтягуватиметься з таблиці-адмінки)
 var TM = {
   tours: {
-    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6750, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true, seasons: [['Літо', 'img/eec1ae232dee3513b4739ee943be7efb.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg'], ['Зима', 'img/2b9561ffbe87cb6a2c790e94b280b697.jpg']] },
-    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false, seasons: [['Літо', 'img/bb85142f4c469e600cd4a53a37804f07.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg']] },
-    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/efb98218d63a5047618b5502e6704c31.jpg'], ['Осінь', 'img/f833908b1249bfdfd3c5f5afdff404e4.jpg']] },
-    kup: { name: 'Івана Купала', gen: 'Івана Купала', price: 7800, img: 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg', h1a: 'Івана Купала', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg']] },
-    shp: { name: 'Шпиці та Червона Рута', gen: 'Шпиців', price: 7200, img: 'img/18f58924fb138cad4d45e5dddc24f607.jpg', h1a: 'Шпиці та Червона Рута', h1b: '', place: 'Чорногора', full: false, seasons: [['Літо', 'img/18f58924fb138cad4d45e5dddc24f607.jpg']] },
-    rot: { name: 'Ротило та Верховина', gen: 'Ротила', price: 6800, img: 'img/6ace0c60fc1ff65e799998fabaed3463.jpg', h1a: 'Ротило та Верховина', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/6ace0c60fc1ff65e799998fabaed3463.jpg']] },
-    krk: { name: "У пошуках крокусів", gen: "крокусів", price: 5900, img: 'img/tours/ph.jpg', h1a: "У пошуках крокусів", h1b: '', place: "Микуличин", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]] },
-    hut: { name: "Гуцульщина", gen: "Гуцульщини", price: 6600, img: 'img/tours/ph.jpg', h1a: "Гуцульщина", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]] },
-    rzd: { name: "Різдво в Карпатах", gen: "Різдва", price: 8700, img: 'img/tours/ph.jpg', h1a: "Різдво в Карпатах", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]] },
-    drw: { name: "Зимова «Планета Драгобрат»", gen: "зимового Драгобрату", price: 5350, img: 'img/tours/ph.jpg', h1a: "Зимова «Планета Драгобрат»", h1b: '', place: "Свидовець", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]] },
-    sec: { name: 'Секретна подорож', gen: 'Секретної подорожі', price: 0, img: 'img/0e37070598a5a2093770abeac4f5a8ce.jpg', h1a: 'Секретна подорож', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/0e37070598a5a2093770abeac4f5a8ce.jpg']] }
+    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6750, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true, seasons: [['Літо', 'img/eec1ae232dee3513b4739ee943be7efb.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg'], ['Зима', 'img/2b9561ffbe87cb6a2c790e94b280b697.jpg']], page: true, lvl: '', days: 3 },
+    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false, seasons: [['Літо', 'img/bb85142f4c469e600cd4a53a37804f07.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/efb98218d63a5047618b5502e6704c31.jpg'], ['Осінь', 'img/f833908b1249bfdfd3c5f5afdff404e4.jpg']], page: true, lvl: 'Середній', days: 3 },
+    kup: { name: 'Івана Купала', gen: 'Івана Купала', price: 7800, img: 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg', h1a: 'Івана Купала', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    shp: { name: 'Шпиці та Червона Рута', gen: 'Шпиців', price: 7200, img: 'img/18f58924fb138cad4d45e5dddc24f607.jpg', h1a: 'Шпиці та Червона Рута', h1b: '', place: 'Чорногора', full: false, seasons: [['Літо', 'img/18f58924fb138cad4d45e5dddc24f607.jpg']], page: true, lvl: 'Середній', days: 3 },
+    rot: { name: 'Ротило та Верховина', gen: 'Ротила', price: 6800, img: 'img/6ace0c60fc1ff65e799998fabaed3463.jpg', h1a: 'Ротило та Верховина', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/6ace0c60fc1ff65e799998fabaed3463.jpg']], page: true, lvl: 'Середній', days: 3 },
+    krk: { name: "У пошуках крокусів", gen: "крокусів", price: 5900, img: 'img/tours/ph.jpg', h1a: "У пошуках крокусів", h1b: '', place: "Микуличин", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Квітень · Микуличин', lvl: 'Середній', days: 3 },
+    hut: { name: "Гуцульщина", gen: "Гуцульщини", price: 6600, img: 'img/tours/ph.jpg', h1a: "Гуцульщина", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Травень · Косів і Криворівня', lvl: 'Легкий', days: 2 },
+    rzd: { name: "Різдво в Карпатах", gen: "Різдва", price: 8700, img: 'img/tours/ph.jpg', h1a: "Різдво в Карпатах", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: '24–26 грудня · Верховина', lvl: '', days: 3 },
+    drw: { name: "Зимова «Планета Драгобрат»", gen: "зимового Драгобрату", price: 5350, img: 'img/tours/ph.jpg', h1a: "Зимова «Планета Драгобрат»", h1b: '', place: "Свидовець", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: 'Січень–лютий · лижі й борд', lvl: 'Легкий', days: 3 },
+    sec: { name: 'Секретна подорож', gen: 'Секретної подорожі', price: 0, img: 'img/0e37070598a5a2093770abeac4f5a8ce.jpg', h1a: 'Секретна подорож', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/0e37070598a5a2093770abeac4f5a8ce.jpg']], page: false, note: 'анонс у профілі', lvl: '', days: 4 }
   },
+  // lvl: складність маршруту, days: днів у турі (порожньо = не показуємо)
   // [тур, місяць, дати, статус ok/few/sold, вільних місць]
   dates: [
     ['dra', 'jun', '12–14 червня', 'ok', 10],
@@ -1289,10 +1308,19 @@ SCREENS["BookingV4"] = { props: {"accent": "#F2491D", "startStep": 1}, Cls: (fun
 /*TM-DATA*/ // єдине джерело турів і дат (потім підтягуватиметься з таблиці-адмінки)
 var TM = {
   tours: {
-    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6750, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true },
-    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false },
-    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false }
+    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6750, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true, seasons: [['Літо', 'img/eec1ae232dee3513b4739ee943be7efb.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg'], ['Зима', 'img/2b9561ffbe87cb6a2c790e94b280b697.jpg']], page: true, lvl: '', days: 3 },
+    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false, seasons: [['Літо', 'img/bb85142f4c469e600cd4a53a37804f07.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/efb98218d63a5047618b5502e6704c31.jpg'], ['Осінь', 'img/f833908b1249bfdfd3c5f5afdff404e4.jpg']], page: true, lvl: 'Середній', days: 3 },
+    kup: { name: 'Івана Купала', gen: 'Івана Купала', price: 7800, img: 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg', h1a: 'Івана Купала', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    shp: { name: 'Шпиці та Червона Рута', gen: 'Шпиців', price: 7200, img: 'img/18f58924fb138cad4d45e5dddc24f607.jpg', h1a: 'Шпиці та Червона Рута', h1b: '', place: 'Чорногора', full: false, seasons: [['Літо', 'img/18f58924fb138cad4d45e5dddc24f607.jpg']], page: true, lvl: 'Середній', days: 3 },
+    rot: { name: 'Ротило та Верховина', gen: 'Ротила', price: 6800, img: 'img/6ace0c60fc1ff65e799998fabaed3463.jpg', h1a: 'Ротило та Верховина', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/6ace0c60fc1ff65e799998fabaed3463.jpg']], page: true, lvl: 'Середній', days: 3 },
+    krk: { name: "У пошуках крокусів", gen: "крокусів", price: 5900, img: 'img/tours/ph.jpg', h1a: "У пошуках крокусів", h1b: '', place: "Микуличин", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Квітень · Микуличин', lvl: 'Середній', days: 3 },
+    hut: { name: "Гуцульщина", gen: "Гуцульщини", price: 6600, img: 'img/tours/ph.jpg', h1a: "Гуцульщина", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Травень · Косів і Криворівня', lvl: 'Легкий', days: 2 },
+    rzd: { name: "Різдво в Карпатах", gen: "Різдва", price: 8700, img: 'img/tours/ph.jpg', h1a: "Різдво в Карпатах", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: '24–26 грудня · Верховина', lvl: '', days: 3 },
+    drw: { name: "Зимова «Планета Драгобрат»", gen: "зимового Драгобрату", price: 5350, img: 'img/tours/ph.jpg', h1a: "Зимова «Планета Драгобрат»", h1b: '', place: "Свидовець", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: 'Січень–лютий · лижі й борд', lvl: 'Легкий', days: 3 },
+    sec: { name: 'Секретна подорож', gen: 'Секретної подорожі', price: 0, img: 'img/0e37070598a5a2093770abeac4f5a8ce.jpg', h1a: 'Секретна подорож', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/0e37070598a5a2093770abeac4f5a8ce.jpg']], page: false, note: 'анонс у профілі', lvl: '', days: 4 }
   },
+  // lvl: складність маршруту, days: днів у турі (порожньо = не показуємо)
   // [тур, місяць, дати, статус ok/few/sold, вільних місць]
   dates: [
     ['dra', 'jun', '12–14 червня', 'ok', 10],
@@ -1303,6 +1331,10 @@ var TM = {
     ['dra', 'aug', '7–9 серпня', 'ok', 10],
     ['pip', 'aug', '14–16 серпня', 'ok', 10],
     ['bak', 'aug', '28–30 серпня', 'ok', 10],
+    ['kup', 'jun', '22–24 червня', 'ok', 10],
+    ['shp', 'jun', '26–28 червня', 'ok', 10],
+    ['rot', 'jul', '3–5 липня', 'ok', 10],
+    ['sec', 'aug', '20–23 серпня', 'ok', 10],
     ['dra', 'sep', '25–27 вересня', 'ok', 10, 6950],
     ['dra', 'oct', '2–4 жовтня', 'ok', 10, 6950],
     ['dra', 'oct', '16–18 жовтня', 'ok', 10, 6950],
@@ -1384,19 +1416,67 @@ class Component extends DCLogic {
 }
 
  return Component; })() };
-SCREENS["MenuV3"] = { props: {"accent": "#F2491D"}, Cls: (function(){ 
+SCREENS["MenuV3"] = { props: {"today": "2026-06-01", "accent": "#F2491D"}, Cls: (function(){ 
 class Component extends DCLogic {
   renderVals() {
     var acc = this.props.accent ?? '#F2491D';
     var accInk = acc.toUpperCase() === '#7CC8CF' ? '#111111' : '#FFFFFF';
+    /*TM-DATA*/ // єдине джерело турів і дат (потім підтягуватиметься з таблиці-адмінки)
+var TM = {
+  tours: {
+    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6750, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true, seasons: [['Літо', 'img/eec1ae232dee3513b4739ee943be7efb.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg'], ['Зима', 'img/2b9561ffbe87cb6a2c790e94b280b697.jpg']], page: true, lvl: '', days: 3 },
+    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false, seasons: [['Літо', 'img/bb85142f4c469e600cd4a53a37804f07.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/efb98218d63a5047618b5502e6704c31.jpg'], ['Осінь', 'img/f833908b1249bfdfd3c5f5afdff404e4.jpg']], page: true, lvl: 'Середній', days: 3 },
+    kup: { name: 'Івана Купала', gen: 'Івана Купала', price: 7800, img: 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg', h1a: 'Івана Купала', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    shp: { name: 'Шпиці та Червона Рута', gen: 'Шпиців', price: 7200, img: 'img/18f58924fb138cad4d45e5dddc24f607.jpg', h1a: 'Шпиці та Червона Рута', h1b: '', place: 'Чорногора', full: false, seasons: [['Літо', 'img/18f58924fb138cad4d45e5dddc24f607.jpg']], page: true, lvl: 'Середній', days: 3 },
+    rot: { name: 'Ротило та Верховина', gen: 'Ротила', price: 6800, img: 'img/6ace0c60fc1ff65e799998fabaed3463.jpg', h1a: 'Ротило та Верховина', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/6ace0c60fc1ff65e799998fabaed3463.jpg']], page: true, lvl: 'Середній', days: 3 },
+    krk: { name: "У пошуках крокусів", gen: "крокусів", price: 5900, img: 'img/tours/ph.jpg', h1a: "У пошуках крокусів", h1b: '', place: "Микуличин", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Квітень · Микуличин', lvl: 'Середній', days: 3 },
+    hut: { name: "Гуцульщина", gen: "Гуцульщини", price: 6600, img: 'img/tours/ph.jpg', h1a: "Гуцульщина", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Травень · Косів і Криворівня', lvl: 'Легкий', days: 2 },
+    rzd: { name: "Різдво в Карпатах", gen: "Різдва", price: 8700, img: 'img/tours/ph.jpg', h1a: "Різдво в Карпатах", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: '24–26 грудня · Верховина', lvl: '', days: 3 },
+    drw: { name: "Зимова «Планета Драгобрат»", gen: "зимового Драгобрату", price: 5350, img: 'img/tours/ph.jpg', h1a: "Зимова «Планета Драгобрат»", h1b: '', place: "Свидовець", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: 'Січень–лютий · лижі й борд', lvl: 'Легкий', days: 3 },
+    sec: { name: 'Секретна подорож', gen: 'Секретної подорожі', price: 0, img: 'img/0e37070598a5a2093770abeac4f5a8ce.jpg', h1a: 'Секретна подорож', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/0e37070598a5a2093770abeac4f5a8ce.jpg']], page: false, note: 'анонс у профілі', lvl: '', days: 4 }
+  },
+  // lvl: складність маршруту, days: днів у турі (порожньо = не показуємо)
+  // [тур, місяць, дати, статус ok/few/sold, вільних місць]
+  dates: [
+    ['dra', 'jun', '12–14 червня', 'ok', 10],
+    ['dra', 'jul', '10–12 липня', 'ok', 10],
+    ['bak', 'jul', '17–19 липня', 'ok', 10],
+    ['pip', 'jul', '24–26 липня', 'ok', 10],
+    ['bak', 'aug', '31 липня – 2 серпня', 'ok', 10],
+    ['dra', 'aug', '7–9 серпня', 'ok', 10],
+    ['pip', 'aug', '14–16 серпня', 'ok', 10],
+    ['bak', 'aug', '28–30 серпня', 'ok', 10],
+    ['kup', 'jun', '22–24 червня', 'ok', 10],
+    ['shp', 'jun', '26–28 червня', 'ok', 10],
+    ['rot', 'jul', '3–5 липня', 'ok', 10],
+    ['sec', 'aug', '20–23 серпня', 'ok', 10],
+    ['dra', 'sep', '25–27 вересня', 'ok', 10, 6950],
+    ['dra', 'oct', '2–4 жовтня', 'ok', 10, 6950],
+    ['dra', 'oct', '16–18 жовтня', 'ok', 10, 6950],
+    ['dra', 'oct', '30 жовтня – 1 листопада', 'ok', 10, 6950],
+    ['dra', 'nov', '6–8 листопада', 'ok', 10, 6950]
+  ],
+  priceOf: function (r) { return r[5] || TM.tours[r[0]].price; }, // ціна конкретної дати (осінній Драгобрат дорожчий)
+  fmt: function (n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн'; },
+  plural: function (n, a, b, c) { var m = n % 10, h = n % 100; return (m === 1 && h !== 11) ? a : (m >= 2 && m <= 4 && (h < 12 || h > 14)) ? b : c; },
+  forTour: function (id) { return TM.dates.filter(function (d) { return d[0] === id; }); }
+};
+/*TM-DATA-END*/
+    // картка «Найближча мандрівка» рахується з тих самих даних, що й головна (перша дата від «сьогодні», не продана)
+    var GEN = { 'січня': 0, 'лютого': 1, 'березня': 2, 'квітня': 3, 'травня': 4, 'червня': 5, 'липня': 6, 'серпня': 7, 'вересня': 8, 'жовтня': 9, 'листопада': 10, 'грудня': 11 };
+    var startOf = function (label) { var m = /^(\d+)(?:\s+([^\s–-]+))?\s*[–-]\s*(\d+)\s+(\S+)/.exec(label); if (!m || GEN[m[4]] == null) return null; var m2 = GEN[m[4]], m1 = m[2] && GEN[m[2]] != null ? GEN[m[2]] : m2; return { s: Date.UTC(2026, m1, +m[1]), e: Date.UTC(2026, m2, +m[3]) }; };
+    var TODAY = Date.parse(this.props.today ?? '2026-06-01');
+    var up = TM.dates.map(function (r) { var p = startOf(r[2]); return p && p.e >= TODAY && r[3] !== 'sold' && TM.tours[r[0]] && TM.tours[r[0]].page !== false ? { r: r, s: p.s } : null; }).filter(Boolean).sort(function (a, b) { return a.s - b.s; });
+    var nx = up[0] ? (function (x) { var t = TM.tours[x.r[0]]; return { id: x.r[0], di: TM.forTour(x.r[0]).indexOf(x.r), name: t.name, img: t.img, when: x.r[2] + ' · ' + TM.fmt(TM.priceOf(x.r)) }; })(up[0]) : { id: '', di: '', name: '', img: '', when: '' };
     var links = [
       ['CalendarV4.dc.html', 'Календар мандрівок', ''],
       ['GroupV4.dc.html', 'Тур під групу', ''],
       ['AboutV4.dc.html', 'Про нас', ''],
-      ['MainV3.dc.html#reviews', 'Відгуки', ''],
-      ['MainV3.dc.html#faq', 'Питання й відповіді', '']
+      ['MainV4.dc.html#reviews', 'Відгуки', ''],
+      ['MainV4.dc.html#faq', 'Питання й відповіді', '']
     ].map(function (l) { return { href: l[0], label: l[1], note: l[2] }; });
-    return { acc: acc, accInk: accInk, links: links };
+    return { acc: acc, accInk: accInk, links: links, nx: nx, hasNext: !!up[0] };
   }
 }
 
@@ -1519,33 +1599,48 @@ class Component extends DCLogic {
     var acc = P.accent ?? '#F2491D';
     var accInk = acc.toUpperCase() === '#7CC8CF' ? '#111111' : '#FFFFFF';
     var YEAR = +(P.year ?? 2026);
-    /*TM-DATA*/ // дати сезону 2026 з анонсів (потім підтягуватиметься з таблиці-адмінки)
-    var TM = {
-      tours: {
-        dra: { name: 'Планета Драгобрат', price: 6750, page: true },
-        bak: { name: 'Бакота, українська Атлантида', price: 10950, page: true },
-        pip: { name: 'Піп Іван + Верховина', price: 7400, page: true },
-        kup: { name: 'Івана Купала', price: 7800, page: true },
-        shp: { name: 'Шпиці та Червона Рута', price: 7200, page: true },
-        rot: { name: 'Ротило та Верховина', price: 6800, page: true },
-        sec: { name: 'Секретна подорож', price: 0, page: false, note: 'анонс у профілі' }
-      },
-      // [тур, місяць, дати, статус ok/few/sold, вільних місць]
-      dates: [
-        ['dra', 'jun', '12–14 червня', 'ok', 10], ['kup', 'jun', '22–24 червня', 'ok', 10], ['shp', 'jun', '26–28 червня', 'ok', 10],
-        ['rot', 'jul', '3–5 липня', 'ok', 10], ['dra', 'jul', '10–12 липня', 'ok', 10], ['bak', 'jul', '17–19 липня', 'ok', 10], ['pip', 'jul', '24–26 липня', 'ok', 10],
-        ['bak', 'aug', '31 липня – 2 серпня', 'ok', 10], ['dra', 'aug', '7–9 серпня', 'ok', 10], ['pip', 'aug', '14–16 серпня', 'ok', 10], ['sec', 'aug', '20–23 серпня', 'ok', 10], ['bak', 'aug', '28–30 серпня', 'ok', 10],
-        ['dra', 'sep', '25–27 вересня', 'ok', 10, 6950],
-        ['dra', 'oct', '2–4 жовтня', 'ok', 10, 6950],
-        ['dra', 'oct', '16–18 жовтня', 'ok', 10, 6950],
-        ['dra', 'oct', '30 жовтня – 1 листопада', 'ok', 10, 6950],
-        ['dra', 'nov', '6–8 листопада', 'ok', 10, 6950]
-      ],
-      priceOf: function (r) { return r[5] || TM.tours[r[0]].price; }, // ціна конкретної дати (осінній Драгобрат дорожчий)
-      fmt: function (n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн'; },
-      forTour: function (id) { return TM.dates.filter(function (d) { return d[0] === id; }); }
-    };
-    /*TM-DATA-END*/
+    /*TM-DATA*/ // єдине джерело турів і дат (потім підтягуватиметься з таблиці-адмінки)
+var TM = {
+  tours: {
+    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6750, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true, seasons: [['Літо', 'img/eec1ae232dee3513b4739ee943be7efb.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg'], ['Зима', 'img/2b9561ffbe87cb6a2c790e94b280b697.jpg']], page: true, lvl: '', days: 3 },
+    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false, seasons: [['Літо', 'img/bb85142f4c469e600cd4a53a37804f07.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/efb98218d63a5047618b5502e6704c31.jpg'], ['Осінь', 'img/f833908b1249bfdfd3c5f5afdff404e4.jpg']], page: true, lvl: 'Середній', days: 3 },
+    kup: { name: 'Івана Купала', gen: 'Івана Купала', price: 7800, img: 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg', h1a: 'Івана Купала', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    shp: { name: 'Шпиці та Червона Рута', gen: 'Шпиців', price: 7200, img: 'img/18f58924fb138cad4d45e5dddc24f607.jpg', h1a: 'Шпиці та Червона Рута', h1b: '', place: 'Чорногора', full: false, seasons: [['Літо', 'img/18f58924fb138cad4d45e5dddc24f607.jpg']], page: true, lvl: 'Середній', days: 3 },
+    rot: { name: 'Ротило та Верховина', gen: 'Ротила', price: 6800, img: 'img/6ace0c60fc1ff65e799998fabaed3463.jpg', h1a: 'Ротило та Верховина', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/6ace0c60fc1ff65e799998fabaed3463.jpg']], page: true, lvl: 'Середній', days: 3 },
+    krk: { name: "У пошуках крокусів", gen: "крокусів", price: 5900, img: 'img/tours/ph.jpg', h1a: "У пошуках крокусів", h1b: '', place: "Микуличин", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Квітень · Микуличин', lvl: 'Середній', days: 3 },
+    hut: { name: "Гуцульщина", gen: "Гуцульщини", price: 6600, img: 'img/tours/ph.jpg', h1a: "Гуцульщина", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Травень · Косів і Криворівня', lvl: 'Легкий', days: 2 },
+    rzd: { name: "Різдво в Карпатах", gen: "Різдва", price: 8700, img: 'img/tours/ph.jpg', h1a: "Різдво в Карпатах", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: '24–26 грудня · Верховина', lvl: '', days: 3 },
+    drw: { name: "Зимова «Планета Драгобрат»", gen: "зимового Драгобрату", price: 5350, img: 'img/tours/ph.jpg', h1a: "Зимова «Планета Драгобрат»", h1b: '', place: "Свидовець", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: 'Січень–лютий · лижі й борд', lvl: 'Легкий', days: 3 },
+    sec: { name: 'Секретна подорож', gen: 'Секретної подорожі', price: 0, img: 'img/0e37070598a5a2093770abeac4f5a8ce.jpg', h1a: 'Секретна подорож', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/0e37070598a5a2093770abeac4f5a8ce.jpg']], page: false, note: 'анонс у профілі', lvl: '', days: 4 }
+  },
+  // lvl: складність маршруту, days: днів у турі (порожньо = не показуємо)
+  // [тур, місяць, дати, статус ok/few/sold, вільних місць]
+  dates: [
+    ['dra', 'jun', '12–14 червня', 'ok', 10],
+    ['dra', 'jul', '10–12 липня', 'ok', 10],
+    ['bak', 'jul', '17–19 липня', 'ok', 10],
+    ['pip', 'jul', '24–26 липня', 'ok', 10],
+    ['bak', 'aug', '31 липня – 2 серпня', 'ok', 10],
+    ['dra', 'aug', '7–9 серпня', 'ok', 10],
+    ['pip', 'aug', '14–16 серпня', 'ok', 10],
+    ['bak', 'aug', '28–30 серпня', 'ok', 10],
+    ['kup', 'jun', '22–24 червня', 'ok', 10],
+    ['shp', 'jun', '26–28 червня', 'ok', 10],
+    ['rot', 'jul', '3–5 липня', 'ok', 10],
+    ['sec', 'aug', '20–23 серпня', 'ok', 10],
+    ['dra', 'sep', '25–27 вересня', 'ok', 10, 6950],
+    ['dra', 'oct', '2–4 жовтня', 'ok', 10, 6950],
+    ['dra', 'oct', '16–18 жовтня', 'ok', 10, 6950],
+    ['dra', 'oct', '30 жовтня – 1 листопада', 'ok', 10, 6950],
+    ['dra', 'nov', '6–8 листопада', 'ok', 10, 6950]
+  ],
+  priceOf: function (r) { return r[5] || TM.tours[r[0]].price; }, // ціна конкретної дати (осінній Драгобрат дорожчий)
+  fmt: function (n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн'; },
+  plural: function (n, a, b, c) { var m = n % 10, h = n % 100; return (m === 1 && h !== 11) ? a : (m >= 2 && m <= 4 && (h < 12 || h > 14)) ? b : c; },
+  forTour: function (id) { return TM.dates.filter(function (d) { return d[0] === id; }); }
+};
+/*TM-DATA-END*/
     // кольори турів (у таблиці-адмінці це буде колонка «Колір»)
     var TINT = { dra: '#FFD3C4', bak: '#CFE0FF', pip: '#CDEFD5', kup: '#D9F5C9', shp: '#E4DAFF', rot: '#FFE9B8', sec: '#EDEDED' };
     var KEYS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
@@ -1576,7 +1671,7 @@ class Component extends DCLogic {
         var rl = hit && dn !== hit.s && i > 0 ? '0' : '10px', rr = hit && dn !== hit.e && i < 6 ? '0' : '10px';
         // дні мандрівки теж клікабельні: ведуть на сторінку туру з цією датою
         var ht = hit && TM.tours[hit.r[0]], hl = ht && ht.page && hit.r[3] !== 'sold';
-        days.push({ n: new Date(dn * 864e5).getUTCDate(), href: hl ? 'TourV4.dc.html' : (hit && hit.r[3] !== 'sold' ? 'https://ig.me/m/tvoi.mandry' : '#'), id: hl ? hit.r[0] : '', di: hl ? hit.di : '', tab: hit ? '0' : '-1', style: 'text-decoration:none;' + (hit ? 'cursor:pointer;' : 'pointer-events:none;') + 'grid-row:1;grid-column:' + (i + 1) + ';height:28px;display:flex;align-items:center;justify-content:flex-end;padding:0 7px;font-size:13px;font-weight:' + (hit ? '700' : '400') + ';color:' + (hit ? '#111111' : (inM ? (i > 4 ? acc : '#111111') : '#C4C4C4')) + ';background:' + (hit ? (TINT[hit.r[0]] || '#EDEDED') : 'transparent') + ';border-radius:' + rl + ' ' + rr + ' ' + rr + ' ' + rl + ';' });
+        days.push({ n: new Date(dn * 864e5).getUTCDate(), href: hl ? 'TourV4.dc.html' : (hit && hit.r[3] !== 'sold' ? 'https://ig.me/m/tvoi.mandry' : '#'), id: hl ? hit.r[0] : '', di: hl ? hit.di : '', tab: hit ? '0' : '-1', style: 'text-decoration:none;' + (hit ? 'cursor:pointer;' : 'pointer-events:none;') + 'grid-row:1;grid-column:' + (i + 1) + ';height:44px;display:flex;align-items:center;justify-content:flex-end;padding:0 7px;font-size:13px;font-weight:' + (hit ? '700' : '400') + ';color:' + (hit ? '#111111' : (inM ? (i > 4 ? acc : '#111111') : '#C4C4C4')) + ';background:' + (hit ? (TINT[hit.r[0]] || '#EDEDED') : 'transparent') + ';border-radius:' + rl + ' ' + rr + ' ' + rr + ' ' + rl + ';' });
       }
       var row = 2;
       evs.forEach(function (v) {
@@ -1964,7 +2059,72 @@ function setupReviews(){
   Array.prototype.forEach.call(app.querySelectorAll('[data-marquee]'), function(r){ startTrack(r, +r.dataset.marquee < 0 ? -1 : 1); });
 }
 
+/*TM-DATA*/ // єдине джерело турів і дат (потім підтягуватиметься з таблиці-адмінки)
+var TM = {
+  tours: {
+    dra: { name: 'Драгобрат', gen: 'Драгобрату', price: 6750, img: 'img/0567fee2bd71b742446b0b6a95b4a33b.jpg', h1a: 'Осіння планета', h1b: 'Драгобрат', place: 'Свидовець', full: true, seasons: [['Літо', 'img/eec1ae232dee3513b4739ee943be7efb.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg'], ['Зима', 'img/2b9561ffbe87cb6a2c790e94b280b697.jpg']], page: true, lvl: '', days: 3 },
+    bak: { name: 'Бакота', gen: 'Бакоти', price: 10950, img: 'img/bb85142f4c469e600cd4a53a37804f07.jpg', h1a: 'Бакота', h1b: '', place: 'Поділля', full: false, seasons: [['Літо', 'img/bb85142f4c469e600cd4a53a37804f07.jpg'], ['Осінь', 'img/4bcc5ca85822ec55b76f6327985d7d61.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    pip: { name: 'Піп Іван', gen: 'Попа Івана', price: 7400, img: 'img/efb98218d63a5047618b5502e6704c31.jpg', h1a: 'Піп Іван', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/efb98218d63a5047618b5502e6704c31.jpg'], ['Осінь', 'img/f833908b1249bfdfd3c5f5afdff404e4.jpg']], page: true, lvl: 'Середній', days: 3 },
+    kup: { name: 'Івана Купала', gen: 'Івана Купала', price: 7800, img: 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg', h1a: 'Івана Купала', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/fa7c6e21a710a87534cfe3b8b1c95703.jpg']], page: true, lvl: 'Легкий', days: 3 },
+    shp: { name: 'Шпиці та Червона Рута', gen: 'Шпиців', price: 7200, img: 'img/18f58924fb138cad4d45e5dddc24f607.jpg', h1a: 'Шпиці та Червона Рута', h1b: '', place: 'Чорногора', full: false, seasons: [['Літо', 'img/18f58924fb138cad4d45e5dddc24f607.jpg']], page: true, lvl: 'Середній', days: 3 },
+    rot: { name: 'Ротило та Верховина', gen: 'Ротила', price: 6800, img: 'img/6ace0c60fc1ff65e799998fabaed3463.jpg', h1a: 'Ротило та Верховина', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/6ace0c60fc1ff65e799998fabaed3463.jpg']], page: true, lvl: 'Середній', days: 3 },
+    krk: { name: "У пошуках крокусів", gen: "крокусів", price: 5900, img: 'img/tours/ph.jpg', h1a: "У пошуках крокусів", h1b: '', place: "Микуличин", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Квітень · Микуличин', lvl: 'Середній', days: 3 },
+    hut: { name: "Гуцульщина", gen: "Гуцульщини", price: 6600, img: 'img/tours/ph.jpg', h1a: "Гуцульщина", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Весна", "img/tours/ph.jpg"]], when: 'Травень · Косів і Криворівня', lvl: 'Легкий', days: 2 },
+    rzd: { name: "Різдво в Карпатах", gen: "Різдва", price: 8700, img: 'img/tours/ph.jpg', h1a: "Різдво в Карпатах", h1b: '', place: "Верховина", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: '24–26 грудня · Верховина', lvl: '', days: 3 },
+    drw: { name: "Зимова «Планета Драгобрат»", gen: "зимового Драгобрату", price: 5350, img: 'img/tours/ph.jpg', h1a: "Зимова «Планета Драгобрат»", h1b: '', place: "Свидовець", full: false, page: true, seasons: [["Зима", "img/tours/ph.jpg"]], when: 'Січень–лютий · лижі й борд', lvl: 'Легкий', days: 3 },
+    sec: { name: 'Секретна подорож', gen: 'Секретної подорожі', price: 0, img: 'img/0e37070598a5a2093770abeac4f5a8ce.jpg', h1a: 'Секретна подорож', h1b: '', place: 'Карпати', full: false, seasons: [['Літо', 'img/0e37070598a5a2093770abeac4f5a8ce.jpg']], page: false, note: 'анонс у профілі', lvl: '', days: 4 }
+  },
+  // lvl: складність маршруту, days: днів у турі (порожньо = не показуємо)
+  // [тур, місяць, дати, статус ok/few/sold, вільних місць]
+  dates: [
+    ['dra', 'jun', '12–14 червня', 'ok', 10],
+    ['dra', 'jul', '10–12 липня', 'ok', 10],
+    ['bak', 'jul', '17–19 липня', 'ok', 10],
+    ['pip', 'jul', '24–26 липня', 'ok', 10],
+    ['bak', 'aug', '31 липня – 2 серпня', 'ok', 10],
+    ['dra', 'aug', '7–9 серпня', 'ok', 10],
+    ['pip', 'aug', '14–16 серпня', 'ok', 10],
+    ['bak', 'aug', '28–30 серпня', 'ok', 10],
+    ['kup', 'jun', '22–24 червня', 'ok', 10],
+    ['shp', 'jun', '26–28 червня', 'ok', 10],
+    ['rot', 'jul', '3–5 липня', 'ok', 10],
+    ['sec', 'aug', '20–23 серпня', 'ok', 10],
+    ['dra', 'sep', '25–27 вересня', 'ok', 10, 6950],
+    ['dra', 'oct', '2–4 жовтня', 'ok', 10, 6950],
+    ['dra', 'oct', '16–18 жовтня', 'ok', 10, 6950],
+    ['dra', 'oct', '30 жовтня – 1 листопада', 'ok', 10, 6950],
+    ['dra', 'nov', '6–8 листопада', 'ok', 10, 6950]
+  ],
+  priceOf: function (r) { return r[5] || TM.tours[r[0]].price; }, // ціна конкретної дати (осінній Драгобрат дорожчий)
+  fmt: function (n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн'; },
+  plural: function (n, a, b, c) { var m = n % 10, h = n % 100; return (m === 1 && h !== 11) ? a : (m >= 2 && m <= 4 && (h < 12 || h > 14)) ? b : c; },
+  forTour: function (id) { return TM.dates.filter(function (d) { return d[0] === id; }); }
+};
+/*TM-DATA-END*/
 var app = document.getElementById('app');
+// ---- заглушки у квадратних дужках: на сайті не показуємо (на полотні лишаються, щоб було видно, що заповнити) ----
+var PH = /\[[^\]\n]{1,120}\]/;
+// посилання-текст: збільшуємо зону натискання до 44 px, не змінюючи вигляд
+function fixTap(){
+  Array.prototype.forEach.call(app.querySelectorAll('a, button'), function(a){
+    var r = a.getBoundingClientRect(); if (!r.width || r.height >= 44) return;
+    var cs = getComputedStyle(a);
+    if (cs.display === 'inline') { a.style.paddingTop = a.style.paddingBottom = Math.ceil((44 - r.height) / 2) + 'px'; }
+    else if (!/height/.test(a.getAttribute('style') || '') || /align-self/.test(a.getAttribute('style') || '')) { a.style.minHeight = '44px'; if (cs.display === 'block') a.style.display = 'flex'; a.style.alignItems = 'center'; }
+  });
+}
+function hidePh(){
+  Array.prototype.forEach.call(app.querySelectorAll('[data-ph]'), function(e){ e.style.display = 'none'; });
+  var w = document.createTreeWalker(app, NodeFilter.SHOW_TEXT), n, hits = [];
+  while ((n = w.nextNode())) if (PH.test(n.nodeValue) && !n.parentElement.closest('script,style')) hits.push(n);
+  hits.forEach(function(n){
+    var el = n.parentElement, t = n.nodeValue.trim(), block = el.closest('p,li') || el;
+    if (current === 'LegalV3' || /^\[[^\]]*\]\.?$/.test(t)) { block.style.display = 'none'; return; }
+    var t2 = n.nodeValue.replace(/(,\s*)?(?:РНОКПП\s+)?\[[^\]]*\]/g, '').replace(/\s*·\s*$/, '').replace(/,\s*\./g, '.').replace(/\s+([.,])/g, '$1');
+    if (!t2.trim() || /\s(від|з|до|на|у|в)\s*$/.test(t2)) block.style.display = 'none'; else n.nodeValue = t2;
+  });
+}
+
 var current = null, currentKey = null, comp = null;
 var TITLES = { GroupV4: 'Тур під вашу групу · tvoi.mandry', CalendarV4: 'Календар мандрівок · tvoi.mandry', AboutV4: 'Про нас · tvoi.mandry', MainV4: 'tvoi.mandry · фото- і пригодницькі тури Карпатами', MenuV3: 'Меню · tvoi.mandry', LegalV3: 'Оферта і конфіденційність · tvoi.mandry', NotFoundV3: 'Сторінку не знайдено · tvoi.mandry' };
 function mount(name, params, key){
@@ -1990,6 +2150,7 @@ function mount(name, params, key){
     if (!first) dayOpenAnim(wasOpen);
     syncSheet();
     setupReviews();
+    hidePh(); fixTap();
   };
   c._render();
 }
@@ -2001,7 +2162,14 @@ function parse(){
   var h = (location.hash || '').replace(/^#/, ''), i = h.indexOf('-');
   var key = i < 0 ? h : h.slice(0, i), anchor = i < 0 ? '' : h.slice(i + 1);
   var parts = key.split('~'), params = parts[1] ? { tour: parts[1], d: parts[2] != null ? +parts[2] : null } : {};
-  return { screen: h ? (BYKEY[parts[0]] || 'NotFoundV3') : 'MainV4', anchor: anchor, key: key, params: params };
+  var screen = h ? (BYKEY[parts[0]] || 'NotFoundV3') : 'MainV4';
+  if (screen === 'TourV4' || screen === 'BookingV4') {
+    var T = params.tour && TM.tours[params.tour];
+    if (!T || T.page === false) screen = 'NotFoundV3';
+    else if (screen === 'BookingV4' && !TM.forTour(params.tour).length) screen = 'TourV4'; // дат немає: бронювати нічого, показуємо сторінку туру
+    else if (params.d != null && !(params.d >= 0 && params.d < TM.forTour(params.tour).length)) params.d = 0;
+  }
+  return { screen: screen, anchor: anchor, key: key, params: params };
 }
 function route(){
   var r = parse();
